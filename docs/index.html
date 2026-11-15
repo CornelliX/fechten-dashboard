@@ -9,15 +9,17 @@
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 :root {
-  --bg: #f4f2ee; --card: #ffffff; --ink: #16191d; --muted: #6a6f76; --line: #e3e0da;
-  --accent: #c8102e; --good: #1a7f4b; --warn: #b26a00; --chip: #efece6;
+  /* hell: alle Text/Hintergrund-Paare >= 5:1 (WCAG AA) */
+  --bg: #f4f2ee; --card: #ffffff; --ink: #16191d; --muted: #5c6168; --line: #e3e0da;
+  --accent: #c8102e; --good: #126a3d; --warn: #8a4f00; --chip: #efece6;
 }
 @media (prefers-color-scheme: dark) {
   :root { --bg: #111315; --card: #1a1d20; --ink: #eceae6; --muted: #9aa0a6; --line: #2a2e33;
           --accent: #ff4d5e; --good: #3ecf86; --warn: #f0a63a; --chip: #24282c; }
 }
 * { box-sizing: border-box; }
-body { margin: 0; background: var(--bg); color: var(--ink); font: 15px/1.5 Inter, system-ui, sans-serif; }
+body { margin: 0; background: var(--bg); color: var(--ink); font: 16px/1.5 Inter, system-ui, sans-serif; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 3px; }
 main { max-width: 980px; margin: 0 auto; padding: 24px 16px 48px; }
 h1, h2, .num { font-family: "Barlow Condensed", Inter, sans-serif; letter-spacing: .01em; }
 h1 { font-size: 40px; line-height: 1; margin: 0; font-weight: 700; }
@@ -37,7 +39,8 @@ ul.feed { list-style: none; margin: 0; padding: 0; }
 .feed li { display: grid; grid-template-columns: 84px 1fr; gap: 8px; padding: 8px 0; border-top: 1px solid var(--line); }
 .feed li:first-child { border-top: 0; }
 .feed time { color: var(--muted); font-size: 13px; }
-table { width: 100%; border-collapse: collapse; font-size: 14px; }
+table { width: 100%; border-collapse: collapse; font-size: 15px; }
+td a { display: inline-block; padding-block: 3px; }  /* Klickfläche >= 24 px */
 td, th { text-align: left; padding: 7px 6px; border-top: 1px solid var(--line); vertical-align: top; }
 th { color: var(--muted); font-weight: 500; font-size: 12px; text-transform: uppercase; border-top: 0; }
 td.r, th.r { text-align: right; white-space: nowrap; }
@@ -49,10 +52,18 @@ tr.me td { background: color-mix(in srgb, var(--accent) 10%, transparent); font-
 a { color: inherit; text-decoration-color: var(--accent); text-underline-offset: 3px; }
 .w { color: var(--good); font-weight: 600; } .l { color: var(--accent); font-weight: 600; }
 .scroll { overflow-x: auto; }
-svg text { fill: var(--muted); font: 11px Inter, sans-serif; }
+svg text { fill: var(--muted); font: 12px Inter, sans-serif; }
+.show-s { display: none; }
 .chips { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; }
 footer { color: var(--muted); font-size: 12px; margin-top: 24px; }
-@media (max-width: 520px) { h1 { font-size: 32px; } .kpi .num { font-size: 44px; } .hide-s { display: none; } }
+@media (max-width: 720px) {  /* Tabellen kompakt: Status unter dem Namen, Nebenspalten weg */
+  .hide-s { display: none; } .show-s { display: block; margin-top: 4px; }
+  .show-s .badge { white-space: normal; }  /* lange Freitext-Status aus manual.json */
+}
+@media (max-width: 520px) {
+  h1 { font-size: 32px; } .kpi .num { font-size: 44px; }
+  .card { padding: 14px; } td, th { padding-inline: 4px; }
+}
 </style>
 </head>
 <body>
@@ -81,6 +92,11 @@ const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '
 const num = n => n == null || n === '' || isNaN(n) ? '–' : Number(n).toLocaleString('de-DE', { maximumFractionDigits: 3 });
 const int = n => Number.isFinite(Number(n)) && n !== null && n !== '' ? String(Math.trunc(Number(n))) : '–';  // Plätze, IDs, Saisons
 const dmy = s => { const p = String(s ?? '').split('-').map(esc); return p.length === 3 ? `${p[2]}.${p[1]}.${p[0]}` : p.length === 2 ? `${p[1]}/${p[0]}` : p[0]; };
+// 12.–15.11.2026 statt zwei vollen Daten, wenn Monat und Jahr gleich sind
+const range = (a, b) => {
+  if (!b || b === a) return dmy(a);
+  return a.slice(0, 7) === b.slice(0, 7) ? `${esc(a.slice(8, 10))}.–${dmy(b)}` : `${dmy(a)}–<br>${dmy(b)}`;
+};
 const saison = x => Number.isFinite(Number(x)) ? `${int(x - 1)}/${int(x).slice(2)}` : '–';
 const today =new Date().toISOString().slice(0, 10);
 const nocache = { cache: 'no-store' };
@@ -126,10 +142,11 @@ function render(s, changes, hist) {
     || '<li><span></span><span class="sub">Noch keine Änderungen.</span></li>';
 
   const ev = s.events.filter(e => (e.end || e.date) >= today);
-  $('#events').innerHTML = `<tr><th>Datum</th><th>Wettbewerb</th><th class="hide-s">Ort</th><th>Status</th></tr>` + ev.map(e => `
-    <tr><td>${dmy(e.date)}${e.end && e.end !== e.date ? '–<br>' + dmy(e.end) : ''}</td>
-    <td>${e.url ? `<a href="${esc(e.url)}">${esc(e.name)}</a>` : esc(e.name)}</td>
-    <td class="hide-s">${esc(e.city)}</td><td>${badge(e.status)}</td></tr>`).join('');
+  // Handy: Status unter den Namen statt eigener Spalte, damit nichts seitlich verschwindet
+  $('#events').innerHTML = `<tr><th>Datum</th><th>Wettbewerb</th><th class="hide-s">Ort</th><th class="hide-s">Status</th></tr>` + ev.map(e => `
+    <tr><td style="white-space:nowrap">${range(e.date, e.end)}</td>
+    <td>${e.url ? `<a href="${esc(e.url)}">${esc(e.name)}</a>` : esc(e.name)}<div class="show-s">${badge(e.status)}</div></td>
+    <td class="hide-s">${esc(e.city)}</td><td class="hide-s">${badge(e.status)}</td></tr>`).join('');
 
   $('#results').innerHTML = `<tr><th>Datum</th><th>Wettbewerb</th><th class="r">Platz</th><th class="r hide-s">FIE-Pkt.</th><th class="hide-s">Quelle</th></tr>` + s.results.map(r => `
     <tr><td>${dmy(r.date)}</td><td>${esc(r.name)}${r.city && !r.name.includes(r.city) ? ', ' + esc(r.city) : ''}</td>

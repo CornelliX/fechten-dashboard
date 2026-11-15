@@ -6,6 +6,7 @@ import csv
 import json
 import os
 import re
+import secrets
 import time
 import urllib.parse
 import urllib.request
@@ -274,9 +275,11 @@ def main():
     for e in new["errors"]:
         print("FEHLER", e)
     if changes and os.environ.get("GITHUB_OUTPUT"):
+        # Texte stammen teils von fie.org: Zeilenumbrüche raus, Zufalls-Delimiter gegen Output-Injection
+        delim = "EOF_" + secrets.token_hex(16)
+        body = "\n".join("• " + " ".join(c.split()) for c in changes)
         with open(os.environ["GITHUB_OUTPUT"], "a", encoding="utf-8") as fh:
-            body = "\n".join(f"• {c}" for c in changes)
-            fh.write(f"changed=true\nbody<<EOF_BODY\n{body}\nEOF_BODY\n")
+            fh.write(f"changed=true\nbody<<{delim}\n{body}\n{delim}\n")
 
 
 if __name__ == "__main__":

@@ -78,9 +78,11 @@ footer { color: var(--muted); font-size: 12px; margin-top: 24px; }
 <script>
 const $ = s => document.querySelector(s);
 const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
-const num = n => n == null || n === '' ? '–' : Number(n).toLocaleString('de-DE', { maximumFractionDigits: 3 });
-const dmy = s => { const p = String(s ?? '').split('-'); return p.length === 3 ? `${p[2]}.${p[1]}.${p[0]}` : p.length === 2 ? `${p[1]}/${p[0]}` : esc(s); };
-const today = new Date().toISOString().slice(0, 10);
+const num = n => n == null || n === '' || isNaN(n) ? '–' : Number(n).toLocaleString('de-DE', { maximumFractionDigits: 3 });
+const int = n => Number.isFinite(Number(n)) && n !== null && n !== '' ? String(Math.trunc(Number(n))) : '–';  // Plätze, IDs, Saisons
+const dmy = s => { const p = String(s ?? '').split('-').map(esc); return p.length === 3 ? `${p[2]}.${p[1]}.${p[0]}` : p.length === 2 ? `${p[1]}/${p[0]}` : p[0]; };
+const saison = x => Number.isFinite(Number(x)) ? `${int(x - 1)}/${int(x).slice(2)}` : '–';
+const today =new Date().toISOString().slice(0, 10);
 const nocache = { cache: 'no-store' };
 
 Promise.all([
@@ -113,12 +115,12 @@ function render(s, changes, hist) {
   document.title = `${s.name} · Fechten`;
   $('#name').textContent = s.name;
   const upd = new Date(s.updated).toLocaleString('de-DE', { dateStyle: 'medium', timeStyle: 'short' });
-  $('#meta').innerHTML = `Damen-Florett · Stand ${esc(upd)} · <a href="https://fie.org/athletes/${s.fie_id}">FIE-Profil</a>`;
+  $('#meta').innerHTML = `Damen-Florett · Stand ${esc(upd)} · <a href="https://fie.org/athletes/${int(s.fie_id)}">FIE-Profil</a>`;
   if (s.fie.image) { $('#img').src = s.fie.image; $('#img').hidden = false; }
   if (s.errors.length) $('#errors').innerHTML = `<div class="errors"><b>Quelle nicht erreichbar, letzter Stand wird gezeigt:</b><br>${s.errors.map(esc).join('<br>')}</div>`;
 
-  $('#kpi-fie').innerHTML = `<span class="num">${s.fie.rank ?? '–'}</span>${trend(hist, 'FIE')}<div class="sub">${num(s.fie.points)} Punkte · Saison ${s.fie.season - 1}/${String(s.fie.season).slice(2)}</div>`;
-  $('#kpi-dfb').innerHTML = `<span class="num">${s.dfb.rank ?? '–'}</span>${trend(hist, 'DFB')}<div class="sub">${num(s.dfb.points)} Punkte · berechnet ${dmy(s.dfb.calculated)} (Ophardt)</div>`;
+  $('#kpi-fie').innerHTML = `<span class="num">${int(s.fie.rank)}</span>${trend(hist, 'FIE')}<div class="sub">${num(s.fie.points)} Punkte · Saison ${saison(s.fie.season)}</div>`;
+  $('#kpi-dfb').innerHTML = `<span class="num">${int(s.dfb.rank)}</span>${trend(hist, 'DFB')}<div class="sub">${num(s.dfb.points)} Punkte · berechnet ${dmy(s.dfb.calculated)} (Ophardt)</div>`;
 
   $('#feed').innerHTML = changes.slice(0, 20).map(c => `<li><time>${dmy(c.date)}</time><span>${esc(c.text)}</span></li>`).join('')
     || '<li><span></span><span class="sub">Noch keine Änderungen.</span></li>';
@@ -143,11 +145,11 @@ function render(s, changes, hist) {
   }).join('') || '<div class="sub">Keine Gefechte in dieser Saison.</div>';
 
   const meRow = (name) => /gamke/i.test(name) ? ' class="me"' : '';
-  $('#dfb').innerHTML = (s.dfb.top10 || []).map(r => `<tr${meRow(r.name)}><td class="r">${r.rank}</td><td>${esc(r.name)}</td><td class="r">${num(r.points)}</td></tr>`).join('');
+  $('#dfb').innerHTML = (s.dfb.top10 || []).map(r => `<tr${meRow(r.name)}><td class="r">${int(r.rank)}</td><td>${esc(r.name)}</td><td class="r">${num(r.points)}</td></tr>`).join('');
   $('#dfb-note').innerHTML = s.dfb.url ? `Stand ${dmy(s.dfb.calculated)}, <a href="${esc(s.dfb.url)}">Ophardt</a>` : '';
-  $('#ger').innerHTML = (s.fie.top_ger || []).map(r => `<tr${meRow(r.name)}><td class="r">${r.rank}</td><td><a href="https://fie.org/athletes/${r.id}">${esc(r.name)}</a></td><td class="r">${num(r.points)}</td></tr>`).join('');
+  $('#ger').innerHTML = (s.fie.top_ger || []).map(r => `<tr${meRow(r.name)}><td class="r">${int(r.rank)}</td><td><a href="https://fie.org/athletes/${int(r.id)}">${esc(r.name)}</a></td><td class="r">${num(r.points)}</td></tr>`).join('');
 
-  $('#seasons').innerHTML = (s.fie.seasons || []).map(x => `<span class="badge">FIE ${x.season - 1}/${String(x.season).slice(2)}: Platz ${x.rank}</span>`).join('');
+  $('#seasons').innerHTML = (s.fie.seasons || []).map(x => `<span class="badge">FIE ${saison(x.season)}: Platz ${int(x.rank)}</span>`).join('');
   $('#chart').innerHTML = chart(hist);
 }
 
@@ -155,7 +157,7 @@ function chart(hist) {
   const series = ['FIE', 'DFB'].map(src => ({ src, pts: hist.filter(r => r.source === src) })).filter(s => s.pts.length);
   if (!series.some(s => s.pts.length > 1)) {
     return '<div class="sub">Der Verlauf füllt sich mit jeder Ranglisten-Änderung. Bisher: ' +
-      series.map(s => `${s.src} Platz ${s.pts[0].rank} (${dmy(s.pts[0].date)})`).join(', ') + '</div>';
+      series.map(s => `${s.src} Platz ${int(s.pts[0].rank)} (${dmy(s.pts[0].date)})`).join(', ') + '</div>';
   }
   // ponytail: je Rangliste eine eigene Mini-Grafik, gemeinsame Achse wäre bei Platz 7 vs. 312 unlesbar
   return series.filter(s => s.pts.length > 1).map(({ src, pts }) => {
@@ -167,9 +169,9 @@ function chart(hist) {
     const line = pts.map((p, i) => `${i ? 'L' : 'M'}${X(xs[i]).toFixed(1)},${Y(ys[i]).toFixed(1)}`).join('');
     return `<svg viewBox="0 0 ${W} ${H + 10}" width="100%" role="img" aria-label="${src}-Ranglistenverlauf">
       <path d="${line}" fill="none" stroke="var(--accent)" stroke-width="2.5"/>
-      ${pts.map((p, i) => `<circle cx="${X(xs[i])}" cy="${Y(ys[i])}" r="3.5" fill="var(--accent)"><title>${dmy(p.date)}: Platz ${p.rank}</title></circle>`).join('')}
+      ${pts.map((p, i) => `<circle cx="${X(xs[i])}" cy="${Y(ys[i])}" r="3.5" fill="var(--accent)"><title>${dmy(p.date)}: Platz ${int(p.rank)}</title></circle>`).join('')}
       <text x="0" y="12">${src}</text><text x="${P}" y="${H + 8}">${dmy(pts[0].date)}</text>
-      <text x="${W - P}" y="${H + 8}" text-anchor="end">Platz ${pts[pts.length - 1].rank}</text></svg>`;
+      <text x="${W - P}" y="${H + 8}" text-anchor="end">Platz ${int(pts[pts.length - 1].rank)}</text></svg>`;
   }).join('');
 }
 </script>

@@ -30,7 +30,10 @@ jobs:
           git config user.name "fecht-bot"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add docs/data
-          git diff --cached --quiet || (git commit -m "Daten $(date -u +%F)" && git push)
+          git diff --cached --quiet && exit 0
+          git commit -m "Daten $(date -u +%F)"
+          # Ein anderer Lauf kann inzwischen gepusht haben: neueste Daten (unsere) gewinnen
+          git pull --rebase -X theirs && git push
       - name: E-Mail bei Änderungen
         if: steps.u.outputs.changed == 'true' && env.MAIL_USER != ''
         uses: dawidd6/action-send-mail@v3

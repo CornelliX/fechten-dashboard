@@ -1,0 +1,495 @@
+{
+ "updated": "2026-11-15T23:33+00:00",
+ "name": "Ella Gamke",
+ "fie_id": 60886,
+ "errors": [],
+ "fie": {
+  "season": 2027,
+  "rank": 312,
+  "points": 1.125,
+  "image": "https://static.fie.org/uploads/39/195809-Athlete_Gamke.jpg",
+  "seasons": [
+   {
+    "season": 2027,
+    "rank": 312,
+    "points": 1.125
+   },
+   {
+    "season": 2026,
+    "rank": 341,
+    "points": 0.625
+   },
+   {
+    "season": 2025,
+    "rank": 679,
+    "points": 0.0
+   }
+  ],
+  "top_ger": [
+   {
+    "rank": 30,
+    "name": "EBERT Leonie",
+    "points": 55.0,
+    "id": 33746
+   },
+   {
+    "rank": 38,
+    "name": "MORANDI Carlotta",
+    "points": 48.0,
+    "id": 48580
+   },
+   {
+    "rank": 70,
+    "name": "KLEIBRINK Anne",
+    "points": 22.0,
+    "id": 17481
+   },
+   {
+    "rank": 83,
+    "name": "KIRSCHEN Kim",
+    "points": 18.75,
+    "id": 28461
+   },
+   {
+    "rank": 165,
+    "name": "KOTHIERINGER Anna Sophie",
+    "points": 6.5,
+    "id": 47434
+   },
+   {
+    "rank": 186,
+    "name": "HOEFLER Marie",
+    "points": 6.0,
+    "id": 51657
+   },
+   {
+    "rank": 223,
+    "name": "SEIFFERT Veranika",
+    "points": 3.75,
+    "id": 58205
+   },
+   {
+    "rank": 309,
+    "name": "DHUIQUE-HEIN Aliya",
+    "points": 1.25,
+    "id": 42363
+   },
+   {
+    "rank": 310,
+    "name": "HERWIG Merle",
+    "points": 1.25,
+    "id": 58333
+   },
+   {
+    "rank": 312,
+    "name": "GAMKE Ella",
+    "points": 1.125,
+    "id": 60886
+   },
+   {
+    "rank": 338,
+    "name": "HERWIG Finja",
+    "points": 1.0,
+    "id": 58334
+   },
+   {
+    "rank": 341,
+    "name": "KIRSCH Anne",
+    "points": 0.875,
+    "id": 36454
+   }
+  ]
+ },
+ "dfb": {
+  "rank": 6,
+  "points": 47.25,
+  "calculated": "2026-11-15",
+  "url": "https://fencing.ophardt.online/de/display-ranking/html/ger/senior/f/f/i?id=16",
+  "top10": [
+   {
+    "rank": 1,
+    "name": "Carlotta Sophie Morandi",
+    "points": 163
+   },
+   {
+    "rank": 2,
+    "name": "Leonie Ebert",
+    "points": 101.25
+   },
+   {
+    "rank": 3,
+    "name": "Marie Höfler",
+    "points": 68
+   },
+   {
+    "rank": 4,
+    "name": "Kim Kirschen",
+    "points": 56
+   },
+   {
+    "rank": 5,
+    "name": "Anna Sophie Kothieringer",
+    "points": 53.75
+   },
+   {
+    "rank": 6,
+    "name": "Ella Gamke",
+    "points": 47.25
+   },
+   {
+    "rank": 7,
+    "name": "Anne Kleibrink",
+    "points": 45
+   },
+   {
+    "rank": 8,
+    "name": "Veranika Seiffert",
+    "points": 41.75
+   },
+   {
+    "rank": 9,
+    "name": "Merle Herwig",
+    "points": 38.25
+   },
+   {
+    "rank": 10,
+    "name": "Anne Kirsch",
+    "points": 36.25
+   }
+  ]
+ },
+ "results": [
+  {
+   "key": "fie-2027-127",
+   "date": "2026-11-12",
+   "name": "Weltcup Plovdiv",
+   "city": "Plovdiv",
+   "place": 171,
+   "season": 2027,
+   "competition_id": 127,
+   "source": "FIE",
+   "points": 0.25
+  },
+  {
+   "key": "fie-2027-397",
+   "date": "2026-09-19",
+   "name": "Satellite Amsterdam",
+   "city": "Amsterdam",
+   "place": 49,
+   "season": 2027,
+   "competition_id": 397,
+   "source": "FIE",
+   "points": 0.5
+  },
+  {
+   "date": "2026-05-30",
+   "name": "DM Senior",
+   "city": "Berlin",
+   "place": 5,
+   "key": "m-2026-05-30-DM Senior",
+   "source": "Ophardt (manuell)"
+  },
+  {
+   "date": "2026-01-24",
+   "name": "Turnier Dörnigheim",
+   "city": "Dörnigheim",
+   "place": 2,
+   "key": "m-2026-01-24-Turnier Dörnigheim",
+   "source": "Ophardt (manuell)"
+  },
+  {
+   "date": "2026",
+   "name": "Burg-Cup",
+   "city": "Esslingen",
+   "place": 3,
+   "key": "m-2026-Burg-Cup",
+   "source": "Ophardt (manuell)"
+  },
+  {
+   "date": "2026",
+   "name": "DM Team Senior 2025 und 2026, Die Finals 2025",
+   "city": "",
+   "place": 1,
+   "key": "m-2026-DM Team Senior 2025 und 2026, Die Finals 2025",
+   "source": "Ophardt (manuell)"
+  },
+  {
+   "date": "2025-12",
+   "name": "Händel-Cup",
+   "city": "Halle",
+   "place": 8,
+   "key": "m-2025-12-Händel-Cup",
+   "source": "Ophardt (manuell)"
+  },
+  {
+   "date": "2025-10",
+   "name": "Adolf-Ermer-Cup (U20)",
+   "city": "Stuttgart",
+   "place": 1,
+   "key": "m-2025-10-Adolf-Ermer-Cup (U20)",
+   "source": "Ophardt (manuell)"
+  }
+ ],
+ "bouts": [
+  {
+   "date": "2026-11-12",
+   "event": "Weltcup Plovdiv",
+   "win": false,
+   "score": "3:5",
+   "opponent": "AKTAYEVA Sofiya",
+   "nat": "KAZ"
+  },
+  {
+   "date": "2026-11-12",
+   "event": "Weltcup Plovdiv",
+   "win": false,
+   "score": "3:5",
+   "opponent": "SINIGALIA Martina",
+   "nat": "ITA"
+  },
+  {
+   "date": "2026-11-12",
+   "event": "Weltcup Plovdiv",
+   "win": true,
+   "score": "5:3",
+   "opponent": "KIM Hyunjin",
+   "nat": "KOR"
+  },
+  {
+   "date": "2026-11-12",
+   "event": "Weltcup Plovdiv",
+   "win": false,
+   "score": "4:5",
+   "opponent": "SIMKOVA Anna",
+   "nat": "CZE"
+  },
+  {
+   "date": "2026-11-12",
+   "event": "Weltcup Plovdiv",
+   "win": false,
+   "score": "1:5",
+   "opponent": "KOLLAR Anna",
+   "nat": "HUN"
+  },
+  {
+   "date": "2026-11-12",
+   "event": "Weltcup Plovdiv",
+   "win": true,
+   "score": "5:4",
+   "opponent": "AUDIBERT Alicia",
+   "nat": "FRA"
+  },
+  {
+   "date": "2026-11-12",
+   "event": "Weltcup Plovdiv",
+   "win": false,
+   "score": "4:15",
+   "opponent": "AUDIBERT Alicia",
+   "nat": "FRA"
+  },
+  {
+   "date": "2026-09-19",
+   "event": "Satellite Amsterdam",
+   "win": true,
+   "score": "5:2",
+   "opponent": "CANESSA Lucrezia",
+   "nat": "ITA"
+  },
+  {
+   "date": "2026-09-19",
+   "event": "Satellite Amsterdam",
+   "win": false,
+   "score": "3:5",
+   "opponent": "VALIERE Lise",
+   "nat": "FRA"
+  },
+  {
+   "date": "2026-09-19",
+   "event": "Satellite Amsterdam",
+   "win": false,
+   "score": "3:5",
+   "opponent": "ESTEBAN Maxine Isabel",
+   "nat": "CIV"
+  },
+  {
+   "date": "2026-09-19",
+   "event": "Satellite Amsterdam",
+   "win": true,
+   "score": "5:3",
+   "opponent": "KULLA Anna",
+   "nat": "GRE"
+  },
+  {
+   "date": "2026-09-19",
+   "event": "Satellite Amsterdam",
+   "win": false,
+   "score": "2:5",
+   "opponent": "SOPIT Svitlana",
+   "nat": "UKR"
+  },
+  {
+   "date": "2026-09-19",
+   "event": "Satellite Amsterdam",
+   "win": true,
+   "score": "5:1",
+   "opponent": "CULKIN Nathalie",
+   "nat": "GBR"
+  },
+  {
+   "date": "2026-09-19",
+   "event": "Satellite Amsterdam",
+   "win": false,
+   "score": "5:15",
+   "opponent": "FERRARI Carlotta",
+   "nat": "ITA"
+  }
+ ],
+ "events": [
+  {
+   "key": "fie-123",
+   "fie_id": 123,
+   "date": "2026-11-12",
+   "end": "2026-11-15",
+   "name": "Plovdiv World Cup 2026",
+   "city": "Plovdiv",
+   "country": "BUL",
+   "type": "World Cup",
+   "entered": true,
+   "url": "https://fie.org/tournaments/2027/123",
+   "source": "FIE",
+   "status": "Gemeldet (FIE)"
+  },
+  {
+   "date": "2026-12-05",
+   "end": "2026-12-06",
+   "name": "21. Händel-Cup (DFB-Qualifikation)",
+   "city": "Halle",
+   "status": "Gemeldet, auch als Kampfrichterin",
+   "url": "https://fencing.ophardt.online/de/calendar",
+   "key": "m-2026-12-05-21. Händel-Cup (DFB-Qualifikation)",
+   "source": "Ophardt (manuell)"
+  },
+  {
+   "key": "fie-131",
+   "fie_id": 131,
+   "date": "2026-12-10",
+   "end": "2026-12-13",
+   "name": "Shanghai World Cup 2026",
+   "city": "Shanghai",
+   "country": "CHN",
+   "type": "World Cup",
+   "entered": false,
+   "url": "https://fie.org/tournaments/2027/131",
+   "source": "FIE",
+   "status": "Voranmeldung (Ophardt)"
+  },
+  {
+   "key": "fie-171",
+   "fie_id": 171,
+   "date": "2027-01-15",
+   "end": "2027-01-17",
+   "name": "Singapore World Cup 2027",
+   "city": "Singapore",
+   "country": "SGP",
+   "type": "World Cup",
+   "entered": false,
+   "url": "https://fie.org/tournaments/2027/171",
+   "source": "FIE",
+   "status": "Voranmeldung (Ophardt)"
+  },
+  {
+   "key": "fie-155",
+   "fie_id": 155,
+   "date": "2027-02-26",
+   "end": "2027-02-28",
+   "name": "Turin Grand Prix 2027",
+   "city": "Turin",
+   "country": "ITA",
+   "type": "Grand Prix",
+   "entered": false,
+   "url": "https://fie.org/tournaments/2027/155",
+   "source": "FIE",
+   "status": "Keine Meldung bekannt"
+  },
+  {
+   "key": "fie-156",
+   "fie_id": 156,
+   "date": "2027-03-11",
+   "end": "2027-03-14",
+   "name": "Istanbul World Cup 2027",
+   "city": "Istanbul",
+   "country": "TUR",
+   "type": "World Cup",
+   "entered": false,
+   "url": "https://fie.org/tournaments/2027/156",
+   "source": "FIE",
+   "status": "Nicht gemeldet"
+  },
+  {
+   "key": "fie-160",
+   "fie_id": 160,
+   "date": "2027-03-26",
+   "end": "2027-03-28",
+   "name": "Lima Grand Prix 2027",
+   "city": "Lima",
+   "country": "PER",
+   "type": "Grand Prix",
+   "entered": false,
+   "url": "https://fie.org/tournaments/2027/160",
+   "source": "FIE",
+   "status": "Keine Meldung bekannt"
+  },
+  {
+   "date": "2027-04-03",
+   "end": "2027-04-04",
+   "name": "Deutsche Veteranen-Meisterschaft (nur zur Info)",
+   "city": "Schwerin",
+   "status": "Nicht relevant",
+   "url": null,
+   "key": "m-2027-04-03-Deutsche Veteranen-Meisterschaft (nur zur Info)",
+   "source": "Ophardt (manuell)"
+  },
+  {
+   "key": "fie-163",
+   "fie_id": 163,
+   "date": "2027-05-07",
+   "end": "2027-05-09",
+   "name": "Hong Kong Grand Prix 2027",
+   "city": "Hong Kong",
+   "country": "HKG",
+   "type": "Grand Prix",
+   "entered": false,
+   "url": "https://fie.org/tournaments/2027/163",
+   "source": "FIE",
+   "status": "Keine Meldung bekannt"
+  },
+  {
+   "key": "fie-165",
+   "fie_id": 165,
+   "date": "2027-05-29",
+   "end": "2027-06-09",
+   "name": "European Championships 2027",
+   "city": "TBD",
+   "country": "FIE",
+   "type": "Zone Championships",
+   "entered": false,
+   "url": "https://fie.org/tournaments/2027/165",
+   "source": "FIE",
+   "status": "Keine Meldung bekannt"
+  },
+  {
+   "key": "fie-169",
+   "fie_id": 169,
+   "date": "2027-07-20",
+   "end": "2027-07-28",
+   "name": "Tashkent World Championships 2027",
+   "city": "Tashkent",
+   "country": "UZB",
+   "type": "World Championship",
+   "entered": false,
+   "url": "https://fie.org/tournaments/2027/169",
+   "source": "FIE",
+   "status": "Keine Meldung bekannt"
+  }
+ ]
+}

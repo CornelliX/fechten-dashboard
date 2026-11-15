@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Ella Fecht-Dashboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f4f2ee; --card: #ffffff; --ink: #16191d; --muted: #6a6f76; --line: #e3e0da;
+  --accent: #c8102e; --good: #1a7f4b; --warn: #b26a00; --chip: #efece6;
+}
+@media (prefers-color-scheme: dark) {
+  :root { --bg: #111315; --card: #1a1d20; --ink: #eceae6; --muted: #9aa0a6; --line: #2a2e33;
+          --accent: #ff4d5e; --good: #3ecf86; --warn: #f0a63a; --chip: #24282c; }
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--ink); font: 15px/1.5 Inter, system-ui, sans-serif; }
+main { max-width: 980px; margin: 0 auto; padding: 24px 16px 48px; }
+h1, h2, .num { font-family: "Barlow Condensed", Inter, sans-serif; letter-spacing: .01em; }
+h1 { font-size: 40px; line-height: 1; margin: 0; font-weight: 700; }
+h2 { font-size: 22px; margin: 0 0 12px; font-weight: 700; text-transform: uppercase; }
+header { display: flex; gap: 16px; align-items: center; margin-bottom: 20px; }
+header img { width: 72px; height: 72px; border-radius: 50%; object-fit: cover; border: 3px solid var(--accent); background: var(--chip); }
+.sub { color: var(--muted); font-size: 13px; }
+.grid { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+.card { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 16px; min-width: 0; }
+.wide { grid-column: 1 / -1; }
+.kpi .num { font-size: 56px; line-height: 1; font-weight: 700; }
+.kpi .lbl { font-size: 12px; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); }
+.trend { font-weight: 600; font-size: 14px; margin-left: 6px; }
+.up { color: var(--good); } .down { color: var(--accent); }
+.errors { background: color-mix(in srgb, var(--warn) 15%, transparent); border: 1px solid var(--warn); border-radius: 8px; padding: 8px 12px; margin-bottom: 16px; font-size: 13px; }
+ul.feed { list-style: none; margin: 0; padding: 0; }
+.feed li { display: grid; grid-template-columns: 84px 1fr; gap: 8px; padding: 8px 0; border-top: 1px solid var(--line); }
+.feed li:first-child { border-top: 0; }
+.feed time { color: var(--muted); font-size: 13px; }
+table { width: 100%; border-collapse: collapse; font-size: 14px; }
+td, th { text-align: left; padding: 7px 6px; border-top: 1px solid var(--line); vertical-align: top; }
+th { color: var(--muted); font-weight: 500; font-size: 12px; text-transform: uppercase; border-top: 0; }
+td.r, th.r { text-align: right; white-space: nowrap; }
+tr.me td { background: color-mix(in srgb, var(--accent) 10%, transparent); font-weight: 600; }
+.badge { display: inline-block; font-size: 12px; padding: 2px 8px; border-radius: 99px; background: var(--chip); color: var(--muted); white-space: nowrap; }
+.badge.ok { background: color-mix(in srgb, var(--good) 18%, transparent); color: var(--good); }
+.badge.pre { background: color-mix(in srgb, var(--warn) 18%, transparent); color: var(--warn); }
+.badge.no { text-decoration: line-through; }
+a { color: inherit; text-decoration-color: var(--accent); text-underline-offset: 3px; }
+.w { color: var(--good); font-weight: 600; } .l { color: var(--accent); font-weight: 600; }
+.scroll { overflow-x: auto; }
+svg text { fill: var(--muted); font: 11px Inter, sans-serif; }
+.chips { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; }
+footer { color: var(--muted); font-size: 12px; margin-top: 24px; }
+@media (max-width: 520px) { h1 { font-size: 32px; } .kpi .num { font-size: 44px; } .hide-s { display: none; } }
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <img id="img" alt="" hidden>
+    <div><h1 id="name">Fecht-Dashboard</h1><div class="sub" id="meta">Lade Daten …</div></div>
+  </header>
+  <div id="errors"></div>
+  <div class="grid">
+    <section class="card kpi"><div class="lbl">FIE-Weltrangliste · Damen-Florett</div><div id="kpi-fie"></div></section>
+    <section class="card kpi"><div class="lbl">DFB-Rangliste · Senior</div><div id="kpi-dfb"></div></section>
+    <section class="card wide"><h2>Was ist neu</h2><ul class="feed" id="feed"></ul></section>
+    <section class="card wide"><h2>Nächste Termine</h2><div class="scroll"><table id="events"></table></div></section>
+    <section class="card wide"><h2>Ranglisten-Verlauf</h2><div id="chart"></div><div class="chips" id="seasons"></div></section>
+    <section class="card wide"><h2>Ergebnisse</h2><div class="scroll"><table id="results"></table></div></section>
+    <section class="card"><h2>Letzte Gefechte</h2><div id="bouts"></div></section>
+    <section class="card"><h2>DFB-Rangliste Top 10</h2><table id="dfb"></table><div class="sub" id="dfb-note"></div></section>
+    <section class="card"><h2>Deutsche in der FIE-Rangliste</h2><table id="ger"></table></section>
+  </div>
+  <footer>Quellen: <a href="https://fie.org">fie.org</a> (täglich automatisch), <a href="https://fencing.ophardt.online">Ophardt</a> (manuell gepflegt), Live-Ergebnisse auf <a href="https://www.fencingtimelive.com">FencingTimeLive</a>.</footer>
+</main>
+<script>
+const $ = s => document.querySelector(s);
+const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+const num = n => n == null || n === '' ? '–' : Number(n).toLocaleString('de-DE', { maximumFractionDigits: 3 });
+const dmy = s => { const p = String(s ?? '').split('-'); return p.length === 3 ? `${p[2]}.${p[1]}.${p[0]}` : p.length === 2 ? `${p[1]}/${p[0]}` : esc(s); };
+const today = new Date().toISOString().slice(0, 10);
+const nocache = { cache: 'no-store' };
+
+Promise.all([
+  fetch('data/state.json', nocache).then(r => r.json()),
+  fetch('data/changes.json', nocache).then(r => r.json()),
+  fetch('data/history.csv', nocache).then(r => r.text()),
+]).then(([s, changes, csv]) => render(s, changes, parseCsv(csv)))
+  .catch(e => { $('#meta').textContent = 'Daten konnten nicht geladen werden: ' + e.message; });
+
+function parseCsv(t) {
+  const [head, ...rows] = t.trim().split(/\r?\n/);
+  const keys = head.split(',');
+  return rows.map(r => Object.fromEntries(r.split(',').map((v, i) => [keys[i], v])));
+}
+
+function trend(hist, src) {
+  const h = hist.filter(r => r.source === src);
+  if (h.length < 2) return '';
+  const d = Number(h[h.length - 2].rank) - Number(h[h.length - 1].rank);
+  return d > 0 ? `<span class="trend up">▲ ${d}</span>` : d < 0 ? `<span class="trend down">▼ ${-d}</span>` : '';
+}
+
+function badge(status) {
+  const s = String(status || '');
+  const cls = /^Gemeldet/.test(s) ? 'ok' : /Voranmeldung/.test(s) ? 'pre' : /Nicht gemeldet|Nicht relevant/.test(s) ? 'no' : '';
+  return `<span class="badge ${cls}">${esc(s)}</span>`;
+}
+
+function render(s, changes, hist) {
+  document.title = `${s.name} · Fechten`;
+  $('#name').textContent = s.name;
+  const upd = new Date(s.updated).toLocaleString('de-DE', { dateStyle: 'medium', timeStyle: 'short' });
+  $('#meta').innerHTML = `Damen-Florett · Stand ${esc(upd)} · <a href="https://fie.org/athletes/${s.fie_id}">FIE-Profil</a>`;
+  if (s.fie.image) { $('#img').src = s.fie.image; $('#img').hidden = false; }
+  if (s.errors.length) $('#errors').innerHTML = `<div class="errors"><b>Quelle nicht erreichbar, letzter Stand wird gezeigt:</b><br>${s.errors.map(esc).join('<br>')}</div>`;
+
+  $('#kpi-fie').innerHTML = `<span class="num">${s.fie.rank ?? '–'}</span>${trend(hist, 'FIE')}<div class="sub">${num(s.fie.points)} Punkte · Saison ${s.fie.season - 1}/${String(s.fie.season).slice(2)}</div>`;
+  $('#kpi-dfb').innerHTML = `<span class="num">${s.dfb.rank ?? '–'}</span>${trend(hist, 'DFB')}<div class="sub">${num(s.dfb.points)} Punkte · berechnet ${dmy(s.dfb.calculated)} (Ophardt)</div>`;
+
+  $('#feed').innerHTML = changes.slice(0, 20).map(c => `<li><time>${dmy(c.date)}</time><span>${esc(c.text)}</span></li>`).join('')
+    || '<li><span></span><span class="sub">Noch keine Änderungen.</span></li>';
+
+  const ev = s.events.filter(e => (e.end || e.date) >= today);
+  $('#events').innerHTML = `<tr><th>Datum</th><th>Wettbewerb</th><th class="hide-s">Ort</th><th>Status</th></tr>` + ev.map(e => `
+    <tr><td>${dmy(e.date)}${e.end && e.end !== e.date ? '–<br>' + dmy(e.end) : ''}</td>
+    <td>${e.url ? `<a href="${esc(e.url)}">${esc(e.name)}</a>` : esc(e.name)}</td>
+    <td class="hide-s">${esc(e.city)}</td><td>${badge(e.status)}</td></tr>`).join('');
+
+  $('#results').innerHTML = `<tr><th>Datum</th><th>Wettbewerb</th><th class="r">Platz</th><th class="r hide-s">FIE-Pkt.</th><th class="hide-s">Quelle</th></tr>` + s.results.map(r => `
+    <tr><td>${dmy(r.date)}</td><td>${esc(r.name)}${r.city && !r.name.includes(r.city) ? ', ' + esc(r.city) : ''}</td>
+    <td class="r num" style="font-size:18px">${esc(r.place)}</td><td class="r hide-s">${r.points == null ? '' : num(r.points)}</td>
+    <td class="hide-s sub">${esc(r.source)}</td></tr>`).join('');
+
+  const byEvent = {};
+  s.bouts.forEach(b => (byEvent[`${b.event}|${b.date}`] ||= []).push(b));
+  $('#bouts').innerHTML = Object.entries(byEvent).slice(0, 3).map(([k, bs]) => {
+    const [ev, d] = k.split('|'), w = bs.filter(b => b.win).length;
+    return `<div class="sub" style="margin-top:8px"><b>${esc(ev)}</b> · ${dmy(d)} · ${w} S / ${bs.length - w} N</div><table>` +
+      bs.map(b => `<tr><td class="${b.win ? 'w' : 'l'}">${b.win ? 'S' : 'N'} ${esc(b.score)}</td><td>${esc(b.opponent)} <span class="sub">${esc(b.nat)}</span></td></tr>`).join('') + '</table>';
+  }).join('') || '<div class="sub">Keine Gefechte in dieser Saison.</div>';
+
+  const meRow = (name) => /gamke/i.test(name) ? ' class="me"' : '';
+  $('#dfb').innerHTML = (s.dfb.top10 || []).map(r => `<tr${meRow(r.name)}><td class="r">${r.rank}</td><td>${esc(r.name)}</td><td class="r">${num(r.points)}</td></tr>`).join('');
+  $('#dfb-note').innerHTML = s.dfb.url ? `Stand ${dmy(s.dfb.calculated)}, <a href="${esc(s.dfb.url)}">Ophardt</a>` : '';
+  $('#ger').innerHTML = (s.fie.top_ger || []).map(r => `<tr${meRow(r.name)}><td class="r">${r.rank}</td><td><a href="https://fie.org/athletes/${r.id}">${esc(r.name)}</a></td><td class="r">${num(r.points)}</td></tr>`).join('');
+
+  $('#seasons').innerHTML = (s.fie.seasons || []).map(x => `<span class="badge">FIE ${x.season - 1}/${String(x.season).slice(2)}: Platz ${x.rank}</span>`).join('');
+  $('#chart').innerHTML = chart(hist);
+}
+
+function chart(hist) {
+  const series = ['FIE', 'DFB'].map(src => ({ src, pts: hist.filter(r => r.source === src) })).filter(s => s.pts.length);
+  if (!series.some(s => s.pts.length > 1)) {
+    return '<div class="sub">Der Verlauf füllt sich mit jeder Ranglisten-Änderung. Bisher: ' +
+      series.map(s => `${s.src} Platz ${s.pts[0].rank} (${dmy(s.pts[0].date)})`).join(', ') + '</div>';
+  }
+  // ponytail: je Rangliste eine eigene Mini-Grafik, gemeinsame Achse wäre bei Platz 7 vs. 312 unlesbar
+  return series.filter(s => s.pts.length > 1).map(({ src, pts }) => {
+    const W = 600, H = 120, P = 28;
+    const xs = pts.map(p => Date.parse(p.date)), ys = pts.map(p => Number(p.rank));
+    const [x0, x1] = [Math.min(...xs), Math.max(...xs)], [y0, y1] = [Math.min(...ys), Math.max(...ys)];
+    const X = x => P + (x1 === x0 ? 0 : (x - x0) / (x1 - x0)) * (W - 2 * P);
+    const Y = y => P / 2 + (y1 === y0 ? 0.5 : (y - y0) / (y1 - y0)) * (H - P);  // Platz 1 oben
+    const line = pts.map((p, i) => `${i ? 'L' : 'M'}${X(xs[i]).toFixed(1)},${Y(ys[i]).toFixed(1)}`).join('');
+    return `<svg viewBox="0 0 ${W} ${H + 10}" width="100%" role="img" aria-label="${src}-Ranglistenverlauf">
+      <path d="${line}" fill="none" stroke="var(--accent)" stroke-width="2.5"/>
+      ${pts.map((p, i) => `<circle cx="${X(xs[i])}" cy="${Y(ys[i])}" r="3.5" fill="var(--accent)"><title>${dmy(p.date)}: Platz ${p.rank}</title></circle>`).join('')}
+      <text x="0" y="12">${src}</text><text x="${P}" y="${H + 8}">${dmy(pts[0].date)}</text>
+      <text x="${W - P}" y="${H + 8}" text-anchor="end">Platz ${pts[pts.length - 1].rank}</text></svg>`;
+  }).join('');
+}
+</script>
+</body>
+</html>

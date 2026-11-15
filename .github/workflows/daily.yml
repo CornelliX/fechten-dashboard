@@ -1,0 +1,48 @@
+name: Täglich aktualisieren
+
+on:
+  schedule:
+    - cron: "0 5 * * *"        # 6 Uhr MEZ / 7 Uhr MESZ
+  workflow_dispatch:            # manuell starten: Actions → "Täglich aktualisieren" → Run workflow
+  push:
+    paths: [manual.json]        # Ophardt-Daten von Hand geändert → sofort übernehmen
+
+permissions:
+  contents: write
+
+concurrency: update
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    env:
+      MAIL_USER: ${{ secrets.MAIL_USER }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python test_update.py
+      - id: u
+        run: python update.py
+      - name: Daten speichern
+        run: |
+          git config user.name "fecht-bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/data
+          git diff --cached --quiet || (git commit -m "Daten $(date -u +%F)" && git push)
+      - name: E-Mail bei Änderungen
+        if: steps.u.outputs.changed == 'true' && env.MAIL_USER != ''
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: ${{ secrets.MAIL_SERVER }}
+          server_port: ${{ secrets.MAIL_PORT }}
+          username: ${{ secrets.MAIL_USER }}
+          password: ${{ secrets.MAIL_PASS }}
+          from: Ellas Fecht-Dashboard <${{ secrets.MAIL_USER }}>
+          to: ${{ secrets.MAIL_TO }}
+          subject: "Ella Fechten: Neuigkeiten"
+          body: |
+            ${{ steps.u.outputs.body }}
+
+            Dashboard: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/

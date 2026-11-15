@@ -1,0 +1,53 @@
+{
+  "_hinweis": "Ophardt sperrt automatische Abrufe. Diese Datei pflegst du von Hand (oder sagst Claude Bescheid). Jede Änderung erscheint beim nächsten Lauf im Feed und in der Mail. Datumsformat JJJJ-MM-TT.",
+  "dfb": {
+    "rank": 6,
+    "points": 47.25,
+    "calculated": "2026-11-15",
+    "url": "https://fencing.ophardt.online/de/display-ranking/html/ger/senior/f/f/i?id=16",
+    "top10": [
+      { "rank": 1, "name": "Carlotta Sophie Morandi", "points": 163 },
+      { "rank": 2, "name": "Leonie Ebert", "points": 101.25 },
+      { "rank": 3, "name": "Marie Höfler", "points": 68 },
+      { "rank": 4, "name": "Kim Kirschen", "points": 56 },
+      { "rank": 5, "name": "Anna Sophie Kothieringer", "points": 53.75 },
+      { "rank": 6, "name": "Ella Gamke", "points": 47.25 },
+      { "rank": 7, "name": "Anne Kleibrink", "points": 45 },
+      { "rank": 8, "name": "Veranika Seiffert", "points": 41.75 },
+      { "rank": 9, "name": "Merle Herwig", "points": 38.25 },
+      { "rank": 10, "name": "Anne Kirsch", "points": 36.25 }
+    ]
+  },
+  "fie_status": {
+    "_hinweis": "Ophardt-Meldestatus für FIE-Turniere, Schlüssel = FIE-Turnier-ID. Sobald Ella in der FIE-Meldeliste steht, zeigt das Dashboard automatisch 'Gemeldet (FIE)'.",
+    "131": "Voranmeldung (Ophardt)",
+    "171": "Voranmeldung (Ophardt)",
+    "156": "Nicht gemeldet"
+  },
+  "events": [
+    {
+      "date": "2026-12-05",
+      "end": "2026-12-06",
+      "name": "21. Händel-Cup (DFB-Qualifikation)",
+      "city": "Halle",
+      "status": "Gemeldet, auch als Kampfrichterin",
+      "url": "https://fencing.ophardt.online/de/calendar"
+    },
+    {
+      "date": "2027-04-03",
+      "end": "2027-04-04",
+      "name": "Deutsche Veteranen-Meisterschaft (nur zur Info)",
+      "city": "Schwerin",
+      "status": "Nicht relevant",
+      "url": null
+    }
+  ],
+  "results": [
+    { "date": "2026-05-30", "name": "DM Senior", "city": "Berlin", "place": 5 },
+    { "date": "2026", "name": "Burg-Cup", "city": "Esslingen", "place": 3 },
+    { "date": "2026-01-24", "name": "Turnier Dörnigheim", "city": "Dörnigheim", "place": 2 },
+    { "date": "2025-12", "name": "Händel-Cup", "city": "Halle", "place": 8 },
+    { "date": "2025-10", "name": "Adolf-Ermer-Cup (U20)", "city": "Stuttgart", "place": 1 },
+    { "date": "2026", "name": "DM Team Senior 2025 und 2026, Die Finals 2025", "city": "", "place": 1 }
+  ]
+}

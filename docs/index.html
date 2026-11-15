@@ -94,6 +94,7 @@ const int = n => Number.isFinite(Number(n)) && n !== null && n !== '' ? String(M
 const dmy = s => { const p = String(s ?? '').split('-').map(esc); return p.length === 3 ? `${p[2]}.${p[1]}.${p[0]}` : p.length === 2 ? `${p[1]}/${p[0]}` : p[0]; };
 // 12.–15.11.2026 statt zwei vollen Daten, wenn Monat und Jahr gleich sind
 const range = (a, b) => {
+  a = String(a ?? ''); b = String(b ?? '');  // manual.json kann Zahlen statt Strings enthalten
   if (!b || b === a) return dmy(a);
   return a.slice(0, 7) === b.slice(0, 7) ? `${esc(a.slice(8, 10))}.–${dmy(b)}` : `${dmy(a)}–<br>${dmy(b)}`;
 };

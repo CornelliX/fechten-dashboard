@@ -406,9 +406,8 @@ function renderBilanz(s) {
 }
 
 // Statistik: Laufbahn aus der Ophardt-Biografie (laufbahn.json, per ophardt_bio.py importiert) plus FIE-Daten
-const EVENT_DE = { 'German Championships': 'Deutsche Meisterschaft', 'German Team Championships': 'Deutsche Mannschaftsmeisterschaft',
-  'European Championships': 'Europameisterschaft', 'International Tournament': 'Internationales Turnier',
-  'International Competition': 'Internationales Turnier', 'Youth Tournament': 'Jugendturnier', 'The Finals': 'Die Finals' };
+// Deutscher Anzeigename kommt aus dem Import (ophardt_bio.py, Feld "name"); "event" bleibt Ophardts Originalname
+const evName = r => r.name || r.event;
 const ageDe = a => esc(a === 'Senior' ? 'Senioren' : a);
 // "The Finals" ist die Finalrunde der Deutschen Meisterschaft: mit der DM desselben Jahres zusammenführen
 function careerResults(career) {
@@ -425,7 +424,7 @@ function renderStats(s, hist, career) {
   const C = careerResults(career);
   const fie = (s.results || []).filter(r => r.source === 'FIE' && Number(r.place) > 0);
   const byDate = (a, b) => String(b.date).localeCompare(String(a.date));
-  const ev = r => esc(EVENT_DE[r.event] || r.event);
+  const ev = r => esc(evName(r));
   const yr = r => String(r.date).slice(0, 4);
   const minRank = xs => { const v = xs.map(Number).filter(n => n > 0); return v.length ? Math.min(...v) : null; };
   const tile = (lbl, val, sub) => `<div><div class="lbl">${lbl}</div><span class="num">${val}</span><div class="sub">${sub}</div></div>`;
@@ -481,7 +480,7 @@ function renderStats(s, hist, career) {
       groups.get(k)[r.type === 'Mannschaft' ? 'team' : 'ein'] = r;
     });
     const place = r => !r ? '<span class="sub">–</span>'
-      : `<span class="num" style="font-size:18px${r.rank === 1 ? ';color:var(--brand)' : ''}">${int(r.rank)}.</span>`;
+      : `<span class="num" style="font-size:18px${r.rank === 1 ? ';color:var(--good)' : ''}">${int(r.rank)}.</span>`;
     const champRow = g => {
       const cities = [...new Set([g.ein, g.team].filter(Boolean).map(r => r.city))];
       const where = cities.length > 1 ? `Einzel ${esc(g.ein.city)} · Team ${esc(g.team.city)}` : esc(cities[0]);
@@ -528,7 +527,7 @@ function anniversaries(career, s, ref) {
   const C = careerResults(career);
   const asc = (a, b) => String(a.date).localeCompare(String(b.date));
   const first = pred => C.filter(pred).sort(asc)[0];
-  const at = r => `${EVENT_DE[r.event] || r.event}, ${r.city}`;
+  const at = r => `${evName(r)}, ${r.city}`;
   const fie1 = (s.results || []).filter(r => r.source === 'FIE').sort(asc)[0];
   const t = first(() => true), nat = first(r => /^National/.test(r.section)), intl = first(r => /^(International|Zonal)/.test(r.section));
   const list = [

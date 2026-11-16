@@ -199,3 +199,25 @@ assert [(r["date"], r["rank"], r["age"], r["type"]) for r in b["results"]] == \
 assert b["rankings"] == [{"level": "National", "rank": 5, "points": 62.25, "season": 2025,
                           "title": "Deutsche Rangliste", "weapon": "Florett", "age": "Senior"}], b["rankings"]
 print("ok")
+
+# Deutsche Ophardt-Seite: deutsche Abschnitte/Daten, Turniernamen bekommen deutschen Anzeigenamen
+BIO_DE = """---
+source: "https://fencing.ophardt.online/de/biography/athlete/1"
+---
+### Medaillen
+<table><thead><tr><th colspan="3">Nationale Meisterschaft</th></tr><tr><th>g</th><th>s</th><th>b</th></tr></thead><tbody><tr><td>7</td><td>0</td><td>0</td></tr></tbody></table>
+|  | 17.04.2016 | Turnierreifeprüfung (Deutscher Fechter-Bund e.V.) |  |
+### Ergebnisse
+##### Nationale Meisterschaft
+<table><tbody><tr><td>1</td><td>07.05.22 / 08.05.22</td><td>Winsen Luhe</td><td>German Championships</td><td>Florett Damen U17 Einzel</td></tr></tbody></table>
+##### Regionale Turniere
+<table><tbody><tr><td>2</td><td>02.04.22 / 03.04.22</td><td>Schkeuditz</td><td>Tournament of the Airport</td><td>Florett Damen U17 Einzel</td></tr><tr><td>1</td><td>17.03.18</td><td>Altenburg</td><td>Cup Wenzel</td><td>Florett Damen U12 Einzel</td></tr></tbody></table>
+"""
+d = ophardt_bio.parse(BIO_DE)
+assert d["medals"]["national"] == [7, 0, 0] and d["exam"] == "2016-04-17", d
+assert sorted((r["date"], r["section"], r["age"], r["type"]) for r in d["results"]) == [
+    ("2018-03-17", "Regional Tournaments", "U12", "Einzel"), ("2022-04-02", "Regional Tournaments", "U17", "Einzel"),
+    ("2022-05-07", "National Championships", "U17", "Einzel")], d["results"]
+assert {r["name"] for r in d["results"]} == {"Flughafen-Turnier", "Deutsche Meisterschaft", "Wenzel-Cup"}, d["results"]
+assert all(r["section"] in ("National Championships", "Regional Tournaments") for r in d["results"])
+print("ok")

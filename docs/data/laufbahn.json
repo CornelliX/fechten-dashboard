@@ -1,5 +1,5 @@
 {
- "source": "https://fencing.ophardt.online/en/biography/athlete/357995",
+ "source": "https://fencing.ophardt.online/de/biography/athlete/357995",
  "medals": {
   "national": [
    7,
@@ -21,6 +21,7 @@
    "rank": 171,
    "city": "Plovdiv",
    "event": "World Cup",
+   "name": "Weltcup",
    "weapon": "Florett",
    "age": "Senior",
    "type": "Einzel"
@@ -32,6 +33,7 @@
    "rank": 54,
    "city": "Antony Paris",
    "event": "Antony Open",
+   "name": "Antony Open",
    "weapon": "Florett",
    "age": "Senior",
    "type": "Einzel"
@@ -43,6 +45,7 @@
    "rank": 49,
    "city": "Amsterdam",
    "event": "SISTA-SFZ International",
+   "name": "SISTA-SFZ International",
    "weapon": "Florett",
    "age": "Senior",
    "type": "Einzel"
@@ -54,6 +57,7 @@
    "rank": 1,
    "city": "Koblenz",
    "event": "German Team Championships",
+   "name": "Deutsche Mannschaftsmeisterschaft",
    "weapon": "Florett",
    "age": "Senior",
    "type": "Mannschaft"
@@ -65,6 +69,7 @@
    "rank": 3,
    "city": "Esslingen",
    "event": "Esslinger Burg-Cup",
+   "name": "Esslinger Burg-Cup",
    "weapon": "Florett",
    "age": "Senior",
    "type": "Einzel"
@@ -76,6 +81,7 @@
    "rank": 6,
    "city": "Buchholz",
    "event": "German Championships",
+   "name": "Deutsche Meisterschaft",
    "weapon": "Florett",
    "age": "U20",
    "type": "Einzel"
@@ -87,6 +93,7 @@
    "rank": 1,
    "city": "Buchholz",
    "event": "German Championships",
+   "name": "Deutsche Meisterschaft",
    "weapon": "Florett",
    "age": "U20",
    "type": "Mannschaft"
@@ -98,6 +105,7 @@
    "rank": 5,
    "city": "Berlin",
    "event": "German Championships",
+   "name": "Deutsche Meisterschaft",
    "weapon": "Florett",
    "age": "Senior",
    "type": "Einzel"
@@ -109,6 +117,7 @@
    "rank": 53,
    "city": "Cagliari",
    "event": "European Championships",
+   "name": "Europameisterschaft",
    "weapon": "Florett",
    "age": "U23",
    "type": "Einzel"
@@ -120,6 +129,7 @@
    "rank": 8,
    "city": "Cagliari",
    "event": "European Championships",
+   "name": "Europameisterschaft",
    "weapon": "Florett",
    "age": "U23",
    "type": "Mannschaft"
@@ -131,6 +141,7 @@
    "rank": 12,
    "city": "Tbilisi",
    "event": "European Championships",
+   "name": "Europameisterschaft",
    "weapon": "Florett",
    "age": "U20",
    "type": "Einzel"
@@ -142,6 +153,7 @@
    "rank": 11,
    "city": "Tbilisi",
    "event": "European Championships",
+   "name": "Europameisterschaft",
    "weapon": "Florett",
    "age": "U20",
    "type": "Mannschaft"
@@ -153,6 +165,7 @@
    "rank": 139,
    "city": "Torino",
    "event": "Trofeo INALPI",
+   "name": "Trofeo INALPI",
    "weapon": "Florett",
    "age": "Senior",
    "type": "Einzel"
@@ -164,6 +177,7 @@
    "rank": 2,
    "city": "Dörnigheim",
    "event": "International Competition",
+   "name": "Internationales Turnier",
    "weapon": "Florett",
    "age": "Senior",
    "type": "Einzel"
@@ -175,6 +189,7 @@
    "rank": 108,
    "city": "Tbilisi",
    "event": "World Cup",
+   "name": "Weltcup",
    "weapon": "Florett",
    "age": "U20",
    "type": "Einzel"
@@ -186,6 +201,7 @@
    "rank": 10,
    "city": "Tbilisi",
    "event": "World Cup",
+   "name": "Weltcup",
    "weapon": "Florett",
    "age": "U20",
    "type": "Mannschaft"
@@ -197,6 +213,7 @@
    "rank": 8,
    "city": "Halle",
    "event": "20.International Händel-Cup",
+   "name": "20. Internationaler Händel-Cup",
    "weapon": "Florett",
    "age": "Senior",
    "type": "Einzel"
@@ -208,6 +225,7 @@
    "rank": 129,
    "city": "Busan",
    "event": "Busan World Cup",
+   "name": "Busan World Cup",
    "weapon": "Florett",
    "age": "Senior",
    "type": "Einzel"
@@ -219,6 +237,7 @@
    "rank": 71,
    "city": "Samorin",
    "event": "Golden Hope",
+   "name": "Golden Hope",
    "weapon": "Florett",
    "age": "U20",
    "type": "Einzel"
@@ -230,6 +249,7 @@
    "rank": 14,
    "city": "Samorin",
    "event": "Golden Hope",
+   "name": "Golden Hope",
    "weapon": "Florett",
    "age": "U20",
    "type": "Mannschaft"
@@ -241,6 +261,7 @@
    "rank": 67,
    "city": "Istanbul",
    "event": "Istanbul World Cup",
+   "name": "Istanbul World Cup",
    "weapon": "Florett",
    "age": "U20",
    "type": "Einzel"
@@ -252,6 +273,7 @@
    "rank": 14,
    "city": "Istanbul",
    "event": "Istanbul World Cup",
+   "name": "Istanbul World Cup",
    "weapon": "Florett",
    "age": "U20",
    "type": "Mannschaft"
@@ -263,6 +285,7 @@
    "rank": 1,
    "city": "Stuttgart Bad Cannstatt",
    "event": "Adolf-Ermer-Cup",
+   "name": "Adolf-Ermer-Cup",
    "weapon": "Florett",
    "age": "U20",
    "type": "Einzel"
@@ -274,6 +297,7 @@
    "rank": 7,
    "city": "Jena",
    "event": "2. Saale Cup",
+   "name": "2. Saale Cup",
    "weapon": "Florett",
    "age": "U20",
    "type": "Einzel"
@@ -285,6 +309,7 @@
    "rank": 1,
    "city": "Dresden",
    "event": "The Finals",
+   "name": "Die Finals",
    "weapon": "Florett",
    "age": "Senior",
    "type": "Mannschaft"
@@ -296,6 +321,7 @@
    "rank": 11,
    "city": "Esslingen",
    "event": "Esslinger Burg-Cup",
+   "name": "Esslinger Burg-Cup",
    "weapon": "Florett",
    "age": "Senior",
    "type": "Einzel"
@@ -307,6 +333,7 @@
    "rank": 17,
    "city": "Tauberbischofsheim/Dresden",
    "event": "German Championships",
+   "name": "Deutsche Meisterschaft",
    "weapon": "Florett",
    "age": "Senior",
    "type": "Einzel"
@@ -318,6 +345,7 @@
    "rank": 1,
    "city": "Tauberbischofsheim/Dresden",
    "event": "German Championships",
+   "name": "Deutsche Meisterschaft",
    "weapon": "Florett",
    "age": "Senior",
    "type": "Mannschaft"
@@ -329,6 +357,7 @@
    "rank": 5,
    "city": "Moers",
    "event": "German Championships",
+   "name": "Deutsche Meisterschaft",
    "weapon": "Florett",
    "age": "U20",
    "type": "Einzel"
@@ -340,6 +369,7 @@
    "rank": 1,
    "city": "Moers",
    "event": "German Championships",
+   "name": "Deutsche Meisterschaft",
    "weapon": "Florett",
    "age": "U20",
    "type": "Mannschaft"
@@ -351,6 +381,7 @@
    "rank": 6,
    "city": "Praha",
    "event": "Prague Challenge",
+   "name": "Prague Challenge",
    "weapon": "Florett",
    "age": "U23",
    "type": "Einzel"
@@ -362,6 +393,7 @@
    "rank": 1,
    "city": "Praha",
    "event": "Prague Challenge",
+   "name": "Prague Challenge",
    "weapon": "Florett",
    "age": "U23",
    "type": "Mannschaft"
@@ -373,6 +405,7 @@
    "rank": 159,
    "city": "Cairo",
    "event": "National Bank of Egypt World Cup",
+   "name": "National Bank of Egypt World Cup",
    "weapon": "Florett",
    "age": "Senior",
    "type": "Einzel"
@@ -384,6 +417,7 @@
    "rank": 149,
    "city": "Zagreb",
    "event": "Challenge Mazuranic",
+   "name": "Challenge Mazuranic",
    "weapon": "Florett",
    "age": "U20",
    "type": "Einzel"
@@ -395,6 +429,7 @@
    "rank": 17,
    "city": "Bonn",
    "event": "International Competition QuB",
+   "name": "Internationales Qualifikationsturnier",
    "weapon": "Florett",
    "age": "Senior",
    "type": "Einzel"
@@ -406,6 +441,7 @@
    "rank": 50,
    "city": "Tbilisi",
    "event": "World Cup",
+   "name": "Weltcup",
    "weapon": "Florett",
    "age": "U20",
    "type": "Einzel"
@@ -417,6 +453,7 @@
    "rank": 14,
    "city": "Halle",
    "event": "International Händel-Cup",
+   "name": "Internationaler Händel-Cup",
    "weapon": "Florett",
    "age": "Senior",
    "type": "Einzel"
@@ -428,6 +465,7 @@
    "rank": 5,
    "city": "Barcelona Sabadell",
    "event": "Fencing for Everyone Sabadell",
+   "name": "Fencing for Everyone Sabadell",
    "weapon": "Florett",
    "age": "U23",
    "type": "Einzel"
@@ -439,6 +477,7 @@
    "rank": 114,
    "city": "Istanbul",
    "event": "Istanbul Junior World Cup",
+   "name": "Istanbul Junior World Cup",
    "weapon": "Florett",
    "age": "U20",
    "type": "Einzel"
@@ -450,6 +489,7 @@
    "rank": 9,
    "city": "Stuttgart BadCannstatt",
    "event": "Adolf-Ermer-Cup",
+   "name": "Adolf-Ermer-Cup",
    "weapon": "Florett",
    "age": "U20",
    "type": "Einzel"
@@ -461,6 +501,7 @@
    "rank": 26,
    "city": "Jena",
    "event": "Saale Cup",
+   "name": "Saale Cup",
    "weapon": "Florett",
    "age": "U20",
    "type": "Einzel"
@@ -472,6 +513,7 @@
    "rank": 11,
    "city": "Winsen",
    "event": "German Championships",
+   "name": "Deutsche Meisterschaft",
    "weapon": "Florett",
    "age": "U20",
    "type": "Einzel"
@@ -483,6 +525,7 @@
    "rank": 1,
    "city": "Winsen",
    "event": "German Championships",
+   "name": "Deutsche Meisterschaft",
    "weapon": "Florett",
    "age": "U20",
    "type": "Mannschaft"
@@ -494,6 +537,7 @@
    "rank": 28,
    "city": "Bonn",
    "event": "German Championships",
+   "name": "Deutsche Meisterschaft",
    "weapon": "Florett",
    "age": "Senior",
    "type": "Einzel"
@@ -505,6 +549,7 @@
    "rank": 9,
    "city": "Weinheim",
    "event": "Plasma Liquid Cup 2024",
+   "name": "Plasma Liquid Cup 2024",
    "weapon": "Florett",
    "age": "Senior",
    "type": "Einzel"
@@ -516,6 +561,7 @@
    "rank": 68,
    "city": "Leipzig",
    "event": "World Cup",
+   "name": "Weltcup",
    "weapon": "Florett",
    "age": "U20",
    "type": "Einzel"
@@ -527,6 +573,7 @@
    "rank": 139,
    "city": "Zagreb",
    "event": "Challenge Mazuranic",
+   "name": "Challenge Mazuranic",
    "weapon": "Florett",
    "age": "U20",
    "type": "Einzel"
@@ -538,6 +585,7 @@
    "rank": 62,
    "city": "Udine",
    "event": "Alpe Adria",
+   "name": "Alpe Adria",
    "weapon": "Florett",
    "age": "U20",
    "type": "Einzel"
@@ -549,6 +597,7 @@
    "rank": 55,
    "city": "Halle",
    "event": "International Händel-Cup",
+   "name": "Internationaler Händel-Cup",
    "weapon": "Florett",
    "age": "Senior",
    "type": "Einzel"
@@ -560,6 +609,7 @@
    "rank": 99,
    "city": "Istanbul",
    "event": "World Cup",
+   "name": "Weltcup",
    "weapon": "Florett",
    "age": "U20",
    "type": "Einzel"
@@ -571,6 +621,7 @@
    "rank": 8,
    "city": "Stuttgart BadCannstatt",
    "event": "Adolf-Ermer-Cup",
+   "name": "Adolf-Ermer-Cup",
    "weapon": "Florett",
    "age": "U20",
    "type": "Einzel"
@@ -582,6 +633,7 @@
    "rank": 35,
    "city": "Esslingen",
    "event": "Esslinger Burg-Cup",
+   "name": "Esslinger Burg-Cup",
    "weapon": "Florett",
    "age": "Senior",
    "type": "Einzel"
@@ -593,6 +645,7 @@
    "rank": 10,
    "city": "Jena",
    "event": "International Tournament",
+   "name": "Internationales Turnier",
    "weapon": "Florett",
    "age": "U20",
    "type": "Einzel"
@@ -604,6 +657,7 @@
    "rank": 6,
    "city": "Moers",
    "event": "German Championships",
+   "name": "Deutsche Meisterschaft",
    "weapon": "Florett",
    "age": "U17",
    "type": "Einzel"
@@ -615,6 +669,7 @@
    "rank": 1,
    "city": "Moers",
    "event": "German Championships",
+   "name": "Deutsche Meisterschaft",
    "weapon": "Florett",
    "age": "U17",
    "type": "Mannschaft"
@@ -626,6 +681,7 @@
    "rank": 16,
    "city": "Stuttgart BadCannstatt",
    "event": "German Championships",
+   "name": "Deutsche Meisterschaft",
    "weapon": "Florett",
    "age": "U20",
    "type": "Einzel"
@@ -637,6 +693,7 @@
    "rank": 4,
    "city": "Stuttgart BadCannstatt",
    "event": "German Championships",
+   "name": "Deutsche Meisterschaft",
    "weapon": "Florett",
    "age": "U20",
    "type": "Mannschaft"
@@ -648,6 +705,7 @@
    "rank": 2,
    "city": "Tauberbischofsheim",
    "event": "Championships of Baden-Nord - Württemberg",
+   "name": "Meisterschaft Nordbaden-Württemberg",
    "weapon": "Degen",
    "age": "Senior",
    "type": "Mannschaft"
@@ -659,6 +717,7 @@
    "rank": 7,
    "city": "Halle",
    "event": "Internationaler König-Pokal",
+   "name": "Internationaler König-Pokal",
    "weapon": "Florett",
    "age": "U17",
    "type": "Einzel"
@@ -670,6 +729,7 @@
    "rank": 154,
    "city": "Poznan",
    "event": "AMU Cup",
+   "name": "AMU Cup",
    "weapon": "Florett",
    "age": "U17",
    "type": "Einzel"
@@ -681,6 +741,7 @@
    "rank": 48,
    "city": "Halle",
    "event": "International Händel-Cup",
+   "name": "Internationaler Händel-Cup",
    "weapon": "Florett",
    "age": "Senior",
    "type": "Einzel"
@@ -692,6 +753,7 @@
    "rank": 56,
    "city": "Cabries",
    "event": "Coupe Mondiale de fleurets cadets",
+   "name": "Coupe Mondiale de fleurets cadets",
    "weapon": "Florett",
    "age": "U17",
    "type": "Einzel"
@@ -703,6 +765,7 @@
    "rank": 7,
    "city": "Cabries",
    "event": "Coupe Mondiale de fleurets cadets",
+   "name": "Coupe Mondiale de fleurets cadets",
    "weapon": "Florett",
    "age": "U17",
    "type": "Mannschaft"
@@ -714,6 +777,7 @@
    "rank": 35,
    "city": "Moers",
    "event": "International Tournament",
+   "name": "Internationales Turnier",
    "weapon": "Florett",
    "age": "U20",
    "type": "Einzel"
@@ -725,6 +789,7 @@
    "rank": 14,
    "city": "Moers",
    "event": "Sparkassen-Cup",
+   "name": "Sparkassen-Cup",
    "weapon": "Florett",
    "age": "U17",
    "type": "Einzel"
@@ -736,6 +801,7 @@
    "rank": 77,
    "city": "Nürnberg",
    "event": "Cadet Ciruit",
+   "name": "Kadetten-Circuit",
    "weapon": "Florett",
    "age": "U17",
    "type": "Einzel"
@@ -747,6 +813,7 @@
    "rank": 35,
    "city": "Cottbus",
    "event": "ekays - Women's Foil",
+   "name": "ekays - Women's Foil",
    "weapon": "Florett",
    "age": "Senior",
    "type": "Einzel"
@@ -758,6 +825,7 @@
    "rank": 39,
    "city": "Stuttgart BadCannstatt",
    "event": "Adolf-Ermer-Cup",
+   "name": "Adolf-Ermer-Cup",
    "weapon": "Florett",
    "age": "U20",
    "type": "Einzel"
@@ -769,6 +837,7 @@
    "rank": 1,
    "city": "Winsen Luhe",
    "event": "German Championships",
+   "name": "Deutsche Meisterschaft",
    "weapon": "Florett",
    "age": "U17",
    "type": "Einzel"
@@ -780,6 +849,7 @@
    "rank": 2,
    "city": "Schkeuditz",
    "event": "Tournament of the Airport",
+   "name": "Flughafen-Turnier",
    "weapon": "Florett",
    "age": "U17",
    "type": "Einzel"
@@ -791,6 +861,7 @@
    "rank": 3,
    "city": "Halle",
    "event": "Internationaler König-Pokal",
+   "name": "Internationaler König-Pokal",
    "weapon": "Florett",
    "age": "U17",
    "type": "Einzel"
@@ -802,6 +873,7 @@
    "rank": 7,
    "city": "Görlitz",
    "event": "Saxonian Championships",
+   "name": "Sächsische Meisterschaft",
    "weapon": "Florett",
    "age": "Senior",
    "type": "Einzel"
@@ -813,6 +885,7 @@
    "rank": 3,
    "city": "Görlitz",
    "event": "Saxonian Championships",
+   "name": "Sächsische Meisterschaft",
    "weapon": "Florett",
    "age": "U17",
    "type": "Einzel"
@@ -824,6 +897,7 @@
    "rank": 1,
    "city": "Görlitz",
    "event": "Saxonian Championships",
+   "name": "Sächsische Meisterschaft",
    "weapon": "Florett",
    "age": "U17",
    "type": "Mannschaft"
@@ -835,6 +909,7 @@
    "rank": 1,
    "city": "Görlitz",
    "event": "Saxonian Championships",
+   "name": "Sächsische Meisterschaft",
    "weapon": "Degen",
    "age": "U17",
    "type": "Mannschaft"
@@ -846,6 +921,7 @@
    "rank": 95,
    "city": "Poznan",
    "event": "AMU Cup",
+   "name": "AMU Cup",
    "weapon": "Florett",
    "age": "U17",
    "type": "Einzel"
@@ -857,6 +933,7 @@
    "rank": 11,
    "city": "Poznan",
    "event": "AMU Cup",
+   "name": "AMU Cup",
    "weapon": "Florett",
    "age": "U17",
    "type": "Mannschaft"
@@ -868,6 +945,7 @@
    "rank": 49,
    "city": "Cabries",
    "event": "Coupe Mondiale de fleurets cadets",
+   "name": "Coupe Mondiale de fleurets cadets",
    "weapon": "Florett",
    "age": "U17",
    "type": "Einzel"
@@ -879,6 +957,7 @@
    "rank": 44,
    "city": "Tauberbischofsheim (BN)",
    "event": "Goldenes Florett",
+   "name": "Goldenes Florett",
    "weapon": "Florett",
    "age": "U17",
    "type": "Einzel"
@@ -890,6 +969,7 @@
    "rank": 43,
    "city": "Moers",
    "event": "International Tournament",
+   "name": "Internationales Turnier",
    "weapon": "Florett",
    "age": "U20",
    "type": "Einzel"
@@ -901,6 +981,7 @@
    "rank": 6,
    "city": "Moers",
    "event": "Sparkassen-Cup",
+   "name": "Sparkassen-Cup",
    "weapon": "Florett",
    "age": "U17",
    "type": "Einzel"
@@ -912,6 +993,7 @@
    "rank": 23,
    "city": "Jena",
    "event": "International Tournament",
+   "name": "Internationales Turnier",
    "weapon": "Florett",
    "age": "U20",
    "type": "Einzel"
@@ -923,6 +1005,7 @@
    "rank": 3,
    "city": "Jena",
    "event": "International Tournament",
+   "name": "Internationales Turnier",
    "weapon": "Florett",
    "age": "U17",
    "type": "Einzel"
@@ -934,6 +1017,7 @@
    "rank": 1,
    "city": "Dresden",
    "event": "SFV Season end Tournament",
+   "name": "SFV-Saisonabschlussturnier",
    "weapon": "Florett",
    "age": "U17",
    "type": "Einzel"
@@ -945,6 +1029,7 @@
    "rank": 1,
    "city": "Dresden",
    "event": "SFV Season end Tournament",
+   "name": "SFV-Saisonabschlussturnier",
    "weapon": "Florett",
    "age": "U15",
    "type": "Einzel"
@@ -956,6 +1041,7 @@
    "rank": 15,
    "city": "Wroclaw",
    "event": "Challenge Wratislavia",
+   "name": "Challenge Wratislavia",
    "weapon": "Florett",
    "age": "U15",
    "type": "Einzel"
@@ -967,6 +1053,7 @@
    "rank": 11,
    "city": "Aue",
    "event": "Erzgebirgs-Cup",
+   "name": "Erzgebirgs-Cup",
    "weapon": "Degen",
    "age": "U17",
    "type": "Einzel"
@@ -978,6 +1065,7 @@
    "rank": 1,
    "city": "Altenburg",
    "event": "Central German Championships",
+   "name": "Mitteldeutsche Meisterschaft",
    "weapon": "Florett",
    "age": "U15",
    "type": "Einzel"
@@ -989,6 +1077,7 @@
    "rank": 3,
    "city": "Aue",
    "event": "Saxonian Championships",
+   "name": "Sächsische Meisterschaft",
    "weapon": "Florett",
    "age": "U17",
    "type": "Einzel"
@@ -1000,6 +1089,7 @@
    "rank": 3,
    "city": "Aue",
    "event": "Saxonian Championships",
+   "name": "Sächsische Meisterschaft",
    "weapon": "Florett",
    "age": "U17",
    "type": "Mannschaft"
@@ -1011,6 +1101,7 @@
    "rank": 1,
    "city": "Aue",
    "event": "Saxonian Championships",
+   "name": "Sächsische Meisterschaft",
    "weapon": "Florett",
    "age": "U15",
    "type": "Einzel"
@@ -1022,6 +1113,7 @@
    "rank": 1,
    "city": "Aue",
    "event": "Saxonian Championships",
+   "name": "Sächsische Meisterschaft",
    "weapon": "Florett",
    "age": "U15",
    "type": "Mannschaft"
@@ -1033,6 +1125,7 @@
    "rank": 128,
    "city": "Tauberbischofsheim",
    "event": "Goldenes Florett",
+   "name": "Goldenes Florett",
    "weapon": "Florett",
    "age": "U17",
    "type": "Einzel"
@@ -1044,6 +1137,7 @@
    "rank": 5,
    "city": "Spremberg",
    "event": "Lauermann-Cup",
+   "name": "Lauermann-Cup",
    "weapon": "Florett",
    "age": "U15",
    "type": "Einzel"
@@ -1055,6 +1149,7 @@
    "rank": 1,
    "city": "Meißen",
    "event": "Cup of Elbland",
+   "name": "Elbland-Cup",
    "weapon": "Florett",
    "age": "U15",
    "type": "Einzel"
@@ -1066,6 +1161,7 @@
    "rank": 1,
    "city": "Liberec",
    "event": "Babylon Cup",
+   "name": "Babylon Cup",
    "weapon": "Florett",
    "age": "U14",
    "type": "Einzel"
@@ -1077,6 +1173,7 @@
    "rank": 22,
    "city": "Jena",
    "event": "Fair Resort Cup",
+   "name": "Fair Resort Cup",
    "weapon": "Florett",
    "age": "U17",
    "type": "Einzel"
@@ -1088,6 +1185,7 @@
    "rank": 2,
    "city": "Dresden",
    "event": "Central German Championships",
+   "name": "Mitteldeutsche Meisterschaft",
    "weapon": "Florett",
    "age": "U13",
    "type": "Einzel"
@@ -1099,6 +1197,7 @@
    "rank": 7,
    "city": "Moers",
    "event": "German Championships",
+   "name": "Deutsche Meisterschaft",
    "weapon": "Florett",
    "age": "U14+U13",
    "type": "Mannschaft"
@@ -1110,6 +1209,7 @@
    "rank": 6,
    "city": "Moers",
    "event": "German Championships",
+   "name": "Deutsche Meisterschaft",
    "weapon": "Florett",
    "age": "U13",
    "type": "Einzel"
@@ -1121,6 +1221,7 @@
    "rank": 25,
    "city": "Leipzig",
    "event": "Allstar Deutschland Challenge",
+   "name": "Allstar Deutschland Challenge",
    "weapon": "Degen",
    "age": "U14+U13",
    "type": "Einzel"
@@ -1132,6 +1233,7 @@
    "rank": 1,
    "city": "Weimar",
    "event": "Salve-Cup",
+   "name": "Salve-Cup",
    "weapon": "Florett",
    "age": "U14+U13",
    "type": "Einzel"
@@ -1143,6 +1245,7 @@
    "rank": 35,
    "city": "Schkeuditz",
    "event": "Tournament of the Airport",
+   "name": "Flughafen-Turnier",
    "weapon": "Florett",
    "age": "U17",
    "type": "Einzel"
@@ -1154,6 +1257,7 @@
    "rank": 1,
    "city": "Görlitz",
    "event": "Saxonian Championships",
+   "name": "Sächsische Meisterschaft",
    "weapon": "Florett",
    "age": "U14+U13",
    "type": "Einzel"
@@ -1165,6 +1269,7 @@
    "rank": 1,
    "city": "Görlitz",
    "event": "Saxonian Championships",
+   "name": "Sächsische Meisterschaft",
    "weapon": "Florett",
    "age": "U14+U13",
    "type": "Mannschaft"
@@ -1176,6 +1281,7 @@
    "rank": 39,
    "city": "Wroclaw",
    "event": "Challenge Wratislavia",
+   "name": "Challenge Wratislavia",
    "weapon": "Florett",
    "age": "U13",
    "type": "Einzel"
@@ -1187,6 +1293,7 @@
    "rank": 9,
    "city": "Halle",
    "event": "26. Internationaler König-Pokal",
+   "name": "26. Internationaler König-Pokal",
    "weapon": "Florett",
    "age": "U13",
    "type": "Einzel"
@@ -1198,6 +1305,7 @@
    "rank": 3,
    "city": "Spremberg",
    "event": "Lauermann-Cup",
+   "name": "Lauermann-Cup",
    "weapon": "Florett",
    "age": "U13",
    "type": "Einzel"
@@ -1209,6 +1317,7 @@
    "rank": 1,
    "city": "Berlin",
    "event": "Int. Wittenauer Fuchs",
+   "name": "Int. Wittenauer Fuchs",
    "weapon": "Florett",
    "age": "U13",
    "type": "Einzel"
@@ -1220,6 +1329,7 @@
    "rank": 60,
    "city": "Moers",
    "event": "Sparkassen-Cup",
+   "name": "Sparkassen-Cup",
    "weapon": "Florett",
    "age": "U17",
    "type": "Einzel"
@@ -1231,6 +1341,7 @@
    "rank": 1,
    "city": "Radebeul",
    "event": "Cup of Elbland",
+   "name": "Elbland-Cup",
    "weapon": "Florett",
    "age": "U14+U13",
    "type": "Einzel"
@@ -1242,6 +1353,7 @@
    "rank": 11,
    "city": "Liberec",
    "event": "Babylon Cup",
+   "name": "Babylon Cup",
    "weapon": "Florett",
    "age": "U14",
    "type": "Einzel"
@@ -1253,6 +1365,7 @@
    "rank": 39,
    "city": "Jena",
    "event": "Fair Resort Cup",
+   "name": "Fair Resort Cup",
    "weapon": "Florett",
    "age": "U17",
    "type": "Einzel"
@@ -1264,6 +1377,7 @@
    "rank": 1,
    "city": "N.N.",
    "event": "Sächsische Meisterschaft",
+   "name": "Sächsische Meisterschaft",
    "weapon": "Florett",
    "age": "U12+U11",
    "type": "Einzel"
@@ -1275,6 +1389,7 @@
    "rank": 1,
    "city": "N.N.",
    "event": "Sächsische Meisterschaft",
+   "name": "Sächsische Meisterschaft",
    "weapon": "Florett",
    "age": "U12-U10",
    "type": "Mannschaft"
@@ -1286,6 +1401,7 @@
    "rank": 2,
    "city": "Dresden",
    "event": "Cup Karl May",
+   "name": "Karl-May-Cup",
    "weapon": "Florett",
    "age": "U12+U11",
    "type": "Einzel"
@@ -1297,6 +1413,7 @@
    "rank": 20,
    "city": "Wroclaw",
    "event": "Challenge Wratislavia",
+   "name": "Challenge Wratislavia",
    "weapon": "Florett",
    "age": "U13",
    "type": "Einzel"
@@ -1308,6 +1425,7 @@
    "rank": 1,
    "city": "Altenburg",
    "event": "Cup Wenzel",
+   "name": "Wenzel-Cup",
    "weapon": "Florett",
    "age": "U12",
    "type": "Einzel"
@@ -1319,6 +1437,7 @@
    "rank": 2,
    "city": "Kraftsdorf",
    "event": "Cup Osterburg",
+   "name": "Osterburg-Cup",
    "weapon": "Florett",
    "age": "U12",
    "type": "Einzel"
@@ -1330,6 +1449,7 @@
    "rank": 1,
    "city": "Bitterfeld",
    "event": "Championships Sachsen-Anhalt",
+   "name": "Landesmeisterschaft Sachsen-Anhalt",
    "weapon": "Florett",
    "age": "U12",
    "type": "Einzel"
@@ -1341,6 +1461,7 @@
    "rank": 1,
    "city": "Leipzig",
    "event": "Youth Tournament",
+   "name": "Jugendturnier",
    "weapon": "Florett",
    "age": "U12",
    "type": "Einzel"
@@ -1352,6 +1473,7 @@
    "rank": 1,
    "city": "Kolkwitz",
    "event": "Lauermann-Cup",
+   "name": "Lauermann-Cup",
    "weapon": "Florett",
    "age": "U12+U11",
    "type": "Einzel"
@@ -1363,6 +1485,7 @@
    "rank": 3,
    "city": "Schkeuditz",
    "event": "Sächsisches Wichtel Cup",
+   "name": "Sächsisches Wichtel Cup",
    "weapon": "Florett",
    "age": "U12+U11",
    "type": "Einzel"
@@ -1374,6 +1497,7 @@
    "rank": 2,
    "city": "Berlin",
    "event": "Fox of Wittenau",
+   "name": "Wittenauer Fuchs",
    "weapon": "Florett",
    "age": "U12",
    "type": "Einzel"
@@ -1385,6 +1509,7 @@
    "rank": 1,
    "city": "Radebeul",
    "event": "Cup of Elbland",
+   "name": "Elbland-Cup",
    "weapon": "Florett",
    "age": "U12+U11",
    "type": "Einzel"
@@ -1396,6 +1521,7 @@
    "rank": 10,
    "city": "Liberec",
    "event": "Babylon Cup",
+   "name": "Babylon Cup",
    "weapon": "Florett",
    "age": "U14",
    "type": "Einzel"
@@ -1407,6 +1533,7 @@
    "rank": 3,
    "city": "Dresden",
    "event": "Sächsische Meisterschaft",
+   "name": "Sächsische Meisterschaft",
    "weapon": "Florett",
    "age": "U12+U11",
    "type": "Einzel"
@@ -1418,6 +1545,7 @@
    "rank": 1,
    "city": "Dresden",
    "event": "Cup Karl May",
+   "name": "Karl-May-Cup",
    "weapon": "Florett",
    "age": "U12+U11",
    "type": "Einzel"
@@ -1429,6 +1557,7 @@
    "rank": 1,
    "city": "Jena",
    "event": "Jenaer Schülercup",
+   "name": "Jenaer Schülercup",
    "weapon": "Florett",
    "age": "U11",
    "type": "Einzel"
@@ -1440,6 +1569,7 @@
    "rank": 55,
    "city": "Wroclaw",
    "event": "Challenge Wratislavia",
+   "name": "Challenge Wratislavia",
    "weapon": "Florett",
    "age": "U11",
    "type": "Einzel"
@@ -1451,6 +1581,7 @@
    "rank": 6,
    "city": "Altenburg",
    "event": "Cup Wenzel",
+   "name": "Wenzel-Cup",
    "weapon": "Florett",
    "age": "U11",
    "type": "Einzel"
@@ -1462,6 +1593,7 @@
    "rank": 2,
    "city": "Kraftsdorf",
    "event": "Cup Osterburg",
+   "name": "Osterburg-Cup",
    "weapon": "Florett",
    "age": "U11",
    "type": "Einzel"
@@ -1473,6 +1605,7 @@
    "rank": 6,
    "city": "Leipzig - Mölkau",
    "event": "Youth Tournament",
+   "name": "Jugendturnier",
    "weapon": "Florett",
    "age": "U12+U11",
    "type": "Einzel"
@@ -1484,6 +1617,7 @@
    "rank": 3,
    "city": "Bitterfeld",
    "event": "Championships Sachsen-Anhalt",
+   "name": "Landesmeisterschaft Sachsen-Anhalt",
    "weapon": "Florett",
    "age": "U11",
    "type": "Einzel"
@@ -1495,6 +1629,7 @@
    "rank": 19,
    "city": "Schkeuditz",
    "event": "Sächsisches Wichtel Cup",
+   "name": "Sächsisches Wichtel Cup",
    "weapon": "Florett",
    "age": "U12+U11",
    "type": "Einzel"
@@ -1506,6 +1641,7 @@
    "rank": 2,
    "city": "Berlin",
    "event": "Fox of Wittenau",
+   "name": "Wittenauer Fuchs",
    "weapon": "Florett",
    "age": "U11",
    "type": "Einzel"
@@ -1517,6 +1653,7 @@
    "rank": 3,
    "city": "Bitterfeld",
    "event": "Sword of Bitterfeld",
+   "name": "Bitterfelder Schwert",
    "weapon": "Florett",
    "age": "U11",
    "type": "Einzel"
@@ -1528,6 +1665,7 @@
    "rank": 6,
    "city": "Chemnitz",
    "event": "Youth Cup of Chemnitz",
+   "name": "Chemnitzer Jugendcup",
    "weapon": "Florett",
    "age": "U12+U11",
    "type": "Einzel"
@@ -1539,6 +1677,7 @@
    "rank": 5,
    "city": "Bad Elster",
    "event": "Sächsische Landesmeisterschaft",
+   "name": "Sächsische Landesmeisterschaft",
    "weapon": "Florett",
    "age": "U12-U10",
    "type": "Mannschaft"
@@ -1550,6 +1689,7 @@
    "rank": 3,
    "city": "Bad Elster",
    "event": "Sächsische Landesmeisterschaft",
+   "name": "Sächsische Landesmeisterschaft",
    "weapon": "Florett",
    "age": "U10",
    "type": "Einzel"
@@ -1561,6 +1701,7 @@
    "rank": 7,
    "city": "Jena",
    "event": "Jenaer Schülercup",
+   "name": "Jenaer Schülercup",
    "weapon": "Florett",
    "age": "U10",
    "type": "Einzel"
@@ -1572,6 +1713,7 @@
    "rank": 6,
    "city": "Schwerin",
    "event": "Cup Petermännchen",
+   "name": "Petermännchen-Cup",
    "weapon": "Florett",
    "age": "U10",
    "type": "Einzel"

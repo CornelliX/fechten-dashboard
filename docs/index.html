@@ -63,8 +63,9 @@ svg text { fill: var(--muted); font: 12px Inter, sans-serif; }
 .show-s { display: none; }
 /* Ranglisten-Verlauf */
 .chart-wrap { position: relative; margin-top: 6px; }
-.chart-wrap + .chart-wrap { margin-top: 22px; padding-top: 16px; border-top: 1px solid var(--line); }
-.chart-wrap h3 { font: 700 17px/1.2 "Barlow Condensed", Inter, sans-serif; text-transform: uppercase; margin: 0 0 4px; }
+#chart { display: grid; gap: 14px 24px; }
+#chart details summary { font-size: 12px; color: var(--muted); padding: 2px 0; }
+.chart-wrap h3 { font: 700 15px/1.2 "Barlow Condensed", Inter, sans-serif; text-transform: uppercase; margin: 0 0 2px; }
 .chart-wrap svg[data-src] { display: block; touch-action: pan-y; }
 svg text.note { fill: var(--ink); font-weight: 600; }
 svg text.endlabel { fill: var(--ink); font: 700 15px Inter, sans-serif; }
@@ -580,13 +581,13 @@ function stepData(src, hist, results) {
 }
 
 function ticksFor(src, yMin, yMax) {
-  if (src === 'DFB') return [1, 5, 10, 15, 20, 30].filter(v => v <= yMax);
-  const step = [50, 100, 200, 250, 500, 1000].find(st => (yMax - yMin) / st <= 5) || 1000;
+  if (src === 'DFB') return [1, 5, 10, 20, 30].filter(v => v <= yMax);
+  const step = [50, 100, 200, 250, 500, 1000].find(st => (yMax - yMin) / st <= 3) || 1000;
   const out = []; for (let v = yMin; v <= yMax; v += step) out.push(v); return out;
 }
 
 function stepChart(src, pts, W) {
-  const H = 190, L = 40, R = 78, T = 26, B = 26;
+  const H = 124, L = 34, R = 86, T = 16, B = 24;
   const t0 = pts[0].t, tEnd = Math.max(Date.parse(today + 'T12:00'), pts.at(-1).t);
   const maxR = Math.max(...pts.map(p => p.rank)), minR = Math.min(...pts.map(p => p.rank));
   // DFB ab Platz 1 (Abstand zur Spitze zählt); FIE nur der erreichte Bereich, sonst gehen Sprünge unter
@@ -611,24 +612,25 @@ function stepChart(src, pts, W) {
   return `<svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" role="img" data-src="${src}"
       aria-label="${LABEL[src]}: aktuell Platz ${last.rank}, ${pts.length} Stände seit ${dmy(pts[0].d)}">
     ${grid}
-    <text x="${L - 6}" y="${T - 12}" text-anchor="end">Platz</text>
     <path d="${d}" fill="none" stroke="var(--series)" stroke-width="2" stroke-linejoin="round"/>
-    ${pts.map(p => `<circle cx="${X(p.t)}" cy="${Y(p.rank)}" r="4.5" fill="var(--series)" stroke="var(--card)" stroke-width="2"/>`).join('')}
+    ${pts.map(p => `<circle cx="${X(p.t)}" cy="${Y(p.rank)}" r="3.5" fill="var(--series)" stroke="var(--card)" stroke-width="2"/>`).join('')}
     ${notes}
     <text x="${X(tEnd) + 8}" y="${Y(last.rank) + 5}" class="endlabel">Platz ${int(last.rank)}</text>
-    <text x="${L}" y="${H - 6}">${dmy(pts[0].d)}</text>
-    <text x="${X(tEnd)}" y="${H - 6}" text-anchor="end">heute</text>
+    <text x="${L}" y="${H - 3}">${dmy(pts[0].d)}</text>
+    <text x="${X(tEnd)}" y="${H - 3}" text-anchor="end">heute</text>
     <line class="cross" x1="0" x2="0" y1="${T}" y2="${H - B}" stroke="var(--muted)" stroke-dasharray="3 3" visibility="hidden"/>
   </svg>`;
 }
 
 function drawCharts(hist, results) {
   const box = $('#chart');
-  const W = Math.max(280, box.clientWidth);
+  const cols = box.clientWidth >= 640 ? 2 : 1;
+  box.style.gridTemplateColumns = `repeat(${cols}, minmax(0, 1fr))`;
+  const W = Math.max(260, Math.floor((box.clientWidth - (cols - 1) * 24) / cols));
   const series = ['DFB', 'FIE'].map(src => ({ src, pts: stepData(src, hist, results) })).filter(s => s.pts.length);
   box.innerHTML = series.map(({ src, pts }) => `<div class="chart-wrap">
       <h3>${safeUrl(rankUrl[src]) ? `<a class="quiet-link" href="${safeUrl(rankUrl[src])}" target="_blank" rel="noopener">${LABEL[src]} ${EXT}</a>` : LABEL[src]}</h3>${stepChart(src, pts, W)}<div class="tip" hidden></div>
-      <details><summary>Werte als Tabelle</summary><table>
+      <details><summary>Werte</summary><table>
         <tr><th>Stand</th><th class="r">Platz</th><th class="r">Punkte</th><th>Anlass</th></tr>
         ${pts.slice().reverse().map(p => `<tr><td>${dmy(p.d)}</td><td class="r">${int(p.rank)}</td><td class="r">${num(p.pts)}</td><td class="sub">${esc(p.why)}</td></tr>`).join('')}
       </table></details></div>`).join('');

@@ -114,6 +114,7 @@ def fetch_profile(cfg):
     bouts = pick(qs, f'["fencers", {fid}, "latest-bouts"') or []
     return {
         "rank": prof["rank"], "points": float(prof["points"]), "image": prof.get("image"),
+        "born": str(prof.get("date") or "")[:4] or None, "hand": prof.get("hand"),
         "seasons": [{"season": s["season"], "rank": s["rank"], "points": float(s["point"])}
                     for s in prof.get("ranking", []) if s.get("category") == cfg["category"]],
         "results": [result_row(x, cfg["category"]) for x in results],
@@ -132,10 +133,10 @@ def result_row(x, cat):
             "competition_id": x["competitionId"], "category": cat, "source": "FIE"}
 
 
-def fetch_results(cfg, season):
-    """Ergebnisse dieser und der letzten Saison, Senior und U20 (alte bleiben im State erhalten)."""
+def fetch_results(cfg, season, back=1):
+    """Ergebnisse dieser und der letzten `back` Saisons, Senior und U20 (alte bleiben im State erhalten)."""
     out = []
-    for s in (season, season - 1):
+    for s in range(season, season - back - 1, -1):
         for cat in ("S", "J"):
             q = urllib.parse.urlencode({"category": cat, "season": s})
             items = json.loads(get(f"{FIE}/api/fie/fencer/{cfg['fie_id']}/results?{q}")).get("items", [])
@@ -302,7 +303,11 @@ def build_state(cfg, manual, old, today, fetchers=None):
     rank = attempt("FIE-Rangliste", lambda: f["ranking"](cfg, season))
     prof = attempt("FIE-Profil", lambda: f["profile"](cfg))
     events = attempt("FIE-Kalender", lambda: f["events"](cfg))
-    more_results = attempt("FIE-Ergebnisse", lambda: f["results"](cfg, season))
+    # Einmalig die ganze FIE-Laufbahn nachladen; danach reichen zwei Saisons (alte bleiben im State)
+    # ponytail: fester Rückblick von 4 Saisons, bei älteren Laufbahnen erhöhen
+    has_history = any(r.get("source") == "FIE" and int(r.get("season") or season) < season - 1
+                      for r in old.get("results", []))
+    more_results = attempt("FIE-Ergebnisse", lambda: f["results"](cfg, season, 1 if has_history else 4))
     opponents = attempt("FIE-Gegnerinnen", lambda: f["opponents"](cfg))
     dfb_news = attempt("DFB-News", lambda: f["dfb_news"](cfg))
     new_albums = attempt("DFB-Fotoarchiv", lambda: f["photo_albums"](cfg))
@@ -311,7 +316,8 @@ def build_state(cfg, manual, old, today, fetchers=None):
     fie["ranking_url"] = f"{FIE}/athletes/detailed-ranking?" + urllib.parse.urlencode(
         {"season": season, "weapon": cfg["weapon"], "gender": cfg["gender"], "category": cfg["category"], "type": "I"})
     if prof:
-        fie.update(rank=prof["rank"], points=prof["points"], image=prof["image"], seasons=prof["seasons"])
+        fie.update(rank=prof["rank"], points=prof["points"], image=prof["image"], seasons=prof["seasons"],
+                   born=prof.get("born"), hand=prof.get("hand"))
     if rank and rank["rank"]:
         fie.update(rank=rank["rank"], points=rank["points"])
     if rank:

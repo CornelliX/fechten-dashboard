@@ -17,7 +17,7 @@ def fake(rank=312, points=1.125, entered=False, results=(), more=(), field=230):
                               "results": list(results)},
         "events": lambda c: [{"key": "fie-131", "fie_id": 131, "date": "2026-12-10", "end": "2026-12-13",
                               "name": "Shanghai World Cup 2026", "entered": entered, "source": "FIE"}],
-        "results": lambda c, s: list(more),
+        "results": lambda c, s, back=1: list(more),
         "field": lambda s, cid: field,
         "opponents": lambda c: [],
         "dfb_news": lambda c: {"date": "2026-11-16", "title": "T", "url": "https://www.fechten.org/n/t"},
@@ -166,4 +166,13 @@ assert diff(p1, p2) == [{"text": "Neue Fotos im DFB-Fotoarchiv: Weltcup Plovdiv 
 p3 = build(MANUAL, p2, dict(f_ph, photo_albums=lambda c: []))  # Album nicht mehr unter den 12 neuesten
 assert diff(p2, p3) == [] and len(p3["photo_albums"]) == 2
 
+print("ok")
+
+# Laufbahn: ohne ältere FIE-Ergebnisse im State wird weiter zurück geladen, danach nur zwei Saisons
+calls = []
+f_back = dict(fake(), results=lambda c, s, back=1: calls.append(back) or [])
+build(MANUAL, {}, f_back)
+build(MANUAL, {"results": [{"key": "fie-2024-1-J", "source": "FIE", "season": 2024, "date": "2023-11-04",
+                            "name": "Weltcup Istanbul (U20)", "place": 99}]}, f_back)
+assert calls == [4, 1], calls
 print("ok")

@@ -74,6 +74,11 @@ details summary { cursor: pointer; color: var(--muted); font-size: 13px; padding
 /* Erläuterung in den Ranglisten-Karten: kleiner Knopf neben der Platzzahl, Text schwebt unter der Karte */
 .kpi { position: relative; }
 .nw { white-space: nowrap; }
+.stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; margin: 4px 0 16px; }
+.stats > div { border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px; min-width: 0; }
+.stats .num { font-size: 30px; display: block; margin: 2px 0; }
+@media (max-width: 600px) { .stats { grid-template-columns: 1fr 1fr; } .stats > div:last-child:nth-child(odd) { grid-column: 1 / -1; } }
+#stats h3 { font-size: 13px; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); margin: 16px 0 4px; }
 .ext { width: .62em; height: .62em; vertical-align: .08em; margin-left: .1em; fill: none; stroke: currentColor; stroke-width: 1.3; stroke-linecap: round; stroke-linejoin: round; opacity: .55; }
 h1, h2, h3 { text-wrap: balance; }
 .quiet-link { color: inherit; text-decoration-color: var(--line); text-underline-offset: 3px; }
@@ -173,6 +178,7 @@ footer { color: var(--muted); font-size: 12px; margin-top: 24px; }
     <section class="card wide"><h2>Letzte News</h2><ul class="feed" id="feed"></ul></section>
     <section class="card wide"><h2>Nächste Termine</h2><div class="scroll"><table id="events"></table></div></section>
     <section class="card wide"><h2>Ergebnisse</h2><div class="scroll"><table id="results"></table></div></section>
+    <section class="card wide"><h2>Statistik</h2><div id="stats"></div></section>
     <section class="card wide"><h2>Letzte Gefechte</h2><div id="bouts"></div></section>
     <section class="card wide"><h2>Gefechtsbilanz</h2><div id="bilanz"></div></section>
     <section class="card"><h2 id="h-dfb">DFB-Rangliste Top 10</h2><table id="dfb"></table><div class="sub" id="dfb-note"></div></section>
@@ -352,6 +358,43 @@ function renderBilanz(s) {
   $('#opp-q').addEventListener('input', ev => draw(ev.target.value.trim().toLowerCase()));
 }
 
+// Statistik: Laufbahn-Kennzahlen aus den Ergebnissen (FIE komplett, national aus manual.json) und den Ranglisten
+function renderStats(s, hist) {
+  const R = (s.results || []).filter(r => Number(r.place) > 0), fie = R.filter(r => r.source === 'FIE');
+  const nat = R.filter(r => r.source !== 'FIE');
+  const byDate = (a, b) => String(a.date).localeCompare(String(b.date));
+  const first = [...fie].sort(byDate)[0];
+  const best = rs => [...rs].sort((a, b) => a.place - b.place || byDate(b, a))[0];
+  const minRank = xs => { const v = xs.map(Number).filter(n => n > 0); return v.length ? Math.min(...v) : null; };
+  const histRanks = src => hist.filter(h => h.source === src).map(h => h.rank);
+  const bestFie = minRank([...histRanks('FIE'), ...(s.fie.seasons || []).map(x => x.rank), s.fie.rank]);
+  const bestDfb = minRank([...histRanks('DFB'), s.dfb.rank]);
+  const podium = R.filter(r => r.place <= 3).sort((a, b) => a.place - b.place || byDate(b, a));
+  const wins = podium.filter(r => r.place == 1).length;
+  const tile = (lbl, val, sub) => `<div><div class="lbl">${lbl}</div><span class="num">${val}</span><div class="sub">${sub}</div></div>`;
+  const where = r => `${esc(r.name)}${r.city && !r.name.includes(r.city) ? ', ' + esc(r.city) : ''}`;
+  const hand = { R: 'Rechtshänderin', L: 'Linkshänderin' }[s.fie.hand];
+  const facts = [s.fie.born && `Jahrgang ${int(s.fie.born)}`, hand].filter(Boolean).join(' · ');
+  const levels = [['Senioren international', fie.filter(r => r.category === 'S')],
+                  ['U20 international', fie.filter(r => r.category === 'J')],
+                  ['National (Einzel)', nat.filter(r => !/team|mannschaft/i.test(r.name))]]
+    .map(([l, rs]) => [l, best(rs)]).filter(([, r]) => r);
+
+  $('#stats').innerHTML = (facts ? `<div class="sub" style="margin-bottom:10px">${facts}</div>` : '') +
+    '<div class="stats">' +
+    (first ? tile('International seit', dmy(String(first.date).slice(0, 7)), `1. FIE-Turnier: ${esc(first.name)}`) : '') +
+    tile('FIE-Turniere', int(fie.length), `${fie.filter(r => r.category === 'S').length} Senioren · ${fie.filter(r => r.category === 'J').length} U20`) +
+    tile('Podestplätze', int(podium.length), `davon ${wins} ${wins === 1 ? 'Sieg' : 'Siege'}`) +
+    (bestDfb ? tile('Bester DFB-Rang', int(bestDfb), 'Rangliste Senioren') : '') +
+    (bestFie ? tile('Bester FIE-Rang', int(bestFie), 'Weltrangliste Senioren') : '') +
+    '</div>' +
+    (levels.length ? `<h3>Beste Platzierungen</h3><table>${levels.map(([l, r]) => `<tr><td>${l}<div class="sub">${where(r)} · ${dmy(r.date)}</div></td>
+      <td class="r">${placeCell(r)}</td></tr>`).join('')}</table>` : '') +
+    (podium.length ? `<h3>Titel und Podest</h3><table>${podium.map(r => `<tr><td style="width:2.5em"><span class="num" style="font-size:18px">${int(r.place)}.</span></td>
+      <td>${where(r)}<div class="sub">${dmy(r.date)}</div></td></tr>`).join('')}</table>` : '') +
+    '<div class="sub" style="margin-top:10px">National nur Ergebnisse ab Saison 2025/26 (Ophardt, manuell gepflegt).</div>';
+}
+
 // Aufklappbare Erläuterung unter einer Ranglisten-Kennzahl; Zeilen mit "– " werden zur Aufzählung
 const EXT = '<svg class="ext" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.5 2.5h5v5M9.5 2.5l-7 7"/></svg>';
 function why(lines, url, label) {
@@ -367,6 +410,7 @@ function why(lines, url, label) {
 function render(s, changes, hist) {
   renderNext(s);
   renderBilanz(s);
+  renderStats(s, hist);
   document.title = `${s.name} · Fechten`;
   $('#name').textContent = s.name;
   const upd = new Date(s.updated).toLocaleString('de-DE', { dateStyle: 'medium', timeStyle: 'short' });
@@ -418,7 +462,7 @@ function render(s, changes, hist) {
   $('#bouts').innerHTML = Object.entries(byEvent).slice(0, 3).map(([k, bs]) => {
     const [ev, d] = k.split('|'), w = bs.filter(b => b.win).length;
     return `<div class="sub" style="margin-top:8px"><b>${esc(ev)}</b> · ${dmy(d)} · ${w} S / ${bs.length - w} N</div><table>` +
-      bs.map(b => `<tr><td class="${b.win ? 'w' : 'l'}">${b.win ? 'S' : 'N'} ${esc(b.score)}</td><td>${esc(b.opponent)} <span class="sub">${esc(b.nat)}</span></td></tr>`).join('') + '</table>';
+      bs.map(b => `<tr><td class="${b.win ? 'w' : 'l'}" style="width:4.5em;white-space:nowrap">${b.win ? 'S' : 'N'} ${esc(b.score)}</td><td>${esc(b.opponent)} <span class="sub">${esc(b.nat)}</span></td></tr>`).join('') + '</table>';
   }).join('') || '<div class="sub">Keine Gefechte in dieser Saison.</div>';
 
   const meRow = (name) => /gamke/i.test(name) ? ' class="me"' : '';

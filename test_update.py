@@ -176,3 +176,26 @@ build(MANUAL, {"results": [{"key": "fie-2024-1-J", "source": "FIE", "season": 20
                             "name": "Weltcup Istanbul (U20)", "place": 99}]}, f_back)
 assert calls == [4, 1], calls
 print("ok")
+
+# Ophardt-Biografie-Import
+import ophardt_bio
+BIO = '''---
+source: "https://fencing.ophardt.online/en/biography/athlete/1"
+---
+### Medals
+<table><thead><tr><th colspan="3">National Championships</th></tr><tr><th>g</th><th>s</th><th>b</th></tr></thead><tbody><tr><td>7</td><td>0</td><td>0</td></tr></tbody></table>
+|  | Apr 17, 2016 | Turnierreifeprüfung |  |
+### Results
+##### National Championships
+<table><thead><tr><th>Rank</th><th>Date</th><th colspan="4">Competition</th></tr></thead><tbody><tr><td>1</td><td>5/7/22 / 5/8/22</td><td><a href="x">Winsen Luhe</a></td><td>German Championships</td><td>Foil Women's U17 Individual</td></tr><tr><td>1</td><td>6/27/26 / 6/28/26</td><td>Koblenz</td><td>German Team Championships</td><td>Foil Women's Senior Team</td></tr></tbody></table>
+### Rankings
+#### National
+<table><tbody><tr><td>5</td><td>62.2500</td><td>2025</td><td>Deutsche Rangliste</td><td>Foil Senior Individual</td></tr><tr><td>5</td><td>62.2500</td><td>2025</td><td>Deutsche Rangliste</td><td>Foil Senior Individual</td></tr></tbody></table>
+'''
+b = ophardt_bio.parse(BIO)
+assert b["medals"]["national"] == [7, 0, 0] and b["exam"] == "2016-04-17", b
+assert [(r["date"], r["rank"], r["age"], r["type"]) for r in b["results"]] == \
+    [("2026-06-27", 1, "Senior", "Mannschaft"), ("2022-05-07", 1, "U17", "Einzel")], b["results"]
+assert b["rankings"] == [{"level": "National", "rank": 5, "points": 62.25, "season": 2025,
+                          "title": "Deutsche Rangliste", "weapon": "Florett", "age": "Senior"}], b["rankings"]
+print("ok")

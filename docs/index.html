@@ -83,6 +83,28 @@ details summary { cursor: pointer; color: var(--muted); font-size: 13px; padding
 .why-body p:last-child { color: var(--muted); font-size: 13px; }
 .why-body ul { margin: -4px 0 10px; padding-left: 18px; }
 .why-body li { margin: 2px 0; }
+/* Regeln und Wissenswertes */
+.rules details { border-top: 1px solid var(--line); }
+.rules h2 + details { border-top: 0; }
+.rules summary { cursor: pointer; list-style: none; display: flex; align-items: center; justify-content: space-between;
+                 min-height: 48px; font-weight: 600; }
+.rules summary::-webkit-details-marker { display: none; }
+.rules summary::after { content: "+"; font-size: 20px; color: var(--muted); margin-left: 12px; }
+.rules details[open] > summary::after { content: "−"; }
+.rules details > div { padding: 0 0 14px; font-size: 15px; }
+.rules p { margin: 6px 0 10px; }
+.rules ul { margin: 6px 0 10px; padding-left: 20px; }
+.rules li { margin: 6px 0; }
+.rules .lights, .rules .timeline { padding-left: 0; list-style: none; }
+.lights li { display: flex; gap: 12px; align-items: flex-start; }
+.lamp { flex: none; width: 22px; height: 22px; border-radius: 50%; margin-top: 2px;
+        box-shadow: 0 0 10px var(--glow), inset 0 0 0 2px rgb(0 0 0 / .08); }
+.lamp-g { background: #1fae54; --glow: rgb(31 174 84 / .55); }
+.lamp-rg { background: linear-gradient(90deg, #e1262f 50%, #1fae54 50%); --glow: rgb(225 38 47 / .4); }
+.lamp-w { background: #fff; border: 1px solid var(--line); --glow: rgb(160 160 160 / .45); }
+.timeline li { padding-left: 14px; border-left: 2px solid var(--line); }
+.card-chip { display: inline-block; width: 12px; height: 16px; border-radius: 2px; margin-right: 8px; vertical-align: -2px; }
+.card-chip.y { background: #f4c20d; } .card-chip.r { background: #d7262e; } .card-chip.b { background: #111; outline: 1px solid var(--muted); }
 /* Nächstes Turnier */
 .next { border-left: 4px solid var(--brand); }
 .next-title { font: 700 30px/1.1 "Barlow Condensed", Inter, sans-serif; margin: 6px 0 4px; }
@@ -145,6 +167,74 @@ footer { color: var(--muted); font-size: 12px; margin-top: 24px; }
     <section class="card"><h2>DFB-Rangliste Top 10</h2><table id="dfb"></table><div class="sub" id="dfb-note"></div></section>
     <section class="card"><h2>Deutsche in der FIE-Rangliste</h2><table id="ger"></table></section>
     <section class="card wide"><h2>Ranglisten-Verlauf</h2><div id="chart"></div></section>
+    <section class="card wide rules" id="regeln"><h2>Regeln und Wissenswertes</h2>
+      <details open><summary>Die Lichter: Grün, Rot, Weiß</summary><div>
+        <ul class="lights">
+          <li><span class="lamp lamp-g" aria-hidden="true"></span><span><b>Grün oder Rot:</b> Gültiger Treffer. Jede Fechterin hat ihre Farbe, eine Rot, die andere Grün. Die Lampe zeigt, wer getroffen hat.</span></li>
+          <li><span class="lamp lamp-rg" aria-hidden="true"></span><span><b>Beide farbigen Lampen:</b> Beide haben getroffen. Dann entscheidet die Kampfrichterin nach dem Vorrecht (siehe unten), wer den Punkt bekommt, oder niemand.</span></li>
+          <li><span class="lamp lamp-w" aria-hidden="true"></span><span><b>Weiß:</b> Treffer außerhalb der gültigen Fläche, etwa an Arm, Bein oder Kopf. Das Gefecht wird angehalten, es gibt aber keinen Punkt. An manchen Geräten leuchtet dafür Gelb.</span></li>
+        </ul>
+        <p>Ein Treffer zählt nur, wenn die Spitze mit mehr als 500 Gramm Druck aufkommt. Ein bloßes Streifen löst kein Licht aus.</p>
+      </div></details>
+      <details><summary>Trefffläche: nur der Rumpf</summary><div>
+        <p>Beim Florett zählt nur der Rumpf, vorne und hinten, vom Kragen bis zu Hüfte und Leiste, dazu der untere Latz der Maske. Arme, Beine und Kopf sind ungültig. Die gültige Fläche ist mit einer leitenden Weste, der <i>Lamé</i>, überzogen. So erkennt das Gerät, ob ein Treffer gültig (farbig) oder ungültig (weiß) war.</p>
+        <p>Getroffen wird nur mit der Spitze; Hiebe wie beim Säbel gibt es nicht.</p>
+      </div></details>
+      <details><summary>Vorrecht: Wer bekommt den Punkt?</summary><div>
+        <p>Florett ist eine „konventionelle“ Waffe: Treffen beide gleichzeitig, entscheidet nicht das Gerät, sondern die Kampfrichterin, wer das <b>Vorrecht</b> hatte.</p>
+        <ul>
+          <li><b>Angriff zuerst:</b> Wer zuerst angreift (Arm streckt sich, Spitze bedroht die Trefffläche), hat das Vorrecht.</li>
+          <li><b>Parade dreht es um:</b> Wehrt die Verteidigerin die Klinge ab, darf sie nun selbst zurückstoßen (Riposte) und hat dafür das Vorrecht.</li>
+          <li><b>Gleichzeitig angegriffen:</b> Greifen beide im selben Moment an, gibt es für niemanden einen Punkt.</li>
+        </ul>
+        <p>Deshalb sieht man nach Doppeltreffern oft Handzeichen der Kampfrichterin: Sie zeigt, wer angegriffen hat und ob eine Parade saß.</p>
+      </div></details>
+      <details><summary>So läuft ein Turnier ab</summary><div>
+        <ul>
+          <li><b>Vorrunde (Pools):</b> Gruppen von 6 bis 7 Fechterinnen, jede gegen jede, bis 5 Treffer oder 3 Minuten.</li>
+          <li><b>Direktausscheidung (Tableau):</b> K.-o.-Runden bis 15 Treffer, drei Abschnitte à 3 Minuten mit je 1 Minute Pause.</li>
+          <li><b>Unentschieden nach Ablauf der Zeit:</b> Das Los bestimmt eine Fechterin mit Vorteil, dann folgt eine Extraminute. Der nächste Treffer entscheidet; fällt keiner, gewinnt die per Los Bevorzugte.</li>
+          <li><b>Die Bahn:</b> 14 Meter lang, 1,5 bis 2 Meter breit. Wer mit beiden Füßen hinten über das Ende tritt, kassiert einen Treffer.</li>
+        </ul>
+      </div></details>
+      <details><summary>Pool-Ergebnisse lesen: V/M, TS, TR, Index</summary><div>
+        <ul>
+          <li><b>V/M:</b> Anteil gewonnener Gefechte, z. B. 2 Siege aus 6 Gefechten = 0,33.</li>
+          <li><b>TS / TR:</b> gesetzte und erhaltene Treffer.</li>
+          <li><b>Index (Ind):</b> TS minus TR, z. B. 21 − 27 = −6.</li>
+        </ul>
+        <p>Nach der Vorrunde wird nach V/M sortiert, bei Gleichstand nach Index, dann nach gesetzten Treffern. Daraus ergibt sich die Setzliste für das Tableau: Die Beste trifft auf die Schwächste, die Zweite auf die Vorletzte und so weiter.</p>
+      </div></details>
+      <details><summary>Karten und Strafen</summary><div>
+        <ul>
+          <li><span class="card-chip y" aria-hidden="true"></span><b>Gelb:</b> Verwarnung.</li>
+          <li><span class="card-chip r" aria-hidden="true"></span><b>Rot:</b> Straftreffer für die Gegnerin.</li>
+          <li><span class="card-chip b" aria-hidden="true"></span><b>Schwarz:</b> Ausschluss, z. B. bei grober Unsportlichkeit. Auch wer den Gruß verweigert, kann Schwarz bekommen.</li>
+        </ul>
+        <p>Vor und nach jedem Gefecht grüßen sich die Fechterinnen mit der Waffe, danach gibt es einen Handschlag.</p>
+      </div></details>
+      <details><summary>Kurze Geschichte des Damenfloretts</summary><div>
+        <ul class="timeline">
+          <li><b>17./18. Jh.</b> Das Florett entsteht in Frankreich als Übungswaffe für den Degen. Die stumpfe Spitze erinnerte an eine Blütenknospe, daher der Name (frz. <i>fleuret</i>, ital. <i>fioretto</i>, „Blümchen“).</li>
+          <li><b>1924</b> Damenflorett ist erstmals olympisch (Paris), als erster Frauenwettbewerb im Fechten überhaupt. Siegerin: Ellen Osiier (Dänemark).</li>
+          <li><b>1928</b> Helene Mayer holt in Amsterdam Gold für Deutschland, mit 18 Siegen aus 20 Gefechten.</li>
+          <li><b>1956</b> Bei Olympia wird im Florett erstmals elektrisch gemessen.</li>
+          <li><b>1960</b> Der Mannschaftswettbewerb im Damenflorett kommt ins olympische Programm.</li>
+          <li><b>1988</b> Seoul: Anja Fichtel, Sabine Bau und Zita Funkenhauser holen Gold, Silber und Bronze, ein komplett westdeutsches Podium.</li>
+          <li><b>1996</b> Bis dahin war Florett die einzige olympische Waffe für Frauen; jetzt kommt Degen dazu, Säbel folgt 2004.</li>
+        </ul>
+      </div></details>
+      <details><summary>Fun Facts</summary><div>
+        <ul>
+          <li><b>Ellas Verein mit Tradition:</b> Olympiasiegerin Anja Fichtel (1988, Einzel und Mannschaft) focht für den FC Tauberbischofsheim.</li>
+          <li><b>Rekordfrau:</b> Valentina Vezzali (Italien) gewann Olympia-Gold im Einzel dreimal in Folge: 2000, 2004 und 2008.</li>
+          <li><b>Titelverteidigerin:</b> Lee Kiefer (USA) siegte 2021 in Tokio und 2024 in Paris, erst die dritte Frau, die Gold im Damenflorett verteidigen konnte.</li>
+          <li><b>Italien</b> ist die erfolgreichste Nation: sieben olympische Goldmedaillen im Damenflorett-Einzel.</li>
+          <li><b>Federleicht:</b> Ein Florett darf höchstens 500 Gramm wiegen und 110 Zentimeter lang sein.</li>
+        </ul>
+      </div></details>
+      <p class="sub" style="margin-top:12px">Vereinfachte Darstellung. Maßgeblich sind die Technischen Regeln der FIE (<a href="https://fie.org">fie.org</a>).</p>
+    </section>
   </div>
   <footer>Quellen: <a href="https://fie.org">fie.org</a> (täglich automatisch), <a href="https://fencing.ophardt.online">Ophardt</a> (manuell gepflegt), Live-Ergebnisse auf <a href="https://www.fencingtimelive.com">FencingTimeLive</a>.</footer>
 </main>

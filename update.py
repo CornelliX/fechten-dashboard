@@ -10,14 +10,14 @@ import secrets
 import time
 import urllib.parse
 import urllib.request
-from datetime import date, datetime, timezone
+from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent
 DATA = ROOT / "docs" / "data"
 FIE = "https://fie.org"
 HEADERS = {"User-Agent": "Mozilla/5.0 (compatible; fencing-dashboard/1.0)"}
-TYPE_DE = {"World Cup": "Weltcup", "World Championship": "WM", "Zone Championships": "Zonen-Meisterschaft",
+TYPE_DE = {"World Cup": "Weltcup", "World Championship": "WM", "Zone Championships": "EM",
            "Satellite": "Satellite", "Grand Prix": "Grand Prix",
            "Coupe du Monde": "Weltcup", "Tournoi Satellite": "Satellite"}
 
@@ -107,15 +107,73 @@ def fetch_profile(cfg):
         "rank": prof["rank"], "points": float(prof["points"]), "image": prof.get("image"),
         "seasons": [{"season": s["season"], "rank": s["rank"], "points": float(s["point"])}
                     for s in prof.get("ranking", []) if s.get("category") == cfg["category"]],
-        "results": [{"key": f"fie-{x['season']}-{x['competitionId']}", "date": x["date"],
-                     "name": f"{TYPE_DE.get(x['competitionType'], x['competitionType'])} {x['city']}",
-                     "city": x["city"], "place": x["place"], "season": x["season"],
-                     "competition_id": x["competitionId"], "source": "FIE"} for x in results],
+        "results": [result_row(x, cfg["category"]) for x in results],
         "bouts": [{"date": b["date"][:10], "event": f"{TYPE_DE.get(b['name'], b['name'])} {b['location']}",
                    "win": b["isWinner"], "score": f"{b['score']['fencer']}:{b['score']['opponent']}",
                    "opponent": " ".join(b["opponent"]["name"].split()), "nat": b["opponent"]["nationality"]}
                   for b in bouts],
     }
+
+
+def result_row(x, cat):
+    """FIE-Ergebnis -> Dashboard-Zeile. Senior-Schlüssel bleiben wie bisher, U20 bekommt ein Suffix."""
+    name = f"{TYPE_DE.get(x['competitionType'], x['competitionType'])} {x['city']}" + (" (U20)" if cat == "J" else "")
+    return {"key": f"fie-{x['season']}-{x['competitionId']}" + ("-J" if cat == "J" else ""), "date": x["date"],
+            "name": name, "city": x["city"], "place": x["place"], "season": x["season"],
+            "competition_id": x["competitionId"], "category": cat, "source": "FIE"}
+
+
+def fetch_results(cfg, season):
+    """Ergebnisse dieser und der letzten Saison, Senior und U20 (alte bleiben im State erhalten)."""
+    out = []
+    for s in (season, season - 1):
+        for cat in ("S", "J"):
+            q = urllib.parse.urlencode({"category": cat, "season": s})
+            items = json.loads(get(f"{FIE}/api/fie/fencer/{cfg['fie_id']}/results?{q}")).get("items", [])
+            out += [result_row(x, cat) for x in items]
+    return out
+
+
+def fetch_field(season, competition_id):
+    return json.loads(get(f"{FIE}/api/fie/competition/{season}/{competition_id}")).get("fencerCount")
+
+
+def event_de(name):
+    """FIE-Wettkampfnamen (oft französisch) kurz auf Deutsch."""
+    n = " ".join(name.split())
+    if n.startswith("Championnats"):
+        return "EM" if "Europe" in n else "WM" if "Monde" in n else n
+    return TYPE_DE.get(n, n)
+
+
+def parse_opponents(items, fid):
+    """Bilanz je Gegnerin aus den Einzelgefechten (FIE-'victories' zählt aus Sicht der Gegnerin)."""
+    rows = []
+    for o in items:
+        bouts = []
+        for e in o.get("events", []):
+            me, other = (e["fencer1"], e["fencer2"]) if e["fencer1"].get("id") == fid else (e["fencer2"], e["fencer1"])
+            bouts.append({"date": e["date"][:10], "win": bool(me.get("isWinner")),
+                          "score": f"{me.get('score')}:{other.get('score')}",
+                          "event": f"{event_de(e['name'])} {e['location']}" + (" (U20)" if e.get("category") == "J" else "")})
+        if not bouts:
+            continue
+        bouts.sort(key=lambda b: b["date"], reverse=True)
+        wins = sum(b["win"] for b in bouts)
+        rows.append({"id": o["id"], "name": " ".join(o["name"].split()), "nat": (o.get("flag") or "").upper(),
+                     "wins": wins, "losses": len(bouts) - wins, "last": bouts[0]})
+    return sorted(rows, key=lambda r: (r["wins"] + r["losses"], r["last"]["date"]), reverse=True)  # häufigste, dann jüngste
+
+
+def fetch_opponents(cfg):
+    items, page = [], 1
+    while page <= 10:  # 20 pro Seite
+        d = json.loads(get(f"{FIE}/api/fie/fencer/{cfg['fie_id']}/opponents?page={page}"))
+        items += d.get("items", [])
+        if not d.get("items") or len(items) >= d.get("totalFound", 0):
+            break
+        page += 1
+    return parse_opponents(items, cfg["fie_id"])
 
 
 def fetch_events(cfg):
@@ -145,7 +203,8 @@ def event_status(ev, manual):
 
 
 def build_state(cfg, manual, old, today, fetchers=None):
-    f = fetchers or {"ranking": fetch_ranking, "profile": fetch_profile, "events": fetch_events}
+    f = {"ranking": fetch_ranking, "profile": fetch_profile, "events": fetch_events, "results": fetch_results,
+         "field": fetch_field, "opponents": fetch_opponents, **(fetchers or {})}
     season, errors = season_of(today), []
 
     def attempt(label, fn):
@@ -158,6 +217,8 @@ def build_state(cfg, manual, old, today, fetchers=None):
     rank = attempt("FIE-Rangliste", lambda: f["ranking"](cfg, season))
     prof = attempt("FIE-Profil", lambda: f["profile"](cfg))
     events = attempt("FIE-Kalender", lambda: f["events"](cfg))
+    more_results = attempt("FIE-Ergebnisse", lambda: f["results"](cfg, season))
+    opponents = attempt("FIE-Gegnerinnen", lambda: f["opponents"](cfg))
 
     fie = dict(old.get("fie") or {}, season=season)
     if prof:
@@ -168,9 +229,16 @@ def build_state(cfg, manual, old, today, fetchers=None):
         fie["top_ger"] = rank["top_ger"]
 
     results = {r["key"]: r for r in old.get("results", []) if r.get("source") == "FIE"}
-    for r in (prof or {}).get("results", []):
-        pts = (rank or {}).get("comp_points", {}).get(f"{r['competition_id']}_{r['season']}")
-        results[r["key"]] = dict(r, points=pts if pts is not None else results.get(r["key"], {}).get("points"))
+    for r in (prof or {}).get("results", []) + (more_results or []):
+        prev = results.get(r["key"], {})
+        pts = (rank or {}).get("comp_points", {}).get(f"{r['competition_id']}_{r['season']}") if r.get("category", "S") == "S" else None
+        field = prev.get("field")
+        if field is None:  # Teilnehmerzahl ändert sich nach dem Turnier nicht: nur einmal abrufen
+            try:
+                field = f["field"](r["season"], r["competition_id"])
+            except Exception:  # Nebeninfo, kein Fehlerbanner; nächster Lauf versucht es erneut
+                field = None
+        results[r["key"]] = dict(r, points=pts if pts is not None else prev.get("points"), field=field)
     for m in manual.get("results", []):
         results[f"m-{m['date']}-{m['name']}"] = dict(m, key=f"m-{m['date']}-{m['name']}", source="Ophardt (manuell)")
 
@@ -187,6 +255,7 @@ def build_state(cfg, manual, old, today, fetchers=None):
         "dfb": manual.get("dfb", {}),
         "results": sorted(results.values(), key=lambda r: str(r["date"]), reverse=True),
         "bouts": prof["bouts"] if prof else old.get("bouts", []),
+        "opponents": opponents if opponents is not None else old.get("opponents", []),
         "events": sorted(all_events, key=lambda e: e["date"]),
     }
 
@@ -217,10 +286,13 @@ def diff(old, new):
                        rank_change("DFB-Rangliste", old.get("dfb"), new.get("dfb"))) if c]
 
     old_r = {r["key"]: r for r in old.get("results", [])}
+    # Ältere Ergebnisse, die erst jetzt mitgeladen werden (z. B. Vorsaison, U20), sind keine Neuigkeit
+    cutoff = (date.fromisoformat(new.get("updated", "9999-12-31")[:10]) - timedelta(days=45)).isoformat()
     for r in new.get("results", []):
         o = old_r.get(r["key"])
         if o is None:
-            out.append(f"Neues Ergebnis: {r['name']}: Platz {r['place']}")
+            if str(r["date"]) >= cutoff:
+                out.append(f"Neues Ergebnis: {r['name']}: Platz {r['place']}")
         elif o.get("place") != r.get("place"):
             out.append(f"Ergebnis geändert: {r['name']}: Platz {o.get('place')} → {r.get('place')}")
 
@@ -253,6 +325,41 @@ def append_history(path, state, today):
         w.writerows(new)
 
 
+def ics(events, name, stamp):
+    """Kalender-Abo (RFC 5545): ganztägige Termine, stabile UIDs, Status in der Beschreibung."""
+    def esc(s):
+        return str(s or "").replace("\\", "\\\\").replace(";", "\\;").replace(",", "\\,").replace("\n", "\\n")
+
+    def fold(line):  # Zeilen > 75 Bytes umbrechen (Folgezeile beginnt mit Leerzeichen), Umlaute = 2 Bytes
+        parts, cur = [], ""
+        for ch in line:
+            if len((cur + ch).encode()) > (75 if not parts else 74):
+                parts.append(cur)
+                cur = ""
+            cur += ch
+        return "\r\n ".join(parts + [cur])
+
+    lines = ["BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//fechten-dashboard//DE", "CALSCALE:GREGORIAN",
+             "METHOD:PUBLISH", f"X-WR-CALNAME:{esc(name)} Fechten", "REFRESH-INTERVAL;VALUE=DURATION:PT12H",
+             "X-PUBLISHED-TTL:PT12H"]
+    for e in events:
+        if "Nicht relevant" in str(e.get("status")):
+            continue
+        try:
+            start = date.fromisoformat(str(e["date"]))
+            end = date.fromisoformat(str(e.get("end") or e["date"]))
+        except ValueError:
+            continue
+        desc = f"Status: {e.get('status')}" + (f"\n{e['url']}" if e.get("url") else "")
+        uid = re.sub(r"[^A-Za-z0-9-]+", "-", e["key"]).strip("-")
+        lines += ["BEGIN:VEVENT", f"UID:{uid}@fechten-dashboard", f"DTSTAMP:{stamp}",
+                  f"DTSTART;VALUE=DATE:{start:%Y%m%d}", f"DTEND;VALUE=DATE:{end + timedelta(days=1):%Y%m%d}",
+                  f"SUMMARY:{esc(e['name'])}", f"LOCATION:{esc(e.get('city'))}", f"DESCRIPTION:{esc(desc)}",
+                  "TRANSP:TRANSPARENT", "END:VEVENT"]
+    lines.append("END:VCALENDAR")
+    return "\r\n".join(fold(line) for line in lines) + "\r\n"
+
+
 def main():
     cfg = json.loads((ROOT / "config.json").read_text(encoding="utf-8"))
     manual = json.loads((ROOT / "manual.json").read_text(encoding="utf-8"))
@@ -269,6 +376,8 @@ def main():
     feed = [{"date": today.isoformat(), "text": c} for c in changes] + feed
     changes_path.write_text(json.dumps(feed, ensure_ascii=False, indent=1), encoding="utf-8")
     append_history(DATA / "history.csv", new, today)
+    stamp = new["updated"][:16].replace("-", "").replace(":", "") + "00Z"  # 2026-11-16T11:32 -> 20261116T113200Z
+    (DATA / "termine.ics").write_bytes(ics(new["events"], cfg["name"], stamp).encode("utf-8"))
 
     for c in changes:
         print("•", c)

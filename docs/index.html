@@ -378,8 +378,8 @@ function renderBilanz(s) {
   const w = o.reduce((a, x) => a + x.wins, 0), l = o.reduce((a, x) => a + x.losses, 0);
   // Seit: Jahr des ersten erfassten FIE-Turniers (Ergebnisse), sonst ältestes bekanntes Gefecht
   const firstFie = [...(s.results || []).filter(r => r.source === 'FIE').map(r => String(r.date)), ...o.map(x => x.last.date)].sort()[0];
-  // U+2005 = Viertelgeviert zwischen Zahl und %
-  $('#bilanz').innerHTML = `<div class="num big">${Math.round(100 * w / (w + l))} % SIEGE</div>
+  // Schmaler Abstand zwischen Zahl und % per Rand statt Leerzeichen (Barlow hat kein eigenes Viertelgeviert)
+  $('#bilanz').innerHTML = `<div class="num big">${Math.round(100 * w / (w + l))}<span style="margin-left:.08em">%</span> SIEGE</div>
       <div class="sub">Bilanz ${int(w)}:${int(l)} aus ${int(w + l)} Gefechten gegen ${int(o.length)} Gegnerinnen bei internationalen FIE-Turnieren${firstFie ? ` seit ${int(firstFie.slice(0, 4))}` : ''}</div>
     <input type="search" id="opp-q" placeholder="Gegnerin oder Nation suchen, z. B. Audibert oder ITA" aria-label="Gegnerin oder Nation suchen">
     <table><tbody id="opp"></tbody></table>`;

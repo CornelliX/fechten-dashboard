@@ -4,6 +4,11 @@ on:
   schedule:
     - cron: "0 5 * * *"        # 6 Uhr MEZ / 7 Uhr MESZ
   workflow_dispatch:            # manuell starten: Actions → "Täglich aktualisieren" → Run workflow
+    inputs:
+      testmail:
+        description: "Testmail senden, auch ohne Änderungen"
+        type: boolean
+        default: false
   push:
     paths: [manual.json]        # Ophardt-Daten von Hand geändert → sofort übernehmen
 
@@ -39,7 +44,7 @@ jobs:
           git pull --rebase || { git rebase --abort; exit 1; }
           git push
       - name: E-Mail bei Änderungen
-        if: steps.u.outputs.changed == 'true' && env.MAIL_USER != ''
+        if: (steps.u.outputs.changed == 'true' || inputs.testmail) && env.MAIL_USER != ''
         uses: dawidd6/action-send-mail@v3
         with:
           server_address: ${{ secrets.MAIL_SERVER }}
@@ -50,6 +55,6 @@ jobs:
           to: ${{ secrets.MAIL_TO }}
           subject: "Ella Fechten: Neuigkeiten"
           body: |
-            ${{ steps.u.outputs.body }}
+            ${{ steps.u.outputs.body || 'Testmail: Die Benachrichtigung funktioniert. Heute gab es keine Änderungen.' }}
 
             Dashboard: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/

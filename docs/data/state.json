@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-16T12:33+00:00",
+ "updated": "2026-11-16T13:14+00:00",
  "name": "Ella Gamke",
  "fie_id": 60886,
  "errors": [],
@@ -98,6 +98,26 @@
     "points": 0.875,
     "id": 36454
    }
+  ],
+  "breakdown": [
+   {
+    "key": "458_2026",
+    "label": "Grand Prix Turin 2026",
+    "points": 0.375,
+    "counted": true
+   },
+   {
+    "key": "397_2027",
+    "label": "Satellite Amsterdam 2026",
+    "points": 0.5,
+    "counted": true
+   },
+   {
+    "key": "127_2027",
+    "label": "Weltcup Plovdiv 2026",
+    "points": 0.25,
+    "counted": true
+   }
   ]
  },
  "dfb": {
@@ -156,6 +176,89 @@
     "name": "Anne Kirsch",
     "points": 36.25
    }
+  ]
+ },
+ "dfb_prev": {
+  "rank": 7,
+  "points": 48.25,
+  "calculated": "2026-10-19",
+  "top10": [
+   {
+    "rank": 1,
+    "name": "Carlotta Sophie Morandi",
+    "points": 160.5
+   },
+   {
+    "rank": 2,
+    "name": "Leonie Ebert",
+    "points": 76.25
+   },
+   {
+    "rank": 3,
+    "name": "Marie Höfler",
+    "points": 67.75
+   },
+   {
+    "rank": 4,
+    "name": "Anne Kleibrink",
+    "points": 65
+   },
+   {
+    "rank": 5,
+    "name": "Kim Kirschen",
+    "points": 55.75
+   },
+   {
+    "rank": 6,
+    "name": "Anna Sophie Kothieringer",
+    "points": 51
+   },
+   {
+    "rank": 7,
+    "name": "Ella Gamke",
+    "points": 48.25
+   },
+   {
+    "rank": 8,
+    "name": "Celia Hohenadel",
+    "points": 38
+   },
+   {
+    "rank": 9,
+    "name": "Merle Herwig",
+    "points": 38
+   },
+   {
+    "rank": 10,
+    "name": "Anne Kirsch",
+    "points": 36.25
+   }
+  ]
+ },
+ "fie_prev": {
+  "rank": 341,
+  "points": 0.625,
+  "breakdown": null,
+  "date": "2026-07-31",
+  "label": "Saisonabschluss 2025/26"
+ },
+ "explain": {
+  "dfb": [
+   "Seit der Berechnung vom 19.10.2026:",
+   "Platz 7 → 6, 48,25 → 47,25 Punkte (−1).",
+   "Weniger Punkte und trotzdem besser platziert: Konkurrentinnen vor ihr haben noch mehr Punkte verloren.",
+   "– Überholt: Anne Kleibrink (65 → 45 Punkte)",
+   "So rechnet die DFB-Rangliste: Jedes Ergebnis zählt ein Jahr und fällt danach heraus, schwächere Ergebnisse können als Streichergebnis wegfallen. Punkte ändern sich deshalb bei jeder Neuberechnung, auch ohne neues Turnier.",
+   "Aktueller Stand: berechnet am 15.11.2026 (Ophardt)."
+  ],
+  "fie": [
+   "Seit Saisonabschluss 2025/26:",
+   "Platz 341 → 312, 0,625 → 1,125 Punkte (+0,5).",
+   "Aktuell gewertet:",
+   "– Grand Prix Turin 2026: 0,375",
+   "– Satellite Amsterdam 2026: 0,5",
+   "– Weltcup Plovdiv 2026: 0,25",
+   "So rechnet die FIE-Weltrangliste: Gewertet werden die Ergebnisse der letzten zwölf Monate. Die Punkte eines Turniers fallen weg, sobald es im neuen Jahr wieder ausgetragen wird. Es zählt nur eine begrenzte Zahl bester Ergebnisse, der Rest wird gestrichen."
   ]
  },
  "results": [
@@ -1874,69 +1977,5 @@
    "source": "FIE",
    "status": "Keine Meldung bekannt"
   }
- ],
- "dfb_prev": {
-  "rank": 7,
-  "points": 48.25,
-  "calculated": "2026-10-19",
-  "top10": [
-   {
-    "rank": 1,
-    "name": "Carlotta Sophie Morandi",
-    "points": 160.5
-   },
-   {
-    "rank": 2,
-    "name": "Leonie Ebert",
-    "points": 76.25
-   },
-   {
-    "rank": 3,
-    "name": "Marie Höfler",
-    "points": 67.75
-   },
-   {
-    "rank": 4,
-    "name": "Anne Kleibrink",
-    "points": 65
-   },
-   {
-    "rank": 5,
-    "name": "Kim Kirschen",
-    "points": 55.75
-   },
-   {
-    "rank": 6,
-    "name": "Anna Sophie Kothieringer",
-    "points": 51
-   },
-   {
-    "rank": 7,
-    "name": "Ella Gamke",
-    "points": 48.25
-   },
-   {
-    "rank": 8,
-    "name": "Celia Hohenadel",
-    "points": 38
-   },
-   {
-    "rank": 9,
-    "name": "Merle Herwig",
-    "points": 38
-   },
-   {
-    "rank": 10,
-    "name": "Anne Kirsch",
-    "points": 36.25
-   }
-  ]
- },
- "fie_prev": {
-  "rank": 341,
-  "points": 0.625,
-  "breakdown": null,
-  "date": "2026-07-31",
-  "label": "Saisonabschluss 2025/26"
- }
+ ]
 }

@@ -74,6 +74,8 @@ details summary { cursor: pointer; color: var(--muted); font-size: 13px; padding
 /* Erläuterung in den Ranglisten-Karten: kleiner Knopf neben der Platzzahl, Text schwebt unter der Karte */
 .kpi { position: relative; }
 .nw { white-space: nowrap; }
+.quiet-link { color: inherit; text-decoration-color: var(--line); text-underline-offset: 3px; }
+.quiet-link:hover { text-decoration-color: var(--brand); }
 .kpi-row { display: flex; align-items: center; gap: 6px; }
 .why { display: inline-block; vertical-align: middle; margin-left: 6px; }
 .why > summary { list-style: none; cursor: pointer; display: inline-flex; align-items: center; justify-content: center;
@@ -163,8 +165,8 @@ footer { color: var(--muted); font-size: 12px; margin-top: 24px; }
   </header>
   <div id="errors"></div>
   <div class="grid">
-    <section class="card kpi"><div class="lbl">DFB-Rangliste · Senior</div><div id="kpi-dfb"></div></section>
-    <section class="card kpi"><div class="lbl">FIE-Weltrangliste · Damen-Florett</div><div id="kpi-fie"></div></section>
+    <section class="card kpi"><div class="lbl" id="lbl-dfb">DFB-Rangliste · Senior</div><div id="kpi-dfb"></div></section>
+    <section class="card kpi"><div class="lbl" id="lbl-fie">FIE-Weltrangliste · Damen-Florett</div><div id="kpi-fie"></div></section>
     <section class="card wide next" id="next"></section>
     <section class="card wide"><h2>Letzte News</h2><ul class="feed" id="feed"></ul></section>
     <section class="card wide"><h2>Nächste Termine</h2><div class="scroll"><table id="events"></table></div></section>
@@ -172,8 +174,8 @@ footer { color: var(--muted); font-size: 12px; margin-top: 24px; }
       <p class="sub" style="margin:10px 0 0">„Fotos im DFB-Archiv“ führt zum Fotoarchiv des Deutschen Fechter-Bundes. Dort gelten dessen Nutzungsbedingungen; Fotos werden hier bewusst nicht angezeigt.</p></section>
     <section class="card wide"><h2>Gefechtsbilanz</h2><div id="bilanz"></div></section>
     <section class="card"><h2>Letzte Gefechte</h2><div id="bouts"></div></section>
-    <section class="card"><h2>DFB-Rangliste Top 10</h2><table id="dfb"></table><div class="sub" id="dfb-note"></div></section>
-    <section class="card"><h2>Deutsche in der FIE-Rangliste</h2><table id="ger"></table></section>
+    <section class="card"><h2 id="h-dfb">DFB-Rangliste Top 10</h2><table id="dfb"></table><div class="sub" id="dfb-note"></div></section>
+    <section class="card"><h2 id="h-ger">Deutsche in der FIE-Rangliste</h2><table id="ger"></table></section>
     <section class="card wide"><h2>Ranglisten-Verlauf</h2><div id="chart"></div></section>
     <section class="card wide rules" id="regeln"><h2>Regeln und Wissenswertes</h2>
       <details open><summary>Die Lichter: Grün, Rot, Weiß</summary><div>
@@ -350,12 +352,13 @@ function renderBilanz(s) {
 }
 
 // Aufklappbare Erläuterung unter einer Ranglisten-Kennzahl; Zeilen mit "– " werden zur Aufzählung
-function why(lines) {
+function why(lines, url, label) {
   if (!lines || !lines.length) return '';
   let html = '', list = [];
   const flush = () => { if (list.length) { html += `<ul>${list.map(l => `<li>${esc(l)}</li>`).join('')}</ul>`; list = []; } };
   lines.forEach(l => { if (l.startsWith('– ')) list.push(l.slice(2)); else { flush(); html += `<p>${esc(l)}</p>`; } });
   flush();
+  if (safeUrl(url)) html += `<p><a href="${safeUrl(url)}" target="_blank" rel="noopener">${esc(label)} ansehen ↗</a></p>`;
   return `<details class="why"><summary aria-label="Erläuterung" title="Erläuterung">i</summary><div class="why-body">${html}</div></details>`;
 }
 
@@ -369,8 +372,15 @@ function render(s, changes, hist) {
   if (s.fie.image) { $('#img').src = s.fie.image; $('#img').hidden = false; }
   if (s.errors.length) $('#errors').innerHTML = `<div class="errors"><b>Quelle nicht erreichbar, letzter Stand wird gezeigt:</b><br>${s.errors.map(esc).join('<br>')}</div>`;
 
-  $('#kpi-fie').innerHTML = `<div class="kpi-row"><span class="num">${int(s.fie.rank)}</span>${trend(hist, 'FIE')}</div><div class="sub">${num(s.fie.points)} Punkte · <span class="nw">Saison ${saison(s.fie.season)}${why((s.explain || {}).fie)}</span></div>`;
-  $('#kpi-dfb').innerHTML = `<div class="kpi-row"><span class="num">${int(s.dfb.rank)}</span>${trend(hist, 'DFB')}</div><div class="sub">${num(s.dfb.points)} Punkte · <span class="nw">berechnet ${dmy(s.dfb.calculated)}${why((s.explain || {}).dfb)}</span></div>`;
+  // Ranglisten-Links: DFB aus manual.json (Ophardt), FIE aus den Daten (Fallback: aktuelle Saison)
+  rankUrl.DFB = s.dfb.url;
+  rankUrl.FIE = s.fie.ranking_url || `https://fie.org/athletes/detailed-ranking?season=${int(s.fie.season)}&weapon=F&gender=F&category=S&type=I`;
+  const linkTo = (sel, url) => { const el = $(sel); if (el && safeUrl(url))
+    el.innerHTML = `<a class="quiet-link" href="${safeUrl(url)}" target="_blank" rel="noopener">${esc(el.textContent)} ↗</a>`; };
+  linkTo('#lbl-dfb', rankUrl.DFB); linkTo('#lbl-fie', rankUrl.FIE);
+  linkTo('#h-dfb', rankUrl.DFB); linkTo('#h-ger', rankUrl.FIE);
+  $('#kpi-fie').innerHTML = `<div class="kpi-row"><span class="num">${int(s.fie.rank)}</span>${trend(hist, 'FIE')}</div><div class="sub">${num(s.fie.points)} Punkte · <span class="nw">Saison ${saison(s.fie.season)}${why((s.explain || {}).fie, rankUrl.FIE, 'FIE-Weltrangliste')}</span></div>`;
+  $('#kpi-dfb').innerHTML = `<div class="kpi-row"><span class="num">${int(s.dfb.rank)}</span>${trend(hist, 'DFB')}</div><div class="sub">${num(s.dfb.points)} Punkte · <span class="nw">berechnet ${dmy(s.dfb.calculated)}${why((s.explain || {}).dfb, rankUrl.DFB, 'DFB-Rangliste')}</span></div>`;
   // Erläuterungen schließen bei Klick daneben oder Esc; immer nur eine offen
   document.addEventListener('click', ev => document.querySelectorAll('details.why[open]')
     .forEach(d => { if (!d.contains(ev.target)) d.open = false; }));
@@ -378,7 +388,8 @@ function render(s, changes, hist) {
     .forEach(d => { d.open = false; d.querySelector('summary').focus(); }); });
 
   // Feed: eigene Änderungen + neueste Meldung von fechten.org (gleiche Form, nur Quelle und Überschrift)
-  const items = changes.slice(0, 20).map(c => ({ date: String(c.date), html: esc(c.text) }));
+  const items = changes.slice(0, 20).map(c => ({ date: String(c.date), html: safeUrl(c.url)
+    ? `<a href="${safeUrl(c.url)}" target="_blank" rel="noopener">${esc(c.text)} ↗</a>` : esc(c.text) }));
   const n = s.dfb_news;
   if (n && safeUrl(n.url)) items.push({ date: String(n.date),
     html: `Deutscher Fechter-Bund: <a href="${safeUrl(n.url)}" target="_blank" rel="noopener">${esc(n.title)} ↗</a>` });
@@ -421,6 +432,7 @@ function render(s, changes, hist) {
 // Treppenlinie: Ein Platz ändert sich nur sprunghaft bei Neuberechnung. Platz 1 oben.
 // Je Rangliste eine eigene Grafik (Platz 6 und 312 auf einer Achse wären unlesbar), in echter Pixelbreite.
 const LABEL = { DFB: 'DFB-Rangliste', FIE: 'FIE-Weltrangliste' };
+const rankUrl = {};  // wird in render() aus den Daten gesetzt
 
 function cause(src, prev, cur, results) {
   if (cur.d.endsWith('-07-31')) return `Saisonabschluss ${saison(Number(cur.d.slice(0, 4)))}`;
@@ -486,7 +498,7 @@ function drawCharts(hist, results) {
   const W = Math.max(280, box.clientWidth);
   const series = ['DFB', 'FIE'].map(src => ({ src, pts: stepData(src, hist, results) })).filter(s => s.pts.length);
   box.innerHTML = series.map(({ src, pts }) => `<div class="chart-wrap">
-      <h3>${LABEL[src]}</h3>${stepChart(src, pts, W)}<div class="tip" hidden></div>
+      <h3>${safeUrl(rankUrl[src]) ? `<a class="quiet-link" href="${safeUrl(rankUrl[src])}" target="_blank" rel="noopener">${LABEL[src]} ↗</a>` : LABEL[src]}</h3>${stepChart(src, pts, W)}<div class="tip" hidden></div>
       <details><summary>Werte als Tabelle</summary><table>
         <tr><th>Stand</th><th class="r">Platz</th><th class="r">Punkte</th><th>Anlass</th></tr>
         ${pts.slice().reverse().map(p => `<tr><td>${dmy(p.d)}</td><td class="r">${int(p.rank)}</td><td class="r">${num(p.pts)}</td><td class="sub">${esc(p.why)}</td></tr>`).join('')}

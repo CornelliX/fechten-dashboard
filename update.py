@@ -308,6 +308,8 @@ def build_state(cfg, manual, old, today, fetchers=None):
     new_albums = attempt("DFB-Fotoarchiv", lambda: f["photo_albums"](cfg))
 
     fie = dict(old.get("fie") or {}, season=season)
+    fie["ranking_url"] = f"{FIE}/athletes/detailed-ranking?" + urllib.parse.urlencode(
+        {"season": season, "weapon": cfg["weapon"], "gender": cfg["gender"], "category": cfg["category"], "type": "I"})
     if prof:
         fie.update(rank=prof["rank"], points=prof["points"], image=prof["image"], seasons=prof["seasons"])
     if rank and rank["rank"]:
@@ -466,33 +468,51 @@ def rank_change(label, o, n):
             f"({de(o.get('points'))} → {de(n.get('points'))} Punkte)")
 
 
-def diff(old, new):
-    out = [c for c in (rank_change("FIE-Weltrangliste", old.get("fie"), new.get("fie")),
-                       rank_change("DFB-Rangliste", old.get("dfb"), new.get("dfb"))) if c]
+PHOTO_ARCHIVE_PUBLIC = "https://www.fechten.org/service/foto-archiv"  # öffentliche Seite mit Nutzungsbedingungen
 
+
+def diff(old, new):
+    """Änderungen als [{"text": ..., "url": ...}]; url nur, wenn es ein direktes Ziel gibt."""
+    out = []
+
+    def add(text, url=None):
+        out.append({"text": text, **({"url": url} if url else {})})
+
+    fie_n, dfb_n = new.get("fie") or {}, new.get("dfb") or {}
+    for label, o, n, url in (("FIE-Weltrangliste", old.get("fie"), fie_n, fie_n.get("ranking_url")),
+                             ("DFB-Rangliste", old.get("dfb"), dfb_n, dfb_n.get("url"))):
+        c = rank_change(label, o, n)
+        if c:
+            add(c, url)
+
+    athlete = f"{FIE}/athletes/{new['fie_id']}" if new.get("fie_id") else None
     old_r = {r["key"]: r for r in old.get("results", [])}
     # Ältere Ergebnisse, die erst jetzt mitgeladen werden (z. B. Vorsaison, U20), sind keine Neuigkeit
     cutoff = (date.fromisoformat(new.get("updated", "9999-12-31")[:10]) - timedelta(days=45)).isoformat()
     for r in new.get("results", []):
         o = old_r.get(r["key"])
+        r_url = r.get("url") or (athlete if r.get("source") == "FIE" else None)
         if o is None:
             if str(r["date"]) >= cutoff:
-                out.append(f"Neues Ergebnis: {r['name']}: Platz {r['place']}")
+                add(f"Neues Ergebnis: {r['name']}: Platz {r['place']}", r_url)
         elif o.get("place") != r.get("place"):
-            out.append(f"Ergebnis geändert: {r['name']}: Platz {o.get('place')} → {r.get('place')}")
+            add(f"Ergebnis geändert: {r['name']}: Platz {o.get('place')} → {r.get('place')}", r_url)
         if r.get("photos") and r.get("photos") != (o or {}).get("photos") and str(r["date"]) >= cutoff:
-            out.append(f"Neue Fotos im DFB-Fotoarchiv: {r['photos']} ({r['name']})")
+            # Turnier nur nennen, wenn es nicht schon im Albumtitel steht (keine Dopplung)
+            same = _fold(r.get("city")) and _fold(r.get("city")) in _fold(r["photos"])
+            add(f"Neue Fotos im DFB-Fotoarchiv: {r['photos']}" + ("" if same else f" ({r['name']})"),
+                PHOTO_ARCHIVE_PUBLIC)
 
     old_e = {e["key"]: e for e in old.get("events", [])}
     for e in new.get("events", []):
         o = old_e.get(e["key"])
         if o is None:
-            out.append(f"Neuer Termin: {e['name']} ({dmy(e['date'])}), {e.get('status')}")
+            add(f"Neuer Termin: {e['name']} ({dmy(e['date'])}), {e.get('status')}", e.get("url"))
             continue
         if o.get("status") != e.get("status"):
-            out.append(f"{e['name']}: {o.get('status')} → {e.get('status')}")
+            add(f"{e['name']}: {o.get('status')} → {e.get('status')}", e.get("url"))
         if o.get("date") != e.get("date"):
-            out.append(f"{e['name']} verschoben: {dmy(o['date'])} → {dmy(e['date'])}")
+            add(f"{e['name']} verschoben: {dmy(o['date'])} → {dmy(e['date'])}", e.get("url"))
     return out
 
 
@@ -558,24 +578,25 @@ def main():
     today = date.today()
 
     new = build_state(cfg, manual, old, today)
-    changes = diff(old, new) if old else ["Dashboard gestartet, ab jetzt werden Änderungen erfasst."]
+    changes = diff(old, new) if old else [{"text": "Dashboard gestartet, ab jetzt werden Änderungen erfasst."}]
 
     state_path.write_text(json.dumps(new, ensure_ascii=False, indent=1), encoding="utf-8")
     feed = json.loads(changes_path.read_text(encoding="utf-8")) if changes_path.exists() else []
-    feed = [{"date": today.isoformat(), "text": c} for c in changes] + feed
+    feed = [{"date": today.isoformat(), **c} for c in changes] + feed
     changes_path.write_text(json.dumps(feed, ensure_ascii=False, indent=1), encoding="utf-8")
     append_history(DATA / "history.csv", new, today)
     stamp = new["updated"][:16].replace("-", "").replace(":", "") + "00Z"  # 2026-11-16T11:32 -> 20261116T113200Z
     (DATA / "termine.ics").write_bytes(ics(new["events"], cfg["name"], stamp).encode("utf-8"))
 
     for c in changes:
-        print("•", c)
+        print("•", c["text"])
     for e in new["errors"]:
         print("FEHLER", e)
     if changes and os.environ.get("GITHUB_OUTPUT"):
         # Texte stammen teils von fie.org: Zeilenumbrüche raus, Zufalls-Delimiter gegen Output-Injection
         delim = "EOF_" + secrets.token_hex(16)
-        body = "\n".join("• " + " ".join(c.split()) for c in changes)
+        body = "\n".join("• " + " ".join(c["text"].split()) + ("\n  " + "".join(c["url"].split()) if c.get("url") else "")
+                           for c in changes)
         with open(os.environ["GITHUB_OUTPUT"], "a", encoding="utf-8") as fh:
             fh.write(f"changed=true\nbody<<{delim}\n{body}\n{delim}\n")
 

@@ -43,7 +43,10 @@ assert [e["status"] for e in a["events"]] == ["Gemeldet", "Voranmeldung (Ophardt
 # 2. Ranglistenwechsel, neues Ergebnis (mit Punkten + Teilnehmerzahl), Meldestatus;
 #    älteres, erst jetzt mitgeladenes U20-Ergebnis erscheint nicht im Feed
 b = build(MANUAL, a, fake(rank=290, points=2.0, entered=True, results=[PLOVDIV], more=[OLD_U20]))
-ch = diff(a, b)
+ch = [c["text"] for c in diff(a, b)]
+fie_c = next(c for c in diff(a, b) if c["text"].startswith("FIE"))
+assert fie_c["url"].startswith("https://fie.org/athletes/detailed-ranking?season=2027&weapon=F"), fie_c
+assert next(c for c in diff(a, b) if c["text"].startswith("Neues Ergebnis"))["url"] == "https://fie.org/athletes/1"
 assert "FIE-Weltrangliste: Platz 312 → 290 ↑ (1,125 → 2 Punkte)" in ch, ch
 assert "Neues Ergebnis: Weltcup Plovdiv: Platz 171" in ch, ch
 assert "Shanghai World Cup 2026: Voranmeldung (Ophardt) → Gemeldet (FIE)" in ch, ch
@@ -56,7 +59,7 @@ assert plov["points"] == 0.25 and plov["field"] == 230 and u20["points"] is None
 down = lambda *x: (_ for _ in ()).throw(OSError("down"))
 broken = {k: down for k in ("ranking", "profile", "events", "results", "field", "opponents", "dfb_news", "photo_albums")}
 c = build(dict(MANUAL, dfb={"rank": 5, "points": 60.75}), b, broken)
-assert diff(b, c) == ["DFB-Rangliste: Platz 7 → 5 ↑ (48,25 → 60,75 Punkte)"], diff(b, c)
+assert [x["text"] for x in diff(b, c)] == ["DFB-Rangliste: Platz 7 → 5 ↑ (48,25 → 60,75 Punkte)"], diff(b, c)
 assert c["fie"]["rank"] == 290 and len(c["errors"]) == 7, c["errors"]
 assert c["dfb_news"]["title"] == "T"  # alte Meldung bleibt bei Ausfall
 assert next(r for r in c["results"] if r["key"] == "fie-2027-127")["field"] == 230
@@ -158,7 +161,8 @@ f_ph = dict(fake(results=[PLOV]), photo_albums=lambda c: albums)
 p1 = build(MANUAL, {}, fake(results=[PLOV]))
 p2 = build(MANUAL, p1, f_ph)
 assert next(r for r in p2["results"] if r["key"] == "fie-2027-127")["photos"] == "Weltcup Plovdiv Florett"
-assert diff(p1, p2) == ["Neue Fotos im DFB-Fotoarchiv: Weltcup Plovdiv Florett (Weltcup Plovdiv)"], diff(p1, p2)
+assert diff(p1, p2) == [{"text": "Neue Fotos im DFB-Fotoarchiv: Weltcup Plovdiv Florett",
+                         "url": "https://www.fechten.org/service/foto-archiv"}], diff(p1, p2)  # keine Dopplung
 p3 = build(MANUAL, p2, dict(f_ph, photo_albums=lambda c: []))  # Album nicht mehr unter den 12 neuesten
 assert diff(p2, p3) == [] and len(p3["photo_albums"]) == 2
 

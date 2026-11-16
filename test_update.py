@@ -2,7 +2,7 @@
 import json
 from datetime import date
 
-from update import build_state, diff, explain_dfb, explain_fie, ics, nuxt_queries, parse_opponents, season_of
+from update import parse_dfb_news, build_state, diff, explain_dfb, explain_fie, ics, nuxt_queries, parse_opponents, season_of
 
 CFG = {"name": "Ella Gamke", "fie_id": 1, "fie_search": "X", "weapon": "F", "gender": "F", "category": "S"}
 MANUAL = {"dfb": {"rank": 7, "points": 48.25}, "fie_status": {"131": "Voranmeldung (Ophardt)"},
@@ -20,6 +20,7 @@ def fake(rank=312, points=1.125, entered=False, results=(), more=(), field=230):
         "results": lambda c, s: list(more),
         "field": lambda s, cid: field,
         "opponents": lambda c: [],
+        "dfb_news": lambda c: {"date": "2026-11-16", "title": "T", "url": "https://www.fechten.org/n/t"},
     }
 
 
@@ -52,10 +53,11 @@ assert plov["points"] == 0.25 and plov["field"] == 230 and u20["points"] is None
 
 # 3. Manuelle DFB-Änderung + Quellen ausgefallen: alter FIE-Stand, Ergebnisse und Teilnehmerzahl bleiben
 down = lambda *x: (_ for _ in ()).throw(OSError("down"))
-broken = {k: down for k in ("ranking", "profile", "events", "results", "field", "opponents")}
+broken = {k: down for k in ("ranking", "profile", "events", "results", "field", "opponents", "dfb_news")}
 c = build(dict(MANUAL, dfb={"rank": 5, "points": 60.75}), b, broken)
 assert diff(b, c) == ["DFB-Rangliste: Platz 7 → 5 ↑ (48,25 → 60,75 Punkte)"], diff(b, c)
-assert c["fie"]["rank"] == 290 and len(c["errors"]) == 5, c["errors"]
+assert c["fie"]["rank"] == 290 and len(c["errors"]) == 6, c["errors"]
+assert c["dfb_news"]["title"] == "T"  # alte Meldung bleibt bei Ausfall
 assert next(r for r in c["results"] if r["key"] == "fie-2027-127")["field"] == 230
 
 # 4. Saisonwechsel im August
@@ -119,5 +121,16 @@ ef = explain_fie({"rank": 341, "points": 0.625, "label": "Saisonabschluss 2025/2
                      {"key": "118_2026", "label": "Weltcup Hong Kong 2026", "points": 8.0, "counted": False}]})
 assert ef[0] == "Seit Saisonabschluss 2025/26:" and "– Neu gewertet: Weltcup Plovdiv 2026 (+0,25)" in ef, ef
 assert "– Streichergebnis, zählt nicht: Weltcup Hong Kong 2026 (8)" in ef, ef
+
+# 9. DFB-News: jüngstes Datum gewinnt (auch wenn angeheftete Topnews oben steht), fremde Links ignoriert
+def item(d, href, title, cls=""):
+    return (f'<div class="row news-list-item mb-3"><div class="col-md-9 {cls}"><h3 itemprop="headline">'
+            f'<a itemprop="url" href="{href}">\n {title}\n</a></h3><time datetime="{d}">x</time>'
+            f'<span class="label label-info">Sport</span><div class="lead"><p>Kurz &amp; gut…</p></div></div></div>')
+page = (item("2026-10-01", "/n/alt", "Alte Topnews", "topnews") + item("2026-11-16", "/n/neu", "Neu &quot;heute&quot;")
+        + item("2026-12-31", "https://evil.example/x", "Fremd"))
+n = parse_dfb_news(page)
+assert n == {"date": "2026-11-16", "title": 'Neu "heute"', "url": "https://www.fechten.org/n/neu",
+             "category": "Sport", "teaser": "Kurz & gut…"}, n
 
 print("ok")

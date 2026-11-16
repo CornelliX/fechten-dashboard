@@ -105,6 +105,11 @@ details summary { cursor: pointer; color: var(--muted); font-size: 13px; padding
 .timeline li { padding-left: 14px; border-left: 2px solid var(--line); }
 .card-chip { display: inline-block; width: 12px; height: 16px; border-radius: 2px; margin-right: 8px; vertical-align: -2px; }
 .card-chip.y { background: #f4c20d; } .card-chip.r { background: #d7262e; } .card-chip.b { background: #111; outline: 1px solid var(--muted); }
+/* DFB-News in Letzte News */
+.dfbnews { display: block; margin-top: 14px; padding: 12px 14px; border: 1px solid var(--line); border-left: 4px solid var(--brand);
+           border-radius: 8px; color: inherit; text-decoration: none; }
+.dfbnews:hover { background: var(--chip); }
+.dfbnews-title { font-weight: 600; margin: 4px 0; text-decoration: underline; text-decoration-color: var(--brand); text-underline-offset: 3px; }
 /* Nächstes Turnier */
 .next { border-left: 4px solid var(--brand); }
 .next-title { font: 700 30px/1.1 "Barlow Condensed", Inter, sans-serif; margin: 6px 0 4px; }
@@ -159,7 +164,7 @@ footer { color: var(--muted); font-size: 12px; margin-top: 24px; }
     <section class="card kpi"><div class="lbl">DFB-Rangliste · Senior</div><div id="kpi-dfb"></div></section>
     <section class="card kpi"><div class="lbl">FIE-Weltrangliste · Damen-Florett</div><div id="kpi-fie"></div></section>
     <section class="card wide next" id="next"></section>
-    <section class="card wide"><h2>Letzte News</h2><ul class="feed" id="feed"></ul></section>
+    <section class="card wide"><h2>Letzte News</h2><ul class="feed" id="feed"></ul><div id="dfb-news"></div></section>
     <section class="card wide"><h2>Nächste Termine</h2><div class="scroll"><table id="events"></table></div></section>
     <section class="card wide"><h2>Ergebnisse</h2><div class="scroll"><table id="results"></table></div></section>
     <section class="card wide"><h2>Gefechtsbilanz</h2><div id="bilanz"></div></section>
@@ -364,6 +369,12 @@ function render(s, changes, hist) {
   $('#kpi-fie').innerHTML = `<span class="num">${int(s.fie.rank)}</span>${trend(hist, 'FIE')}<div class="sub">${num(s.fie.points)} Punkte · Saison ${saison(s.fie.season)}</div>${why((s.explain || {}).fie)}`;
   $('#kpi-dfb').innerHTML = `<span class="num">${int(s.dfb.rank)}</span>${trend(hist, 'DFB')}<div class="sub">${num(s.dfb.points)} Punkte · berechnet ${dmy(s.dfb.calculated)} (Ophardt)</div>${why((s.explain || {}).dfb)}`;
 
+  // Neueste Meldung von fechten.org, mit Direktlink
+  const n = s.dfb_news;
+  $('#dfb-news').innerHTML = n && safeUrl(n.url) ? `<a class="dfbnews" href="${safeUrl(n.url)}" target="_blank" rel="noopener">
+      <div class="lbl">Aktuell beim Deutschen Fechter-Bund · ${dmy(n.date)}${n.category ? ' · ' + esc(n.category) : ''}</div>
+      <div class="dfbnews-title">${esc(n.title)} <span aria-hidden="true">↗</span></div>
+      ${n.teaser ? `<div class="sub">${esc(n.teaser)}</div>` : ''}</a>` : '';
   $('#feed').innerHTML = changes.slice(0, 20).map(c => `<li><time>${dmy(c.date)}</time><span>${esc(c.text)}</span></li>`).join('')
     || '<li><span></span><span class="sub">Noch keine Änderungen.</span></li>';
 

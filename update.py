@@ -3,6 +3,7 @@
 erkennt Änderungen und schreibt docs/data/{state.json, changes.json, history.csv}.
 Nur Standardbibliothek. Aufruf: python update.py"""
 import csv
+import html
 import json
 import os
 import re
@@ -184,6 +185,36 @@ def fetch_opponents(cfg):
     return parse_opponents(items, cfg["fie_id"])
 
 
+DFB_NEWS = "https://www.fechten.org/news/listenansicht"
+
+
+def parse_dfb_news(page):
+    """Neueste Meldung der DFB-Nachrichtenliste (jüngstes Datum; angeheftete Topnews stehen nicht immer oben)."""
+    def clean(x):
+        return " ".join(html.unescape(re.sub(r"<[^>]+>", " ", x or "")).split())
+    items = []
+    for chunk in page.split('news-list-item')[1:]:
+        head = re.search(r'itemprop="headline">\s*<a[^>]*href="([^"]+)"[^>]*>(.*?)</a>', chunk, re.S)
+        when = re.search(r'datetime="(\d{4}-\d{2}-\d{2})"', chunk)
+        if not head or not when:
+            continue
+        href = html.unescape(head.group(1))
+        url = "https://www.fechten.org" + href if href.startswith("/") else href
+        if not url.startswith("https://www.fechten.org/"):  # nur Links auf die DFB-Seite
+            continue
+        cat = re.search(r'<span class="label[^"]*">(.*?)</span>', chunk, re.S)
+        lead = re.search(r'<div class="lead"[^>]*>(.*?)</div>', chunk, re.S)
+        items.append({"date": when.group(1), "title": clean(head.group(2)), "url": url,
+                      "category": clean(cat.group(1)) if cat else "", "teaser": clean(lead.group(1)) if lead else ""})
+    if not items:
+        raise ValueError("keine Meldungen gefunden, Seitenstruktur geändert?")
+    return max(items, key=lambda i: i["date"])  # bei gleichem Datum gewinnt die erste in der Liste
+
+
+def fetch_dfb_news(cfg):
+    return parse_dfb_news(get(DFB_NEWS))
+
+
 def fetch_events(cfg):
     data = json.loads(get(f"{FIE}/api/fie/tournaments?upcoming=true&limit=100&sort=dateAsc"))
     events = []
@@ -212,7 +243,7 @@ def event_status(ev, manual):
 
 def build_state(cfg, manual, old, today, fetchers=None):
     f = {"ranking": fetch_ranking, "profile": fetch_profile, "events": fetch_events, "results": fetch_results,
-         "field": fetch_field, "opponents": fetch_opponents, **(fetchers or {})}
+         "field": fetch_field, "opponents": fetch_opponents, "dfb_news": fetch_dfb_news, **(fetchers or {})}
     season, errors = season_of(today), []
 
     def attempt(label, fn):
@@ -227,6 +258,7 @@ def build_state(cfg, manual, old, today, fetchers=None):
     events = attempt("FIE-Kalender", lambda: f["events"](cfg))
     more_results = attempt("FIE-Ergebnisse", lambda: f["results"](cfg, season))
     opponents = attempt("FIE-Gegnerinnen", lambda: f["opponents"](cfg))
+    dfb_news = attempt("DFB-News", lambda: f["dfb_news"](cfg))
 
     fie = dict(old.get("fie") or {}, season=season)
     if prof:
@@ -277,6 +309,7 @@ def build_state(cfg, manual, old, today, fetchers=None):
         "results": sorted(results.values(), key=lambda r: str(r["date"]), reverse=True),
         "bouts": prof["bouts"] if prof else old.get("bouts", []),
         "opponents": opponents if opponents is not None else old.get("opponents", []),
+        "dfb_news": dfb_news or old.get("dfb_news"),
         "events": sorted(all_events, key=lambda e: e["date"]),
     }
 

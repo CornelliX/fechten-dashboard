@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-16T13:14+00:00",
+ "updated": "2026-11-16T13:22+00:00",
  "name": "Ella Gamke",
  "fie_id": 60886,
  "errors": [],
@@ -1844,6 +1844,13 @@
    }
   }
  ],
+ "dfb_news": {
+  "date": "2026-11-16",
+  "title": "Fechten als Teil wichtiger Teil der Parkinsontherapie",
+  "url": "https://www.fechten.org/n/fechten-als-teil-wichtiger-teil-der-parkinsontherapie",
+  "category": "Sonstiges",
+  "teaser": "„Bei Parkinson ist Bewegung einfach die Hälfte der Therapie“, sagt Martin Seeger. Der 43-jährige Berliner Fechter lebt…"
+ },
  "events": [
   {
    "date": "2026-12-05",

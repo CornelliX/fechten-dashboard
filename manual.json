@@ -43,11 +43,11 @@
     }
   ],
   "results": [
-    { "date": "2026-05-30", "name": "DM Senior", "city": "Berlin", "place": 5 },
+    { "date": "2026-05-30", "name": "Deutsche Meisterschaft Senioren", "city": "Berlin", "place": 5 },
     { "date": "2026", "name": "Burg-Cup", "city": "Esslingen", "place": 3 },
     { "date": "2026-01-24", "name": "Turnier Dörnigheim", "city": "Dörnigheim", "place": 2 },
     { "date": "2025-12", "name": "Händel-Cup", "city": "Halle", "place": 8 },
     { "date": "2025-10", "name": "Adolf-Ermer-Cup (U20)", "city": "Stuttgart", "place": 1 },
-    { "date": "2026", "name": "DM Team Senior 2025 und 2026, Die Finals 2025", "city": "", "place": 1 }
+    { "date": "2026", "name": "Deutsche Meisterschaft Mannschaft Senioren 2025 und 2026 (Die Finals 2025)", "city": "", "place": 1 }
   ]
 }

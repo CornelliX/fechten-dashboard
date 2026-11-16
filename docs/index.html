@@ -391,7 +391,7 @@ function renderStats(s, hist) {
     (levels.length ? `<h3>Beste Platzierungen</h3><table>${levels.map(([l, r]) => `<tr><td>${l}<div class="sub">${where(r)} · ${dmy(r.date)}</div></td>
       <td class="r">${placeCell(r)}</td></tr>`).join('')}</table>` : '') +
     (podium.length ? `<h3>Titel und Podest</h3><table>${podium.map(r => `<tr><td style="width:2.5em"><span class="num" style="font-size:18px">${int(r.place)}.</span></td>
-      <td>${where(r)}<div class="sub">${dmy(r.date)}</div></td></tr>`).join('')}</table>` : '') +
+      <td>${r.place == 1 && /^Deutsche Meisterschaft/.test(r.name) ? `<b>Deutsche Meisterin${/mannschaft/i.test(r.name) ? ' mit der Mannschaft' : ''}</b><br>` : ''}${where(r)}<div class="sub">${dmy(r.date)}</div></td></tr>`).join('')}</table>` : '') +
     '<div class="sub" style="margin-top:10px">National nur Ergebnisse ab Saison 2025/26 (Ophardt, manuell gepflegt).</div>';
 }
 

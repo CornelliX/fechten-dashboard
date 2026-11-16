@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-16T13:22+00:00",
+ "updated": "2026-11-16T13:37+00:00",
  "name": "Ella Gamke",
  "fie_id": 60886,
  "errors": [],
@@ -273,7 +273,8 @@
    "category": "S",
    "source": "FIE",
    "points": 0.25,
-   "field": 230
+   "field": 230,
+   "photos": "Weltcup Plovdiv Florett"
   },
   {
    "key": "fie-2027-397",
@@ -1851,6 +1852,56 @@
   "category": "Sonstiges",
   "teaser": "„Bei Parkinson ist Bewegung einfach die Hälfte der Therapie“, sagt Martin Seeger. Der 43-jährige Berliner Fechter lebt…"
  },
+ "photo_albums": [
+  {
+   "title": "Youth Olympic Games Dakar 2026",
+   "date": "2026-11-13"
+  },
+  {
+   "title": "Weltcup Wuxi Damendegen",
+   "date": "2026-11-13"
+  },
+  {
+   "title": "Weltcup Plovdiv Florett",
+   "date": "2026-11-12"
+  },
+  {
+   "title": "Weltcup Bern Herrendegen",
+   "date": "2026-11-12"
+  },
+  {
+   "title": "U17/U20 WC Aix en Provence Damenflorett",
+   "date": "2026-11-06"
+  },
+  {
+   "title": "U17/U20 WC Dormagen Herrensäbel",
+   "date": "2026-11-06"
+  },
+  {
+   "title": "QB Künzelsau Säbel",
+   "date": "2026-10-24"
+  },
+  {
+   "title": "DFB U20 QB Barleben Florett",
+   "date": "2026-10-17"
+  },
+  {
+   "title": "Weltcup Casablanca Degen",
+   "date": "2026-10-15"
+  },
+  {
+   "title": "Welcup Oran Säbel",
+   "date": "2026-10-15"
+  },
+  {
+   "title": "Weltcup Takamtsu Florett",
+   "date": "2026-10-15"
+  },
+  {
+   "title": "Veteranen WM Tiflis 2026",
+   "date": "2026-10-09"
+  }
+ ],
  "events": [
   {
    "date": "2026-12-05",

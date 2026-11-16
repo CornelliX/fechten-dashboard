@@ -40,6 +40,11 @@ NAMES = {
     "Championships of Baden-Nord - Württemberg": "Meisterschaft Nordbaden-Württemberg",
 }
 
+# Ortsschreibweisen von Ophardt vereinheitlichen
+CITIES = {"Stuttgart BadCannstatt": "Stuttgart-Bad Cannstatt", "Stuttgart Bad Cannstatt": "Stuttgart-Bad Cannstatt",
+          "Winsen Luhe": "Winsen (Luhe)", "Winsen": "Winsen (Luhe)", "Leipzig - Mölkau": "Leipzig-Mölkau",
+          "Tauberbischofsheim (BN)": "Tauberbischofsheim"}
+
 
 def german_name(event):
     if event in NAMES:
@@ -113,7 +118,7 @@ def parse(md):
                 start, _, end = c[1].partition(" / ")
                 weapon, age, typ = _comp(c[4])
                 out["results"].append({"section": section, "date": _iso(start), "end": _iso(end) if end else None,
-                                       "rank": int(c[0]), "city": c[2], "event": c[3], "name": german_name(c[3]),
+                                       "rank": int(c[0]), "city": CITIES.get(c[2], c[2]), "event": c[3], "name": german_name(c[3]),
                                        "weapon": weapon, "age": age, "type": typ})
             elif kind == "rankings" and len(c) >= 5:
                 weapon, age, typ = _comp(c[4])

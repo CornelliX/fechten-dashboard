@@ -441,6 +441,31 @@ function renderStats(s, hist, career) {
   $('#stats').innerHTML = h;
 }
 
+// Jubiläen für "Letzte News": Jahrestage aus der Laufbahn, sichtbar 7 Tage ab dem Jahrestag
+function anniversaries(career, s, ref) {
+  const C = (career && career.results || []).filter(r => r.weapon === 'Florett');
+  const asc = (a, b) => String(a.date).localeCompare(String(b.date));
+  const first = pred => C.filter(pred).sort(asc)[0];
+  const at = r => `${EVENT_DE[r.event] || r.event}, ${r.city}`;
+  const fie1 = (s.results || []).filter(r => r.source === 'FIE').sort(asc)[0];
+  const t = first(() => true), nat = first(r => /^National/.test(r.section)), intl = first(r => /^(International|Zonal)/.test(r.section));
+  const list = [
+    career && career.exam && [career.exam, 'Turnierreifeprüfung bestanden'],
+    t && [t.date, `erstes Turnier: ${at(t)}`],
+    nat && [nat.date, `erstes nationales Turnier: ${at(nat)}`],
+    intl && [intl.date, `erstes internationales Turnier: ${at(intl)}`],
+    fie1 && [fie1.date, `erstes FIE-Turnier: ${fie1.name}`],
+    ...C.filter(r => r.section === 'National Championships' && r.rank === 1).map(r =>
+      [r.date, `Deutsche Meisterin ${ageDe(r.age)}${r.type === 'Mannschaft' ? ' mit der Mannschaft' : ' im Einzel'} (${r.city})`]),
+  ].filter(Boolean);
+  const y = Number(ref.slice(0, 4)), refT = Date.parse(ref + 'T12:00');
+  return list.flatMap(([d, what]) => [y, y - 1].map(yy => {  // y-1: Jahrestag Ende Dezember noch Anfang Januar zeigen
+    const n = yy - Number(String(d).slice(0, 4)), day = yy + String(d).slice(4, 10);
+    const age = (refT - Date.parse(day + 'T12:00')) / 864e5;
+    return n >= 1 && age >= 0 && age < 7 ? { date: day, html: `Jubiläum: Vor ${n} ${n === 1 ? 'Jahr' : 'Jahren'} – ${esc(what)}` } : null;
+  })).filter(Boolean);
+}
+
 // Aufklappbare Erläuterung unter einer Ranglisten-Kennzahl; Zeilen mit "– " werden zur Aufzählung
 const EXT = '<svg class="ext" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.5 2.5h5v5M9.5 2.5l-7 7"/></svg>';
 function why(lines, url, label) {
@@ -485,6 +510,7 @@ function render(s, changes, hist, career) {
   const n = s.dfb_news;
   if (n && safeUrl(n.url)) items.push({ date: String(n.date),
     html: `Deutscher Fechter-Bund: <a href="${safeUrl(n.url)}" target="_blank" rel="noopener">${esc(n.title)} ${EXT}</a>` });
+  items.push(...anniversaries(career, s, today));
   items.sort((a, b) => (a.date < b.date ? 1 : a.date > b.date ? -1 : 0));  // stabil: DFB nach eigenen Einträgen vom selben Tag
   $('#feed').innerHTML = items.map(i => `<li><time>${dmy(i.date)}</time><span>${i.html}</span></li>`).join('')
     || '<li><span></span><span class="sub">Noch keine Änderungen.</span></li>';

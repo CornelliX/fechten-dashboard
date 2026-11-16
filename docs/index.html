@@ -364,9 +364,20 @@ function renderBilanz(s) {
 const EVENT_DE = { 'German Championships': 'Deutsche Meisterschaft', 'German Team Championships': 'Deutsche Mannschaftsmeisterschaft',
   'European Championships': 'Europameisterschaft', 'International Tournament': 'Internationales Turnier',
   'International Competition': 'Internationales Turnier', 'Youth Tournament': 'Jugendturnier', 'The Finals': 'Die Finals' };
-const ageDe = a => a === 'Senior' ? 'Senioren' : a;
-function renderStats(s, hist, career) {
+const ageDe = a => esc(a === 'Senior' ? 'Senioren' : a);
+// "The Finals" ist die Finalrunde der Deutschen Meisterschaft: mit der DM desselben Jahres zusammenführen
+function careerResults(career) {
   const C = (career && career.results || []).filter(r => r.weapon === 'Florett');
+  const isDm = r => /^German (Team )?Championships$/.test(r.event);
+  const key = r => `${String(r.date).slice(0, 4)}|${r.age}|${r.type}`;
+  const finals = new Map(C.filter(r => r.event === 'The Finals').map(r => [key(r), r]));
+  const dm = new Set(C.filter(isDm).map(key));
+  return C.filter(r => !(r.event === 'The Finals' && dm.has(key(r))))
+    .map(r => isDm(r) && finals.has(key(r)) ? { ...r, finals: finals.get(key(r)) } : r)
+    .map(r => r.event === 'The Finals' ? { ...r, section: 'National Championships', event: 'German Championships' } : r);
+}
+function renderStats(s, hist, career) {
+  const C = careerResults(career);
   const fie = (s.results || []).filter(r => r.source === 'FIE' && Number(r.place) > 0);
   const byDate = (a, b) => String(b.date).localeCompare(String(a.date));
   const ev = r => esc(EVENT_DE[r.event] || r.event);
@@ -420,7 +431,7 @@ function renderStats(s, hist, career) {
     const lm = (career.medals || {}).regional || [];
     h += '<h3>Meisterschaften</h3><table>' +
       titles.map(r => rankRow(1, `<b>Deutsche Meisterin ${ageDe(r.age)}${r.type === 'Mannschaft' ? ' mit der Mannschaft' : ' im Einzel'}</b>`,
-        `${esc(r.city)} · ${yr(r)}`)).join('') +
+        `${esc(r.city)} · ${yr(r)}${r.finals ? ` · Finale bei Die Finals, ${esc(r.finals.city)}` : ''}`)).join('') +
       em.map(r => rankRow(r.rank, `Europameisterschaft ${ageDe(r.age)} ${r.type === 'Mannschaft' ? 'Mannschaft' : 'Einzel'}`,
         `${esc(r.city)} · ${yr(r)}`)).join('') +
       (lm.length ? `<tr><td></td><td>Landesmeisterschaften<div class="sub">${int(lm[0])}× Gold · ${int(lm[1])}× Silber · ${int(lm[2])}× Bronze</div></td></tr>` : '') +
@@ -443,7 +454,7 @@ function renderStats(s, hist, career) {
 
 // Jubiläen für "Letzte News": Jahrestage aus der Laufbahn, sichtbar 7 Tage ab dem Jahrestag
 function anniversaries(career, s, ref) {
-  const C = (career && career.results || []).filter(r => r.weapon === 'Florett');
+  const C = careerResults(career);
   const asc = (a, b) => String(a.date).localeCompare(String(b.date));
   const first = pred => C.filter(pred).sort(asc)[0];
   const at = r => `${EVENT_DE[r.event] || r.event}, ${r.city}`;
@@ -456,7 +467,7 @@ function anniversaries(career, s, ref) {
     intl && [intl.date, `erstes internationales Turnier: ${at(intl)}`],
     fie1 && [fie1.date, `erstes FIE-Turnier: ${fie1.name}`],
     ...C.filter(r => r.section === 'National Championships' && r.rank === 1).map(r =>
-      [r.date, `Deutsche Meisterin ${ageDe(r.age)}${r.type === 'Mannschaft' ? ' mit der Mannschaft' : ' im Einzel'} (${r.city})`]),
+      [r.date, `Deutsche Meisterin ${r.age === 'Senior' ? 'Senioren' : r.age}${r.type === 'Mannschaft' ? ' mit der Mannschaft' : ' im Einzel'} (${r.city})`]),
   ].filter(Boolean);
   const y = Number(ref.slice(0, 4)), refT = Date.parse(ref + 'T12:00');
   return list.flatMap(([d, what]) => [y, y - 1].map(yy => {  // y-1: Jahrestag Ende Dezember noch Anfang Januar zeigen

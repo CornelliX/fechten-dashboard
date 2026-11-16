@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-16T13:37+00:00",
+ "updated": "2026-11-16T19:07+00:00",
  "name": "Ella Gamke",
  "fie_id": 60886,
  "errors": [],
@@ -118,7 +118,10 @@
     "points": 0.25,
     "counted": true
    }
-  ]
+  ],
+  "ranking_url": "https://fie.org/athletes/detailed-ranking?season=2027&weapon=F&gender=F&category=S&type=I",
+  "born": "2006",
+  "hand": "R"
  },
  "dfb": {
   "rank": 6,
@@ -414,6 +417,110 @@
    "place": 1,
    "key": "m-2025-10-Adolf-Ermer-Cup (U20)",
    "source": "Ophardt (manuell)"
+  },
+  {
+   "key": "fie-2025-129",
+   "date": "2025-03-06",
+   "name": "Weltcup Cairo",
+   "city": "Cairo",
+   "place": 159,
+   "season": 2025,
+   "competition_id": 129,
+   "category": "S",
+   "source": "FIE",
+   "points": null,
+   "field": 185
+  },
+  {
+   "key": "fie-2025-1435-J",
+   "date": "2025-02-01",
+   "name": "Weltcup Zagreb (U20)",
+   "city": "Zagreb",
+   "place": 148,
+   "season": 2025,
+   "competition_id": 1435,
+   "category": "J",
+   "source": "FIE",
+   "points": null,
+   "field": 224
+  },
+  {
+   "key": "fie-2025-444-J",
+   "date": "2025-01-18",
+   "name": "Weltcup Tbilisi (U20)",
+   "city": "Tbilisi",
+   "place": 50,
+   "season": 2025,
+   "competition_id": 444,
+   "category": "J",
+   "source": "FIE",
+   "points": null,
+   "field": 142
+  },
+  {
+   "key": "fie-2025-898-J",
+   "date": "2024-11-02",
+   "name": "Weltcup Istanbul (U20)",
+   "city": "Istanbul",
+   "place": 114,
+   "season": 2025,
+   "competition_id": 898,
+   "category": "J",
+   "source": "FIE",
+   "points": null,
+   "field": 211
+  },
+  {
+   "key": "fie-2024-1435-J",
+   "date": "2024-02-03",
+   "name": "Weltcup Leipzig (U20)",
+   "city": "Leipzig",
+   "place": 68,
+   "season": 2024,
+   "competition_id": 1435,
+   "category": "J",
+   "source": "FIE",
+   "points": null,
+   "field": 166
+  },
+  {
+   "key": "fie-2024-444-J",
+   "date": "2024-01-20",
+   "name": "Weltcup Zagreb (U20)",
+   "city": "Zagreb",
+   "place": 139,
+   "season": 2024,
+   "competition_id": 444,
+   "category": "J",
+   "source": "FIE",
+   "points": null,
+   "field": 196
+  },
+  {
+   "key": "fie-2024-37-J",
+   "date": "2024-01-06",
+   "name": "Weltcup Udine (U20)",
+   "city": "Udine",
+   "place": 62,
+   "season": 2024,
+   "competition_id": 37,
+   "category": "J",
+   "source": "FIE",
+   "points": null,
+   "field": 213
+  },
+  {
+   "key": "fie-2024-898-J",
+   "date": "2023-11-04",
+   "name": "Weltcup Istanbul (U20)",
+   "city": "Istanbul",
+   "place": 99,
+   "season": 2024,
+   "competition_id": 898,
+   "category": "J",
+   "source": "FIE",
+   "points": null,
+   "field": 161
   }
  ],
  "bouts": [

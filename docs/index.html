@@ -451,7 +451,7 @@ function renderStats(s, hist, career) {
   const minRank = xs => { const v = xs.map(Number).filter(n => n > 0); return v.length ? Math.min(...v) : null; };
   const tile = (lbl, val, sub) => `<div><div class="lbl">${lbl}</div><span class="num">${val}</span><div class="sub">${sub}</div></div>`;
   // Wettbewerbe mit Medaille, Ranglistenplätze (medals = false) immer als Zahl
-  const rankRow = (place, main, sub, medals = true) => `<tr><td style="width:2.5em">${medals ? placeNum(place) : `<span class="num" style="font-size:18px">${int(place)}.</span>`}</td><td>${main}<div class="sub">${sub}</div></td></tr>`;
+  const rankRow = (place, main, sub, medals = true) => `<tr><td>${main}<div class="sub">${sub}</div></td><td class="r" style="width:4em">${medals ? placeNum(place) : `<span class="num" style="font-size:18px">${int(place)}.</span>`}</td></tr>`;
 
   // Ranglisten-Bestwerte: Ophardt-Saison X = X/X+1; FIE-Saison X = X-1/X
   const R = (career && career.rankings || []).filter(r => r.weapon === 'Florett');

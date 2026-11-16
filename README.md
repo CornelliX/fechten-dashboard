@@ -5,7 +5,7 @@ Statische Seite (`docs/`), die ein GitHub-Workflow jeden Morgen neu befüllt:
 - **Automatisch von fie.org:** Weltranglistenplatz und Punkte, Ergebnisse mit FIE-Punkten, Einzelgefechte, Saisonkalender Damen-Florett Senior, Meldestatus in den FIE-Meldelisten, deutsche Konkurrenz in der Weltrangliste.
 - **Von Hand in `manual.json`:** DFB-Rangliste, nationale Turniere und Meldestatus bei Ophardt. Ophardt sperrt automatische Abrufe per Cloudflare-Bot-Schutz, deshalb dieser Weg.
 
-Jede Änderung (Platz, Punkte, neues Ergebnis, neuer Termin, Meldestatus, Terminverschiebung) landet im Feed „Was ist neu“, in `docs/data/history.csv` und, falls eingerichtet, per Mail bei dir.
+Jede Änderung (Platz, Punkte, neues Ergebnis, neuer Termin, Meldestatus, Terminverschiebung) landet im Feed „Letzte News“, in `docs/data/history.csv` und, falls eingerichtet, per Mail bei dir.
 
 ## Einrichtung (einmalig, ca. 10 Minuten)
 

@@ -76,7 +76,7 @@ details summary { cursor: pointer; color: var(--muted); font-size: 13px; padding
 /* Erläuterung in den Ranglisten-Karten: kleiner Knopf neben der Platzzahl, Text schwebt unter der Karte */
 .kpi { position: relative; }
 .nw { white-space: nowrap; }
-.stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; margin: 4px 0 16px; }
+.stats { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin: 4px 0 16px; }
 .stats > div { border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px; min-width: 0; }
 .stats .num { font-size: 30px; display: block; margin: 2px 0; }
 @media (max-width: 600px) { .stats { grid-template-columns: 1fr 1fr; } .stats > div:last-child:nth-child(odd) { grid-column: 1 / -1; } }
@@ -411,6 +411,7 @@ function renderStats(s, hist, career) {
   const fieJ = bestOf('FIE (unofficial)', 'U20'), efc = bestOf('EFC (unofficial)', 'U23');
   const bestDfb = minRank([...hist.filter(h => h.source === 'DFB').map(h => h.rank), s.dfb.rank, dfbS && dfbS.rank]);
   const bestFie = minRank([...hist.filter(h => h.source === 'FIE').map(h => h.rank), ...(s.fie.seasons || []).map(x => x.rank), s.fie.rank]);
+  const fieSeason = s.fie.rank == bestFie ? s.fie.season : ((s.fie.seasons || []).find(x => x.rank == bestFie) || {}).season;
 
   const titles = C.filter(r => r.section === 'National Championships' && r.rank === 1).sort(byDate);
   const podium = C.filter(r => r.rank <= 3), wins = podium.filter(r => r.rank === 1).length;
@@ -425,8 +426,10 @@ function renderStats(s, hist, career) {
     tile('Turniere', int(events || fie.length), `davon ${fie.length} FIE-Turniere`) +
     (career ? tile('Deutsche Meistertitel', int(titles.length), `${titles.filter(r => r.type === 'Einzel').length} Einzel · ${titles.filter(r => r.type === 'Mannschaft').length} Mannschaft`) : '') +
     (career ? tile('Podestplätze', int(podium.length), `davon ${wins} Siege`) : '') +
-    (bestDfb ? tile('Bester DFB-Rang', int(bestDfb), `Senioren${dfbS && dfbS.rank === bestDfb ? ' ' + saison(dfbS.season + 1) : ''}${dfbJ ? ` · U20: ${int(dfbJ.rank)}` : ''}`) : '') +
-    (bestFie ? tile('Bester FIE-Rang', int(bestFie), `Senioren${fieJ ? ` · U20: ${int(fieJ.rank)}` : ''}`) : '') +
+    (bestDfb ? tile('Bester DFB-Rang Senioren', int(bestDfb), dfbS && dfbS.rank === bestDfb ? `Saison ${saison(dfbS.season + 1)}` : 'aktuelle Saison') : '') +
+    (dfbJ ? tile('Bester DFB-Rang U20', int(dfbJ.rank), `Saison ${saison(dfbJ.season + 1)}`) : '') +
+    (bestFie ? tile('Bester FIE-Rang Senioren', int(bestFie), fieSeason ? `Saison ${saison(fieSeason)}` : 'Weltrangliste') : '') +
+    (fieJ ? tile('Bester FIE-Rang U20', int(fieJ.rank), `Saison ${saison(fieJ.season + 1)}`) : '') +
     '</div>';
 
   // Beste Einzel-Platzierungen je Ebene (FIE mit Teilnehmerfeld)
@@ -462,9 +465,9 @@ function renderStats(s, hist, career) {
       <table>${tw.slice(0, 6).map(row).join('')}</table>` +
       (tw.length > 6 ? `<details class="more"><summary>Alle ${tw.length} anzeigen</summary><table>${tw.slice(6).map(row).join('')}</table></details>` : '');
 
-    // Ranglisten-Bestwerte
-    const rk = [['DFB Senioren', dfbS], ['DFB U20', dfbJ], ['DFB U17', dfbC], ['FIE U20', fieJ], ['Europa U23 (EFC)', efc]].filter(([, r]) => r);
-    if (rk.length) h += `<h3>Ranglisten-Bestwerte</h3><table>${rk.map(([l, r]) => rankRow(r.rank, l, `Saison ${saison(r.season + 1)}`)).join('')}</table>`;
+    // Weitere Ranglisten-Bestwerte (Senioren/U20 stehen schon in den Kacheln)
+    const rk = [['DFB U17', dfbC], ['Europa U23 (EFC)', efc]].filter(([, r]) => r);
+    if (rk.length) h += `<h3>Weitere Ranglisten-Bestwerte</h3><table>${rk.map(([l, r]) => rankRow(r.rank, l, `Saison ${saison(r.season + 1)}`)).join('')}</table>`;
     h += `<div class="sub" style="margin-top:10px">Quellen: ${safeUrl(career.source) ? `<a href="${safeUrl(career.source)}" target="_blank" rel="noopener">Ophardt-Biografie ${EXT}</a>` : 'Ophardt-Biografie'} (Stand ${dmy(career.imported)}), FIE.</div>`;
   }
   $('#stats').innerHTML = h;

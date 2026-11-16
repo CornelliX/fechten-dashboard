@@ -73,19 +73,18 @@ svg text.endlabel { fill: var(--ink); font: 700 15px Inter, sans-serif; }
 details summary { cursor: pointer; color: var(--muted); font-size: 13px; padding: 6px 0; min-height: 24px; }
 /* Erläuterung in den Ranglisten-Karten: kleiner Knopf neben der Platzzahl, Text schwebt unter der Karte */
 .kpi { position: relative; }
+.nw { white-space: nowrap; }
 .kpi-row { display: flex; align-items: center; gap: 6px; }
-.why { margin-left: auto; }
-.why > summary { list-style: none; cursor: pointer; display: inline-flex; align-items: center; min-height: 32px;
-                 padding: 4px 10px; border: 1px solid var(--line); border-radius: 999px;
-                 color: var(--muted); font-size: 13px; font-weight: 500; white-space: nowrap; }
-.why > summary:hover { color: var(--ink); }
+.why { display: inline-block; vertical-align: middle; margin-left: 6px; }
+.why > summary { list-style: none; cursor: pointer; display: inline-flex; align-items: center; justify-content: center;
+                 width: 24px; height: 24px; border-radius: 50%; border: 1.5px solid var(--muted); color: var(--muted);
+                 font: italic 700 14px/1 Georgia, "Times New Roman", serif; }
+.why > summary:hover { color: var(--ink); border-color: var(--ink); }
 .why > summary::-webkit-details-marker { display: none; }
-.why > summary::after { content: "▾"; margin-left: 6px; font-size: 11px; }
-.why[open] > summary { color: var(--ink); border-color: var(--muted); }
-.why[open] > summary::after { content: "▴"; }
+.why[open] > summary { background: var(--ink); border-color: var(--ink); color: var(--card); }
 .why-body { position: absolute; z-index: 4; left: 0; right: 0; top: calc(100% + 6px); padding: 14px 16px;
             background: var(--card); border: 1px solid var(--line); border-radius: 12px;
-            box-shadow: 0 10px 28px rgb(0 0 0 / .16); font-size: 14px; line-height: 1.5; }
+            box-shadow: 0 10px 28px rgb(0 0 0 / .16); font-size: 14px; line-height: 1.5; color: var(--ink); text-align: left; }
 .why-body p { margin: 0 0 8px; }
 .why-body p:last-child { color: var(--muted); font-size: 13px; margin-bottom: 0; }
 .why-body ul { margin: -4px 0 10px; padding-left: 18px; }
@@ -362,7 +361,7 @@ function why(lines) {
   const flush = () => { if (list.length) { html += `<ul>${list.map(l => `<li>${esc(l)}</li>`).join('')}</ul>`; list = []; } };
   lines.forEach(l => { if (l.startsWith('– ')) list.push(l.slice(2)); else { flush(); html += `<p>${esc(l)}</p>`; } });
   flush();
-  return `<details class="why"><summary>Erläuterung</summary><div class="why-body">${html}</div></details>`;
+  return `<details class="why"><summary aria-label="Erläuterung" title="Erläuterung">i</summary><div class="why-body">${html}</div></details>`;
 }
 
 function render(s, changes, hist) {
@@ -375,8 +374,8 @@ function render(s, changes, hist) {
   if (s.fie.image) { $('#img').src = s.fie.image; $('#img').hidden = false; }
   if (s.errors.length) $('#errors').innerHTML = `<div class="errors"><b>Quelle nicht erreichbar, letzter Stand wird gezeigt:</b><br>${s.errors.map(esc).join('<br>')}</div>`;
 
-  $('#kpi-fie').innerHTML = `<div class="kpi-row"><span class="num">${int(s.fie.rank)}</span>${trend(hist, 'FIE')}${why((s.explain || {}).fie)}</div><div class="sub">${num(s.fie.points)} Punkte · Saison ${saison(s.fie.season)}</div>`;
-  $('#kpi-dfb').innerHTML = `<div class="kpi-row"><span class="num">${int(s.dfb.rank)}</span>${trend(hist, 'DFB')}${why((s.explain || {}).dfb)}</div><div class="sub">${num(s.dfb.points)} Punkte · berechnet ${dmy(s.dfb.calculated)} (Ophardt)</div>`;
+  $('#kpi-fie').innerHTML = `<div class="kpi-row"><span class="num">${int(s.fie.rank)}</span>${trend(hist, 'FIE')}</div><div class="sub">${num(s.fie.points)} Punkte · <span class="nw">Saison ${saison(s.fie.season)}${why((s.explain || {}).fie)}</span></div>`;
+  $('#kpi-dfb').innerHTML = `<div class="kpi-row"><span class="num">${int(s.dfb.rank)}</span>${trend(hist, 'DFB')}</div><div class="sub">${num(s.dfb.points)} Punkte · <span class="nw">berechnet ${dmy(s.dfb.calculated)}${why((s.explain || {}).dfb)}</span></div>`;
   // Erläuterungen schließen bei Klick daneben oder Esc; immer nur eine offen
   document.addEventListener('click', ev => document.querySelectorAll('details.why[open]')
     .forEach(d => { if (!d.contains(ev.target)) d.open = false; }));

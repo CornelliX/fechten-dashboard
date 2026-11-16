@@ -87,6 +87,9 @@ cal = ics([{"key": "fie-131", "date": "2026-12-10", "end": "2026-12-13", "name":
 assert "DTSTART;VALUE=DATE:20261210\r\nDTEND;VALUE=DATE:20261214" in cal
 assert "SUMMARY:Shanghai\\, World Cup" in cal and "Veteranen" not in cal and cal.endswith("END:VCALENDAR\r\n")
 assert all(len(line.encode()) <= 75 for line in cal.split("\r\n"))
+evil = ics([{"key": "x", "date": "2026-12-05", "name": "A\r\nBEGIN:VEVENT\x00", "status": "s",
+             "url": "javascript:alert(1)"}], "E", "S")
+assert evil.split("\r\n").count("BEGIN:VEVENT") == 1 and "\x00" not in evil and "javascript" not in evil, evil
 long = ics([{"key": "m-ä ö", "date": "2026-12-05", "name": "Händel-Cup " * 12, "status": "x"}], "E", "S")
 assert all(len(line.encode()) <= 75 for line in long.split("\r\n")) and "UID:m@fechten-dashboard" in long, long
 

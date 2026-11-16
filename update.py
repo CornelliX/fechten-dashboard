@@ -135,6 +135,7 @@ def fetch_results(cfg, season):
 
 
 def fetch_field(season, competition_id):
+    season, competition_id = int(season), int(competition_id)  # nur Zahlen in die URL
     return json.loads(get(f"{FIE}/api/fie/competition/{season}/{competition_id}")).get("fencerCount")
 
 
@@ -327,8 +328,9 @@ def append_history(path, state, today):
 
 def ics(events, name, stamp):
     """Kalender-Abo (RFC 5545): ganztägige Termine, stabile UIDs, Status in der Beschreibung."""
-    def esc(s):
-        return str(s or "").replace("\\", "\\\\").replace(";", "\\;").replace(",", "\\,").replace("\n", "\\n")
+    def esc(s):  # Steuerzeichen/CR raus (sonst ließen sich eigene Kalenderzeilen einschleusen), dann RFC-Escaping
+        s = re.sub(r"[\x00-\x09\x0b-\x1f\x7f]", "", str(s or "").replace("\r\n", "\n").replace("\r", "\n"))
+        return s.replace("\\", "\\\\").replace(";", "\\;").replace(",", "\\,").replace("\n", "\\n")
 
     def fold(line):  # Zeilen > 75 Bytes umbrechen (Folgezeile beginnt mit Leerzeichen), Umlaute = 2 Bytes
         parts, cur = [], ""
@@ -350,7 +352,8 @@ def ics(events, name, stamp):
             end = date.fromisoformat(str(e.get("end") or e["date"]))
         except ValueError:
             continue
-        desc = f"Status: {e.get('status')}" + (f"\n{e['url']}" if e.get("url") else "")
+        url = str(e.get("url") or "")
+        desc = f"Status: {e.get('status')}" + (f"\n{url}" if re.match(r"^https?://", url) else "")
         uid = re.sub(r"[^A-Za-z0-9-]+", "-", e["key"]).strip("-")
         lines += ["BEGIN:VEVENT", f"UID:{uid}@fechten-dashboard", f"DTSTAMP:{stamp}",
                   f"DTSTART;VALUE=DATE:{start:%Y%m%d}", f"DTEND;VALUE=DATE:{end + timedelta(days=1):%Y%m%d}",

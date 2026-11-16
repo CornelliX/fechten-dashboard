@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-16T19:20+00:00",
+ "updated": "2026-11-16T22:47+00:00",
  "name": "Ella Gamke",
  "fie_id": 60886,
  "errors": [],
@@ -728,8 +728,8 @@
    "losses": 1,
    "last": {
     "date": "2026-11-12",
-    "win": true,
-    "score": "5:4",
+    "win": false,
+    "score": "4:15",
     "event": "Weltcup Plovdiv"
    }
   },
@@ -795,7 +795,7 @@
     "date": "2025-12-05",
     "win": true,
     "score": "5:4",
-    "event": "Coupe du monde Busan"
+    "event": "Weltcup Busan"
    }
   },
   {
@@ -1263,7 +1263,7 @@
     "date": "2025-12-05",
     "win": false,
     "score": "3:5",
-    "event": "Coupe du monde Busan"
+    "event": "Weltcup Busan"
    }
   },
   {
@@ -1276,7 +1276,7 @@
     "date": "2025-12-05",
     "win": false,
     "score": "0:5",
-    "event": "Coupe du monde Busan"
+    "event": "Weltcup Busan"
    }
   },
   {
@@ -1289,7 +1289,7 @@
     "date": "2025-12-05",
     "win": false,
     "score": "1:5",
-    "event": "Coupe du monde Busan"
+    "event": "Weltcup Busan"
    }
   },
   {
@@ -1302,7 +1302,7 @@
     "date": "2025-12-05",
     "win": true,
     "score": "5:1",
-    "event": "Coupe du monde Busan"
+    "event": "Weltcup Busan"
    }
   },
   {
@@ -1315,7 +1315,7 @@
     "date": "2025-12-05",
     "win": false,
     "score": "8:15",
-    "event": "Coupe du monde Busan"
+    "event": "Weltcup Busan"
    }
   },
   {
@@ -2081,7 +2081,7 @@
    "fie_id": 131,
    "date": "2026-12-10",
    "end": "2026-12-13",
-   "name": "Shanghai World Cup 2026",
+   "name": "Weltcup Shanghai",
    "city": "Shanghai",
    "country": "CHN",
    "type": "World Cup",
@@ -2095,7 +2095,7 @@
    "fie_id": 171,
    "date": "2027-01-15",
    "end": "2027-01-17",
-   "name": "Singapore World Cup 2027",
+   "name": "Weltcup Singapore",
    "city": "Singapore",
    "country": "SGP",
    "type": "World Cup",
@@ -2109,7 +2109,7 @@
    "fie_id": 155,
    "date": "2027-02-26",
    "end": "2027-02-28",
-   "name": "Turin Grand Prix 2027",
+   "name": "Grand Prix Turin",
    "city": "Turin",
    "country": "ITA",
    "type": "Grand Prix",
@@ -2123,7 +2123,7 @@
    "fie_id": 156,
    "date": "2027-03-11",
    "end": "2027-03-14",
-   "name": "Istanbul World Cup 2027",
+   "name": "Weltcup Istanbul",
    "city": "Istanbul",
    "country": "TUR",
    "type": "World Cup",
@@ -2137,7 +2137,7 @@
    "fie_id": 160,
    "date": "2027-03-26",
    "end": "2027-03-28",
-   "name": "Lima Grand Prix 2027",
+   "name": "Grand Prix Lima",
    "city": "Lima",
    "country": "PER",
    "type": "Grand Prix",
@@ -2161,7 +2161,7 @@
    "fie_id": 163,
    "date": "2027-05-07",
    "end": "2027-05-09",
-   "name": "Hong Kong Grand Prix 2027",
+   "name": "Grand Prix Hong Kong",
    "city": "Hong Kong",
    "country": "HKG",
    "type": "Grand Prix",
@@ -2175,7 +2175,7 @@
    "fie_id": 165,
    "date": "2027-05-29",
    "end": "2027-06-09",
-   "name": "European Championships 2027",
+   "name": "EM 2027",
    "city": "TBD",
    "country": "FIE",
    "type": "Zone Championships",
@@ -2189,7 +2189,7 @@
    "fie_id": 169,
    "date": "2027-07-20",
    "end": "2027-07-28",
-   "name": "Tashkent World Championships 2027",
+   "name": "WM Tashkent",
    "city": "Tashkent",
    "country": "UZB",
    "type": "World Championship",

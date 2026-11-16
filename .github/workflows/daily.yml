@@ -2,7 +2,10 @@ name: Täglich aktualisieren
 
 on:
   schedule:
-    - cron: "0 5 * * *"        # 6 Uhr MEZ / 7 Uhr MESZ
+    # Nicht zur vollen Stunde: GitHub verwirft geplante Läufe bei hoher Last (am 16.11.2026 um 05:00 UTC passiert).
+    # Zweiter Lauf als Absicherung; ohne Änderungen kommt keine Mail.
+    - cron: "23 4 * * *"       # 5:23 Uhr MEZ / 6:23 Uhr MESZ
+    - cron: "41 15 * * *"      # 16:41 Uhr MEZ / 17:41 Uhr MESZ
   workflow_dispatch:            # manuell starten: Actions → "Täglich aktualisieren" → Run workflow
     inputs:
       testmail:

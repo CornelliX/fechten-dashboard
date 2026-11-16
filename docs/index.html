@@ -186,7 +186,7 @@ footer { color: var(--muted); font-size: 12px; margin-top: 24px; }
     <div><h1 id="name">Fecht-Dashboard</h1><div class="sub" id="meta">Lade Daten …</div></div>
   </header>
   <nav class="jump" aria-label="Abschnitte">
-    <a href="#top">Oben</a><a href="#news">News</a><a href="#termine">Termine</a><a href="#ergebnisse">Ergebnisse</a><a href="#gefechte">Gefechte</a><a href="#bilanz-card">Bilanz</a><a href="#ranglisten" data-also="verlauf">Ranglisten</a><a href="#statistik">Statistik</a><a href="#regeln">Regeln</a>
+    <a href="#top">Oben</a><a href="#news">News</a><a href="#termine">Termine</a><a href="#ergebnisse">Platzierungen</a><a href="#gefechte">Gefechte</a><a href="#bilanz-card">Bilanz</a><a href="#ranglisten" data-also="verlauf">Ranglisten</a><a href="#statistik">Statistik</a><a href="#regeln">Regeln</a>
   </nav>
   <div id="errors"></div>
   <div class="grid">
@@ -195,7 +195,7 @@ footer { color: var(--muted); font-size: 12px; margin-top: 24px; }
     <section class="card wide next" id="next"></section>
     <section class="card wide" id="news"><h2>Letzte News</h2><ul class="feed" id="feed"></ul></section>
     <section class="card wide" id="termine"><h2>Nächste Termine</h2><div class="scroll"><table id="events"></table></div><div id="events-more"></div></section>
-    <section class="card wide" id="ergebnisse"><h2>Ergebnisse</h2><div class="scroll"><table id="results"></table></div><div id="results-more"></div></section>
+    <section class="card wide" id="ergebnisse"><h2>Turnier-Platzierungen</h2><div class="scroll"><table id="results"></table></div><div id="results-more"></div></section>
     <section class="card wide" id="gefechte"><h2>Letzte Gefechte</h2><div id="bouts"></div></section>
     <section class="card wide" id="bilanz-card"><h2>Gefechtsbilanz</h2><div id="bilanz"></div></section>
     <section class="card" id="ranglisten"><h2 id="h-dfb">DFB-Rangliste Top 10</h2><table id="dfb"></table><div class="sub" id="dfb-note"></div></section>
@@ -338,10 +338,11 @@ function badge(status) {
 // Platz mit Teilnehmerfeld: "171 / 230 · Top 74 %" plus Balken (Anteil des Feldes, das hinter ihr landete)
 function placeCell(r) {
   const p = Number(r.place), f = Number(r.field);
-  const big = placeNum(r.place, '');
+  // Platz (Zahl oder Medaille) immer allein in der ersten Zeile, damit alle Plätze bündig untereinander stehen
+  const big = placeNum(r.place);
   if (!(f > 0 && p > 0 && p <= f)) return big;
   const top = Math.max(1, Math.round(100 * p / f));
-  return `${big}<span class="sub"> / ${int(f)}</span><div class="sub">Top ${top} %</div>
+  return `${big}<div class="sub nw">von ${int(f)}</div><div class="sub nw">Top ${top} %</div>
     <div class="bar" aria-hidden="true"><i style="width:${(100 * (f - p + 1) / f).toFixed(1)}%"></i></div>`;
 }
 
@@ -634,7 +635,7 @@ function render(s, changes, hist, career) {
     <td class="hide-s sub">${esc(r.source)}</td></tr>`).join('');
 
   moreToggle('events', ev.length, 5, `Alle ${ev.length} Termine`);
-  moreToggle('results', s.results.length, 8, `Alle ${s.results.length} Ergebnisse`);
+  moreToggle('results', s.results.length, 8, `Alle ${s.results.length} Platzierungen`);
 
   const byEvent = {};
   s.bouts.forEach(b => (byEvent[`${b.event}|${b.date}`] ||= []).push(b));

@@ -360,8 +360,10 @@ function renderBilanz(s) {
   const o = s.opponents || [];
   if (!o.length) { $('#bilanz').innerHTML = '<div class="sub">Noch keine Gefechtsdaten.</div>'; return; }
   const w = o.reduce((a, x) => a + x.wins, 0), l = o.reduce((a, x) => a + x.losses, 0);
-  $('#bilanz').innerHTML = `<div><span class="num big">${int(w)}:${int(l)}</span>
-      <span class="sub">${Math.round(100 * w / (w + l))} % Siege · ${int(w + l)} Gefechte gegen ${int(o.length)} Gegnerinnen bei FIE-Turnieren</span></div>
+  // Seit: Jahr des ersten erfassten FIE-Turniers (Ergebnisse), sonst ältestes bekanntes Gefecht
+  const firstFie = [...(s.results || []).filter(r => r.source === 'FIE').map(r => String(r.date)), ...o.map(x => x.last.date)].sort()[0];
+  $('#bilanz').innerHTML = `<div><span class="num big">${Math.round(100 * w / (w + l))} %</span>
+      <span class="sub">Siege · Bilanz ${int(w)}:${int(l)} aus ${int(w + l)} Gefechten gegen ${int(o.length)} Gegnerinnen bei FIE-Turnieren${firstFie ? ` seit ${int(firstFie.slice(0, 4))}` : ''}</span></div>
     <input type="search" id="opp-q" placeholder="Gegnerin oder Nation suchen, z. B. Audibert oder ITA" aria-label="Gegnerin oder Nation suchen">
     <table><tbody id="opp"></tbody></table>`;
   const draw = q => {

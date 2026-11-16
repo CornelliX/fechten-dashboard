@@ -82,6 +82,19 @@ details summary { cursor: pointer; color: var(--muted); font-size: 13px; padding
        background: var(--brand); color: #fff; font-weight: 600; font-size: 15px; text-decoration: none; border: 0; cursor: pointer; font-family: inherit; }
 .btn.ghost { background: transparent; color: var(--ink); border: 1px solid var(--line); }
 .btn:hover { filter: brightness(1.08); }
+/* Aufklappmenü (Kalender-Optionen) */
+.menu { position: relative; }
+.menu > summary { list-style: none; cursor: pointer; }
+.menu > summary::-webkit-details-marker { display: none; }
+.menu > summary::after { content: "▾"; margin-left: 8px; font-size: 12px; }
+.menu[open] > summary::after { content: "▴"; }
+.menu-pop { position: absolute; z-index: 3; top: calc(100% + 6px); left: 0; width: 220px; padding: 6px;
+            display: flex; flex-direction: column; background: var(--card); border: 1px solid var(--line);
+            border-radius: 10px; box-shadow: 0 8px 24px rgb(0 0 0 / .14); }
+.menu-pop > a, .menu-pop > button { display: flex; align-items: center; min-height: 44px; padding: 8px 12px;
+            border: 0; border-radius: 6px; background: none; color: var(--ink); font: inherit; text-align: left;
+            text-decoration: none; cursor: pointer; }
+.menu-pop > a:hover, .menu-pop > button:hover { background: var(--chip); }
 /* Ergebnis im Feld */
 .bar { height: 4px; background: var(--chip); border-radius: 2px; margin-top: 4px; min-width: 70px; }
 .bar > i { display: block; height: 100%; background: var(--brand); border-radius: 2px; }
@@ -179,8 +192,9 @@ function placeCell(r) {
 }
 
 function renderNext(s) {
-  const cal = `<a class="btn ghost" href="${esc(calWebcal)}">Termine im Kalender abonnieren</a>
-    <button class="btn ghost" type="button" id="cal-copy">Kalender-Link kopieren</button>`;
+  const cal = `<details class="menu"><summary class="btn ghost">Kalender-Optionen</summary>
+    <div class="menu-pop"><a href="${esc(calWebcal)}">Termine im Kalender abonnieren</a>
+      <button type="button" id="cal-copy">Kalender-Link kopieren</button></div></details>`;
   const e = s.events.find(e => String(e.end || e.date) >= today && !/Nicht relevant/.test(e.status || ''));
   if (!e) {
     $('#next').innerHTML = `<div class="lbl">Nächstes Turnier</div><div class="sub">Kein Termin bekannt.</div><div class="actions">${cal}</div>`;
@@ -195,6 +209,10 @@ function renderNext(s) {
       <div class="actions">${running ? '<a class="btn" href="https://www.fencingtimelive.com/">Live-Ergebnisse</a>' : ''}
         ${safeUrl(e.url) ? `<a class="btn ghost" href="${safeUrl(e.url)}">Details</a>` : ''}${cal}</div>`;
   }
+  // Menü schließen bei Klick daneben oder Esc
+  const menu = $('#next details.menu');
+  document.addEventListener('click', ev => { if (menu.open && !menu.contains(ev.target)) menu.open = false; });
+  document.addEventListener('keydown', ev => { if (ev.key === 'Escape' && menu.open) { menu.open = false; menu.querySelector('summary').focus(); } });
   $('#cal-copy').addEventListener('click', async ev => {
     try { await navigator.clipboard.writeText(calHttps); ev.target.textContent = 'Link kopiert'; }
     catch { prompt('Kalender-Link:', calHttps); }

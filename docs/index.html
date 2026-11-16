@@ -71,16 +71,23 @@ svg text.endlabel { fill: var(--ink); font: 700 15px Inter, sans-serif; }
 .tip { position: absolute; z-index: 2; background: var(--card); border: 1px solid var(--line); border-radius: 8px;
        padding: 6px 10px; font-size: 13px; box-shadow: 0 4px 14px rgb(0 0 0 / .12); pointer-events: none; white-space: nowrap; }
 details summary { cursor: pointer; color: var(--muted); font-size: 13px; padding: 6px 0; min-height: 24px; }
-/* Erläuterung in den Ranglisten-Karten */
-.why { margin-top: 10px; border-top: 1px solid var(--line); }
-.why > summary { list-style: none; cursor: pointer; display: flex; align-items: center; min-height: 40px;
-                 color: var(--muted); font-size: 14px; font-weight: 500; }
+/* Erläuterung in den Ranglisten-Karten: kleiner Knopf neben der Platzzahl, Text schwebt unter der Karte */
+.kpi { position: relative; }
+.kpi-row { display: flex; align-items: center; gap: 6px; }
+.why { margin-left: auto; }
+.why > summary { list-style: none; cursor: pointer; display: inline-flex; align-items: center; min-height: 32px;
+                 padding: 4px 10px; border: 1px solid var(--line); border-radius: 999px;
+                 color: var(--muted); font-size: 13px; font-weight: 500; white-space: nowrap; }
+.why > summary:hover { color: var(--ink); }
 .why > summary::-webkit-details-marker { display: none; }
-.why > summary::after { content: "▾"; margin-left: 6px; font-size: 12px; }
+.why > summary::after { content: "▾"; margin-left: 6px; font-size: 11px; }
+.why[open] > summary { color: var(--ink); border-color: var(--muted); }
 .why[open] > summary::after { content: "▴"; }
-.why-body { font-size: 14px; line-height: 1.5; padding-bottom: 4px; }
+.why-body { position: absolute; z-index: 4; left: 0; right: 0; top: calc(100% + 6px); padding: 14px 16px;
+            background: var(--card); border: 1px solid var(--line); border-radius: 12px;
+            box-shadow: 0 10px 28px rgb(0 0 0 / .16); font-size: 14px; line-height: 1.5; }
 .why-body p { margin: 0 0 8px; }
-.why-body p:last-child { color: var(--muted); font-size: 13px; }
+.why-body p:last-child { color: var(--muted); font-size: 13px; margin-bottom: 0; }
 .why-body ul { margin: -4px 0 10px; padding-left: 18px; }
 .why-body li { margin: 2px 0; }
 /* Regeln und Wissenswertes */
@@ -366,8 +373,13 @@ function render(s, changes, hist) {
   if (s.fie.image) { $('#img').src = s.fie.image; $('#img').hidden = false; }
   if (s.errors.length) $('#errors').innerHTML = `<div class="errors"><b>Quelle nicht erreichbar, letzter Stand wird gezeigt:</b><br>${s.errors.map(esc).join('<br>')}</div>`;
 
-  $('#kpi-fie').innerHTML = `<span class="num">${int(s.fie.rank)}</span>${trend(hist, 'FIE')}<div class="sub">${num(s.fie.points)} Punkte · Saison ${saison(s.fie.season)}</div>${why((s.explain || {}).fie)}`;
-  $('#kpi-dfb').innerHTML = `<span class="num">${int(s.dfb.rank)}</span>${trend(hist, 'DFB')}<div class="sub">${num(s.dfb.points)} Punkte · berechnet ${dmy(s.dfb.calculated)} (Ophardt)</div>${why((s.explain || {}).dfb)}`;
+  $('#kpi-fie').innerHTML = `<div class="kpi-row"><span class="num">${int(s.fie.rank)}</span>${trend(hist, 'FIE')}${why((s.explain || {}).fie)}</div><div class="sub">${num(s.fie.points)} Punkte · Saison ${saison(s.fie.season)}</div>`;
+  $('#kpi-dfb').innerHTML = `<div class="kpi-row"><span class="num">${int(s.dfb.rank)}</span>${trend(hist, 'DFB')}${why((s.explain || {}).dfb)}</div><div class="sub">${num(s.dfb.points)} Punkte · berechnet ${dmy(s.dfb.calculated)} (Ophardt)</div>`;
+  // Erläuterungen schließen bei Klick daneben oder Esc; immer nur eine offen
+  document.addEventListener('click', ev => document.querySelectorAll('details.why[open]')
+    .forEach(d => { if (!d.contains(ev.target)) d.open = false; }));
+  document.addEventListener('keydown', ev => { if (ev.key === 'Escape') document.querySelectorAll('details.why[open]')
+    .forEach(d => { d.open = false; d.querySelector('summary').focus(); }); });
 
   // Neueste Meldung von fechten.org, mit Direktlink
   const n = s.dfb_news;

@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-16T11:33+00:00",
+ "updated": "2026-11-16T12:33+00:00",
  "name": "Ella Gamke",
  "fie_id": 60886,
  "errors": [],
@@ -167,8 +167,10 @@
    "place": 171,
    "season": 2027,
    "competition_id": 127,
+   "category": "S",
    "source": "FIE",
-   "points": 0.25
+   "points": 0.25,
+   "field": 230
   },
   {
    "key": "fie-2027-397",
@@ -178,8 +180,10 @@
    "place": 49,
    "season": 2027,
    "competition_id": 397,
+   "category": "S",
    "source": "FIE",
-   "points": 0.5
+   "points": 0.5,
+   "field": 100
   },
   {
    "date": "2026-05-30",
@@ -190,12 +194,51 @@
    "source": "Ophardt (manuell)"
   },
   {
+   "key": "fie-2026-351-J",
+   "date": "2026-02-24",
+   "name": "EM Tbilisi (U20)",
+   "city": "Tbilisi",
+   "place": 12,
+   "season": 2026,
+   "competition_id": 351,
+   "category": "J",
+   "source": "FIE",
+   "points": null,
+   "field": 88
+  },
+  {
+   "key": "fie-2026-458",
+   "date": "2026-02-05",
+   "name": "Grand Prix Turin",
+   "city": "Turin",
+   "place": 139,
+   "season": 2026,
+   "competition_id": 458,
+   "category": "S",
+   "source": "FIE",
+   "points": 0.375,
+   "field": 209
+  },
+  {
    "date": "2026-01-24",
    "name": "Turnier Dörnigheim",
    "city": "Dörnigheim",
    "place": 2,
    "key": "m-2026-01-24-Turnier Dörnigheim",
    "source": "Ophardt (manuell)"
+  },
+  {
+   "key": "fie-2026-444-J",
+   "date": "2026-01-17",
+   "name": "Weltcup Tbilisi (U20)",
+   "city": "Tbilisi",
+   "place": 108,
+   "season": 2026,
+   "competition_id": 444,
+   "category": "J",
+   "source": "FIE",
+   "points": null,
+   "field": 198
   },
   {
    "date": "2026",
@@ -214,12 +257,51 @@
    "source": "Ophardt (manuell)"
   },
   {
+   "key": "fie-2026-125",
+   "date": "2025-12-05",
+   "name": "Weltcup Busan",
+   "city": "Busan",
+   "place": 129,
+   "season": 2026,
+   "competition_id": 125,
+   "category": "S",
+   "source": "FIE",
+   "points": null,
+   "field": 192
+  },
+  {
    "date": "2025-12",
    "name": "Händel-Cup",
    "city": "Halle",
    "place": 8,
    "key": "m-2025-12-Händel-Cup",
    "source": "Ophardt (manuell)"
+  },
+  {
+   "key": "fie-2026-1435-J",
+   "date": "2025-11-28",
+   "name": "Weltcup Samorin (U20)",
+   "city": "Samorin",
+   "place": 71,
+   "season": 2026,
+   "competition_id": 1435,
+   "category": "J",
+   "source": "FIE",
+   "points": null,
+   "field": 217
+  },
+  {
+   "key": "fie-2026-898-J",
+   "date": "2025-11-01",
+   "name": "Weltcup Istanbul (U20)",
+   "city": "Istanbul",
+   "place": 67,
+   "season": 2026,
+   "competition_id": 898,
+   "category": "J",
+   "source": "FIE",
+   "points": null,
+   "field": 275
   },
   {
    "date": "2025-10",
@@ -344,21 +426,1322 @@
    "nat": "ITA"
   }
  ],
- "events": [
+ "opponents": [
   {
-   "key": "fie-123",
-   "fie_id": 123,
-   "date": "2026-11-12",
-   "end": "2026-11-15",
-   "name": "Plovdiv World Cup 2026",
-   "city": "Plovdiv",
-   "country": "BUL",
-   "type": "World Cup",
-   "entered": true,
-   "url": "https://fie.org/tournaments/2027/123",
-   "source": "FIE",
-   "status": "Gemeldet (FIE)"
+   "id": 52777,
+   "name": "AKTAYEVA Sofiya",
+   "nat": "KAZ",
+   "wins": 0,
+   "losses": 3,
+   "last": {
+    "date": "2026-11-12",
+    "win": false,
+    "score": "3:5",
+    "event": "Weltcup Plovdiv"
+   }
   },
+  {
+   "id": 58299,
+   "name": "SIMKOVA Anna",
+   "nat": "CZE",
+   "wins": 1,
+   "losses": 1,
+   "last": {
+    "date": "2026-11-12",
+    "win": false,
+    "score": "4:5",
+    "event": "Weltcup Plovdiv"
+   }
+  },
+  {
+   "id": 53824,
+   "name": "AUDIBERT Alicia",
+   "nat": "FRA",
+   "wins": 1,
+   "losses": 1,
+   "last": {
+    "date": "2026-11-12",
+    "win": true,
+    "score": "5:4",
+    "event": "Weltcup Plovdiv"
+   }
+  },
+  {
+   "id": 35564,
+   "name": "ESTEBAN Maxine Isabel",
+   "nat": "CIV",
+   "wins": 1,
+   "losses": 1,
+   "last": {
+    "date": "2026-09-19",
+    "win": false,
+    "score": "3:5",
+    "event": "Satellite Amsterdam"
+   }
+  },
+  {
+   "id": 53834,
+   "name": "KUS Natasza",
+   "nat": "POL",
+   "wins": 0,
+   "losses": 2,
+   "last": {
+    "date": "2026-02-24",
+    "win": false,
+    "score": "2:3",
+    "event": "EM Tbilisi (U20)"
+   }
+  },
+  {
+   "id": 46493,
+   "name": "GROESS Chiara",
+   "nat": "AUT",
+   "wins": 1,
+   "losses": 1,
+   "last": {
+    "date": "2026-02-05",
+    "win": true,
+    "score": "5:3",
+    "event": "Grand Prix Turin"
+   }
+  },
+  {
+   "id": 53886,
+   "name": "WOJTAS Hanna",
+   "nat": "POL",
+   "wins": 1,
+   "losses": 1,
+   "last": {
+    "date": "2026-01-17",
+    "win": false,
+    "score": "1:5",
+    "event": "Weltcup Tbilisi (U20)"
+   }
+  },
+  {
+   "id": 53865,
+   "name": "KURITZKY Gili",
+   "nat": "ISR",
+   "wins": 2,
+   "losses": 0,
+   "last": {
+    "date": "2025-12-05",
+    "win": true,
+    "score": "5:4",
+    "event": "Coupe du monde Busan"
+   }
+  },
+  {
+   "id": 63325,
+   "name": "TIE Zhihe",
+   "nat": "CHN",
+   "wins": 0,
+   "losses": 2,
+   "last": {
+    "date": "2025-11-28",
+    "win": false,
+    "score": "14:15",
+    "event": "Weltcup Samorin (U20)"
+   }
+  },
+  {
+   "id": 57331,
+   "name": "TURHANLAR Beril",
+   "nat": "TUR",
+   "wins": 2,
+   "losses": 0,
+   "last": {
+    "date": "2025-03-06",
+    "win": true,
+    "score": "5:2",
+    "event": "Weltcup Cairo"
+   }
+  },
+  {
+   "id": 62165,
+   "name": "CHO Rebecca",
+   "nat": "USA",
+   "wins": 0,
+   "losses": 2,
+   "last": {
+    "date": "2025-02-01",
+    "win": false,
+    "score": "3:5",
+    "event": "Weltcup Zagreb (U20)"
+   }
+  },
+  {
+   "id": 48471,
+   "name": "ISBIR Alisa",
+   "nat": "TUR",
+   "wins": 1,
+   "losses": 1,
+   "last": {
+    "date": "2024-11-02",
+    "win": false,
+    "score": "10:15",
+    "event": "Weltcup Istanbul (U20)"
+   }
+  },
+  {
+   "id": 57060,
+   "name": "BOUMAZA Eileen",
+   "nat": "FRA",
+   "wins": 0,
+   "losses": 2,
+   "last": {
+    "date": "2024-02-03",
+    "win": false,
+    "score": "4:5",
+    "event": "Weltcup Leipzig (U20)"
+   }
+  },
+  {
+   "id": 52627,
+   "name": "PORTILLO Claudia",
+   "nat": "ESP",
+   "wins": 2,
+   "losses": 0,
+   "last": {
+    "date": "2024-01-06",
+    "win": true,
+    "score": "15:9",
+    "event": "Weltcup Udine (U20)"
+   }
+  },
+  {
+   "id": 25454,
+   "name": "SINIGALIA Martina",
+   "nat": "ITA",
+   "wins": 0,
+   "losses": 1,
+   "last": {
+    "date": "2026-11-12",
+    "win": false,
+    "score": "3:5",
+    "event": "Weltcup Plovdiv"
+   }
+  },
+  {
+   "id": 31094,
+   "name": "KIM Hyunjin",
+   "nat": "KOR",
+   "wins": 1,
+   "losses": 0,
+   "last": {
+    "date": "2026-11-12",
+    "win": true,
+    "score": "5:3",
+    "event": "Weltcup Plovdiv"
+   }
+  },
+  {
+   "id": 52901,
+   "name": "KOLLAR Anna",
+   "nat": "HUN",
+   "wins": 0,
+   "losses": 1,
+   "last": {
+    "date": "2026-11-12",
+    "win": false,
+    "score": "1:5",
+    "event": "Weltcup Plovdiv"
+   }
+  },
+  {
+   "id": 61393,
+   "name": "CANESSA Lucrezia",
+   "nat": "ITA",
+   "wins": 1,
+   "losses": 0,
+   "last": {
+    "date": "2026-09-19",
+    "win": true,
+    "score": "5:2",
+    "event": "Satellite Amsterdam"
+   }
+  },
+  {
+   "id": 70693,
+   "name": "VALIERE Lise",
+   "nat": "FRA",
+   "wins": 0,
+   "losses": 1,
+   "last": {
+    "date": "2026-09-19",
+    "win": false,
+    "score": "3:5",
+    "event": "Satellite Amsterdam"
+   }
+  },
+  {
+   "id": 66249,
+   "name": "KULLA Anna",
+   "nat": "GRE",
+   "wins": 1,
+   "losses": 0,
+   "last": {
+    "date": "2026-09-19",
+    "win": true,
+    "score": "5:3",
+    "event": "Satellite Amsterdam"
+   }
+  },
+  {
+   "id": 53438,
+   "name": "SOPIT Svitlana",
+   "nat": "UKR",
+   "wins": 0,
+   "losses": 1,
+   "last": {
+    "date": "2026-09-19",
+    "win": false,
+    "score": "2:5",
+    "event": "Satellite Amsterdam"
+   }
+  },
+  {
+   "id": 56866,
+   "name": "CULKIN Nathalie",
+   "nat": "GBR",
+   "wins": 1,
+   "losses": 0,
+   "last": {
+    "date": "2026-09-19",
+    "win": true,
+    "score": "5:1",
+    "event": "Satellite Amsterdam"
+   }
+  },
+  {
+   "id": 46190,
+   "name": "FERRARI Carlotta",
+   "nat": "ITA",
+   "wins": 0,
+   "losses": 1,
+   "last": {
+    "date": "2026-09-19",
+    "win": false,
+    "score": "5:15",
+    "event": "Satellite Amsterdam"
+   }
+  },
+  {
+   "id": 55010,
+   "name": "TAKAISHVILI Liza",
+   "nat": "GEO",
+   "wins": 1,
+   "losses": 0,
+   "last": {
+    "date": "2026-02-24",
+    "win": true,
+    "score": "5:4",
+    "event": "EM Tbilisi (U20)"
+   }
+  },
+  {
+   "id": 63660,
+   "name": "KUFECILER Ada",
+   "nat": "TUR",
+   "wins": 1,
+   "losses": 0,
+   "last": {
+    "date": "2026-02-24",
+    "win": true,
+    "score": "5:0",
+    "event": "EM Tbilisi (U20)"
+   }
+  },
+  {
+   "id": 69043,
+   "name": "SVENSSON Linnea",
+   "nat": "SWE",
+   "wins": 1,
+   "losses": 0,
+   "last": {
+    "date": "2026-02-24",
+    "win": true,
+    "score": "5:1",
+    "event": "EM Tbilisi (U20)"
+   }
+  },
+  {
+   "id": 53708,
+   "name": "MITI BIKFALVI Ingrid",
+   "nat": "ROU",
+   "wins": 1,
+   "losses": 0,
+   "last": {
+    "date": "2026-02-24",
+    "win": true,
+    "score": "5:1",
+    "event": "EM Tbilisi (U20)"
+   }
+  },
+  {
+   "id": 59394,
+   "name": "DERMENZHY Valentyna",
+   "nat": "UKR",
+   "wins": 0,
+   "losses": 1,
+   "last": {
+    "date": "2026-02-24",
+    "win": false,
+    "score": "2:5",
+    "event": "EM Tbilisi (U20)"
+   }
+  },
+  {
+   "id": 68734,
+   "name": "BULAUKINA Kseniya",
+   "nat": "BLR",
+   "wins": 1,
+   "losses": 0,
+   "last": {
+    "date": "2026-02-24",
+    "win": true,
+    "score": "15:4",
+    "event": "EM Tbilisi (U20)"
+   }
+  },
+  {
+   "id": 54921,
+   "name": "JAKUBOWSKA Marta",
+   "nat": "POL",
+   "wins": 1,
+   "losses": 0,
+   "last": {
+    "date": "2026-02-24",
+    "win": true,
+    "score": "15:14",
+    "event": "EM Tbilisi (U20)"
+   }
+  },
+  {
+   "id": 51359,
+   "name": "TSANG Amelie",
+   "nat": "GBR",
+   "wins": 0,
+   "losses": 1,
+   "last": {
+    "date": "2026-02-24",
+    "win": false,
+    "score": "9:15",
+    "event": "EM Tbilisi (U20)"
+   }
+  },
+  {
+   "id": 21767,
+   "name": "MIYAWAKI Karin",
+   "nat": "JPN",
+   "wins": 0,
+   "losses": 1,
+   "last": {
+    "date": "2026-02-05",
+    "win": false,
+    "score": "2:5",
+    "event": "Grand Prix Turin"
+   }
+  },
+  {
+   "id": 58990,
+   "name": "KIM Hoyeon",
+   "nat": "KOR",
+   "wins": 0,
+   "losses": 1,
+   "last": {
+    "date": "2026-02-05",
+    "win": false,
+    "score": "1:5",
+    "event": "Grand Prix Turin"
+   }
+  },
+  {
+   "id": 54660,
+   "name": "KARGAR SHARIFABAD Zahra",
+   "nat": "IRI",
+   "wins": 1,
+   "losses": 0,
+   "last": {
+    "date": "2026-02-05",
+    "win": true,
+    "score": "5:2",
+    "event": "Grand Prix Turin"
+   }
+  },
+  {
+   "id": 61755,
+   "name": "LEE Lavender",
+   "nat": "USA",
+   "wins": 0,
+   "losses": 1,
+   "last": {
+    "date": "2026-02-05",
+    "win": false,
+    "score": "1:5",
+    "event": "Grand Prix Turin"
+   }
+  },
+  {
+   "id": 42839,
+   "name": "BLAZIC Dorja",
+   "nat": "CRO",
+   "wins": 1,
+   "losses": 0,
+   "last": {
+    "date": "2026-02-05",
+    "win": true,
+    "score": "5:3",
+    "event": "Grand Prix Turin"
+   }
+  },
+  {
+   "id": 34449,
+   "name": "ROSSINI Serena",
+   "nat": "ITA",
+   "wins": 0,
+   "losses": 1,
+   "last": {
+    "date": "2026-02-05",
+    "win": false,
+    "score": "8:15",
+    "event": "Grand Prix Turin"
+   }
+  },
+  {
+   "id": 61564,
+   "name": "MARKUS Boglarka",
+   "nat": "HUN",
+   "wins": 1,
+   "losses": 0,
+   "last": {
+    "date": "2026-01-17",
+    "win": true,
+    "score": "5:2",
+    "event": "Weltcup Tbilisi (U20)"
+   }
+  },
+  {
+   "id": 59758,
+   "name": "DEMIRI Nini",
+   "nat": "GEO",
+   "wins": 1,
+   "losses": 0,
+   "last": {
+    "date": "2026-01-17",
+    "win": true,
+    "score": "5:2",
+    "event": "Weltcup Tbilisi (U20)"
+   }
+  },
+  {
+   "id": 68336,
+   "name": "SUN Chloe",
+   "nat": "USA",
+   "wins": 0,
+   "losses": 1,
+   "last": {
+    "date": "2026-01-17",
+    "win": false,
+    "score": "1:5",
+    "event": "Weltcup Tbilisi (U20)"
+   }
+  },
+  {
+   "id": 67856,
+   "name": "KORZHOVA Daria",
+   "nat": "RUS",
+   "wins": 0,
+   "losses": 1,
+   "last": {
+    "date": "2026-01-17",
+    "win": false,
+    "score": "2:5",
+    "event": "Weltcup Tbilisi (U20)"
+   }
+  },
+  {
+   "id": 61394,
+   "name": "PENSA Larissa Francesca Chiara",
+   "nat": "MDA",
+   "wins": 1,
+   "losses": 0,
+   "last": {
+    "date": "2026-01-17",
+    "win": true,
+    "score": "5:2",
+    "event": "Weltcup Tbilisi (U20)"
+   }
+  },
+  {
+   "id": 57106,
+   "name": "CAUVET Olivia",
+   "nat": "FRA",
+   "wins": 0,
+   "losses": 1,
+   "last": {
+    "date": "2026-01-17",
+    "win": false,
+    "score": "8:15",
+    "event": "Weltcup Tbilisi (U20)"
+   }
+  },
+  {
+   "id": 53828,
+   "name": "ROGER Garance",
+   "nat": "FRA",
+   "wins": 0,
+   "losses": 1,
+   "last": {
+    "date": "2025-12-05",
+    "win": false,
+    "score": "3:5",
+    "event": "Coupe du monde Busan"
+   }
+  },
+  {
+   "id": 24463,
+   "name": "MARINO Maria",
+   "nat": "ESP",
+   "wins": 0,
+   "losses": 1,
+   "last": {
+    "date": "2025-12-05",
+    "win": false,
+    "score": "0:5",
+    "event": "Coupe du monde Busan"
+   }
+  },
+  {
+   "id": 60536,
+   "name": "LIN Zhi Tong (Bonnie)",
+   "nat": "CAN",
+   "wins": 0,
+   "losses": 1,
+   "last": {
+    "date": "2025-12-05",
+    "win": false,
+    "score": "1:5",
+    "event": "Coupe du monde Busan"
+   }
+  },
+  {
+   "id": 35207,
+   "name": "CHOI Minseo",
+   "nat": "KOR",
+   "wins": 1,
+   "losses": 0,
+   "last": {
+    "date": "2025-12-05",
+    "win": true,
+    "score": "5:1",
+    "event": "Coupe du monde Busan"
+   }
+  },
+  {
+   "id": 63876,
+   "name": "WANG Yiran",
+   "nat": "CHN",
+   "wins": 0,
+   "losses": 1,
+   "last": {
+    "date": "2025-12-05",
+    "win": false,
+    "score": "8:15",
+    "event": "Coupe du monde Busan"
+   }
+  },
+  {
+   "id": 67047,
+   "name": "LIVSHITS Bozhena",
+   "nat": "BUL",
+   "wins": 1,
+   "losses": 0,
+   "last": {
+    "date": "2025-11-28",
+    "win": true,
+    "score": "5:1",
+    "event": "Weltcup Samorin (U20)"
+   }
+  },
+  {
+   "id": 57339,
+   "name": "ARIKAN Ada",
+   "nat": "TUR",
+   "wins": 1,
+   "losses": 0,
+   "last": {
+    "date": "2025-11-28",
+    "win": true,
+    "score": "5:4",
+    "event": "Weltcup Samorin (U20)"
+   }
+  },
+  {
+   "id": 55304,
+   "name": "ZORIC Mila",
+   "nat": "SRB",
+   "wins": 1,
+   "losses": 0,
+   "last": {
+    "date": "2025-11-28",
+    "win": true,
+    "score": "5:4",
+    "event": "Weltcup Samorin (U20)"
+   }
+  },
+  {
+   "id": 63314,
+   "name": "BOTOS Arven Anasztazia",
+   "nat": "HUN",
+   "wins": 1,
+   "losses": 0,
+   "last": {
+    "date": "2025-11-28",
+    "win": true,
+    "score": "5:1",
+    "event": "Weltcup Samorin (U20)"
+   }
+  },
+  {
+   "id": 56885,
+   "name": "LITA Karina",
+   "nat": "ROU",
+   "wins": 1,
+   "losses": 0,
+   "last": {
+    "date": "2025-11-28",
+    "win": true,
+    "score": "5:1",
+    "event": "Weltcup Samorin (U20)"
+   }
+  },
+  {
+   "id": 66595,
+   "name": "ZHU Yuening",
+   "nat": "CHN",
+   "wins": 1,
+   "losses": 0,
+   "last": {
+    "date": "2025-11-01",
+    "win": true,
+    "score": "5:0",
+    "event": "Weltcup Istanbul (U20)"
+   }
+  },
+  {
+   "id": 60501,
+   "name": "BRYZGALOVA Svitlana",
+   "nat": "UKR",
+   "wins": 1,
+   "losses": 0,
+   "last": {
+    "date": "2025-11-01",
+    "win": true,
+    "score": "5:2",
+    "event": "Weltcup Istanbul (U20)"
+   }
+  },
+  {
+   "id": 52802,
+   "name": "ZORINA Irina",
+   "nat": "RUS",
+   "wins": 1,
+   "losses": 0,
+   "last": {
+    "date": "2025-11-01",
+    "win": true,
+    "score": "5:4",
+    "event": "Weltcup Istanbul (U20)"
+   }
+  },
+  {
+   "id": 63703,
+   "name": "TYM Danuta",
+   "nat": "POL",
+   "wins": 1,
+   "losses": 0,
+   "last": {
+    "date": "2025-11-01",
+    "win": true,
+    "score": "5:1",
+    "event": "Weltcup Istanbul (U20)"
+   }
+  },
+  {
+   "id": 67520,
+   "name": "BOLORE Mélisande",
+   "nat": "FRA",
+   "wins": 1,
+   "losses": 0,
+   "last": {
+    "date": "2025-11-01",
+    "win": true,
+    "score": "5:2",
+    "event": "Weltcup Istanbul (U20)"
+   }
+  },
+  {
+   "id": 58782,
+   "name": "SUVALJKO Korana",
+   "nat": "CRO",
+   "wins": 1,
+   "losses": 0,
+   "last": {
+    "date": "2025-11-01",
+    "win": true,
+    "score": "5:2",
+    "event": "Weltcup Istanbul (U20)"
+   }
+  },
+  {
+   "id": 61173,
+   "name": "FAN Bo Yee",
+   "nat": "HKG",
+   "wins": 0,
+   "losses": 1,
+   "last": {
+    "date": "2025-11-01",
+    "win": false,
+    "score": "7:15",
+    "event": "Weltcup Istanbul (U20)"
+   }
+  },
+  {
+   "id": 25293,
+   "name": "BULCAO Ana Beatriz",
+   "nat": "BRA",
+   "wins": 0,
+   "losses": 1,
+   "last": {
+    "date": "2025-03-06",
+    "win": false,
+    "score": "1:5",
+    "event": "Weltcup Cairo"
+   }
+  },
+  {
+   "id": 57383,
+   "name": "IWAMOTO Reina",
+   "nat": "JPN",
+   "wins": 0,
+   "losses": 1,
+   "last": {
+    "date": "2025-03-06",
+    "win": false,
+    "score": "1:5",
+    "event": "Weltcup Cairo"
+   }
+  },
+  {
+   "id": 56857,
+   "name": "ZHANG Yunjia",
+   "nat": "CAN",
+   "wins": 0,
+   "losses": 1,
+   "last": {
+    "date": "2025-03-06",
+    "win": false,
+    "score": "4:5",
+    "event": "Weltcup Cairo"
+   }
+  },
+  {
+   "id": 60330,
+   "name": "GRAHL Julia",
+   "nat": "BRA",
+   "wins": 1,
+   "losses": 0,
+   "last": {
+    "date": "2025-02-01",
+    "win": true,
+    "score": "5:0",
+    "event": "Weltcup Zagreb (U20)"
+   }
+  },
+  {
+   "id": 61295,
+   "name": "MIKULICKA Zofia",
+   "nat": "POL",
+   "wins": 0,
+   "losses": 1,
+   "last": {
+    "date": "2025-02-01",
+    "win": false,
+    "score": "2:5",
+    "event": "Weltcup Zagreb (U20)"
+   }
+  },
+  {
+   "id": 57127,
+   "name": "ADAMS Rachael",
+   "nat": "GBR",
+   "wins": 0,
+   "losses": 1,
+   "last": {
+    "date": "2025-02-01",
+    "win": false,
+    "score": "3:5",
+    "event": "Weltcup Zagreb (U20)"
+   }
+  },
+  {
+   "id": 64780,
+   "name": "DELEUIL Juliette",
+   "nat": "FRA",
+   "wins": 1,
+   "losses": 0,
+   "last": {
+    "date": "2025-02-01",
+    "win": true,
+    "score": "5:2",
+    "event": "Weltcup Zagreb (U20)"
+   }
+  },
+  {
+   "id": 57300,
+   "name": "COLLINI Greta",
+   "nat": "ITA",
+   "wins": 0,
+   "losses": 1,
+   "last": {
+    "date": "2025-02-01",
+    "win": false,
+    "score": "1:5",
+    "event": "Weltcup Zagreb (U20)"
+   }
+  },
+  {
+   "id": 54883,
+   "name": "FORGACH Rebeka Liliana",
+   "nat": "SVK",
+   "wins": 0,
+   "losses": 1,
+   "last": {
+    "date": "2025-02-01",
+    "win": false,
+    "score": "12:15",
+    "event": "Weltcup Zagreb (U20)"
+   }
+  },
+  {
+   "id": 59679,
+   "name": "XIA Youyang",
+   "nat": "CHN",
+   "wins": 0,
+   "losses": 1,
+   "last": {
+    "date": "2025-01-18",
+    "win": false,
+    "score": "3:5",
+    "event": "Weltcup Tbilisi (U20)"
+   }
+  },
+  {
+   "id": 64009,
+   "name": "ZIEMAK Emilia",
+   "nat": "POL",
+   "wins": 1,
+   "losses": 0,
+   "last": {
+    "date": "2025-01-18",
+    "win": true,
+    "score": "5:4",
+    "event": "Weltcup Tbilisi (U20)"
+   }
+  },
+  {
+   "id": 55456,
+   "name": "KOZLOVA Polina",
+   "nat": "LAT",
+   "wins": 1,
+   "losses": 0,
+   "last": {
+    "date": "2025-01-18",
+    "win": true,
+    "score": "5:2",
+    "event": "Weltcup Tbilisi (U20)"
+   }
+  },
+  {
+   "id": 64654,
+   "name": "KARABTSOVA Kseniya",
+   "nat": "BLR",
+   "wins": 1,
+   "losses": 0,
+   "last": {
+    "date": "2025-01-18",
+    "win": true,
+    "score": "15:9",
+    "event": "Weltcup Tbilisi (U20)"
+   }
+  },
+  {
+   "id": 58285,
+   "name": "HAYES Nadia",
+   "nat": "CAN",
+   "wins": 0,
+   "losses": 1,
+   "last": {
+    "date": "2025-01-18",
+    "win": false,
+    "score": "7:15",
+    "event": "Weltcup Tbilisi (U20)"
+   }
+  },
+  {
+   "id": 57843,
+   "name": "HUANG Ching-Yung Sammi",
+   "nat": "TPE",
+   "wins": 0,
+   "losses": 1,
+   "last": {
+    "date": "2024-11-02",
+    "win": false,
+    "score": "4:5",
+    "event": "Weltcup Istanbul (U20)"
+   }
+  },
+  {
+   "id": 53446,
+   "name": "TANG Daniella Weng Yan",
+   "nat": "SGP",
+   "wins": 0,
+   "losses": 1,
+   "last": {
+    "date": "2024-11-02",
+    "win": false,
+    "score": "1:5",
+    "event": "Weltcup Istanbul (U20)"
+   }
+  },
+  {
+   "id": 58896,
+   "name": "ELMALLAH Sarah",
+   "nat": "EGY",
+   "wins": 1,
+   "losses": 0,
+   "last": {
+    "date": "2024-11-02",
+    "win": true,
+    "score": "5:2",
+    "event": "Weltcup Istanbul (U20)"
+   }
+  },
+  {
+   "id": 49691,
+   "name": "CHUNG Wan Yin",
+   "nat": "HKG",
+   "wins": 0,
+   "losses": 1,
+   "last": {
+    "date": "2024-11-02",
+    "win": false,
+    "score": "2:5",
+    "event": "Weltcup Istanbul (U20)"
+   }
+  },
+  {
+   "id": 52672,
+   "name": "CANTENAR Sevval Pelin",
+   "nat": "TUR",
+   "wins": 1,
+   "losses": 0,
+   "last": {
+    "date": "2024-11-02",
+    "win": true,
+    "score": "5:0",
+    "event": "Weltcup Istanbul (U20)"
+   }
+  },
+  {
+   "id": 60769,
+   "name": "HURIEL Ece Gizem",
+   "nat": "TUR",
+   "wins": 1,
+   "losses": 0,
+   "last": {
+    "date": "2024-11-02",
+    "win": true,
+    "score": "15:4",
+    "event": "Weltcup Istanbul (U20)"
+   }
+  },
+  {
+   "id": 58117,
+   "name": "RATZ Victoria",
+   "nat": "AUT",
+   "wins": 1,
+   "losses": 0,
+   "last": {
+    "date": "2024-02-03",
+    "win": true,
+    "score": "5:0",
+    "event": "Weltcup Leipzig (U20)"
+   }
+  },
+  {
+   "id": 53639,
+   "name": "HRIBAR Manca",
+   "nat": "SLO",
+   "wins": 1,
+   "losses": 0,
+   "last": {
+    "date": "2024-02-03",
+    "win": true,
+    "score": "5:1",
+    "event": "Weltcup Leipzig (U20)"
+   }
+  },
+  {
+   "id": 58626,
+   "name": "ZHANG Ruping",
+   "nat": "CHN",
+   "wins": 1,
+   "losses": 0,
+   "last": {
+    "date": "2024-02-03",
+    "win": true,
+    "score": "5:2",
+    "event": "Weltcup Leipzig (U20)"
+   }
+  },
+  {
+   "id": 57463,
+   "name": "VOELKER Linn Marie",
+   "nat": "GER",
+   "wins": 0,
+   "losses": 1,
+   "last": {
+    "date": "2024-02-03",
+    "win": false,
+    "score": "11:15",
+    "event": "Weltcup Leipzig (U20)"
+   }
+  },
+  {
+   "id": 53412,
+   "name": "JING Emily",
+   "nat": "USA",
+   "wins": 0,
+   "losses": 1,
+   "last": {
+    "date": "2024-01-20",
+    "win": false,
+    "score": "0:4",
+    "event": "Weltcup Zagreb (U20)"
+   }
+  },
+  {
+   "id": 53843,
+   "name": "MAROSI Greta",
+   "nat": "HUN",
+   "wins": 1,
+   "losses": 0,
+   "last": {
+    "date": "2024-01-20",
+    "win": true,
+    "score": "5:4",
+    "event": "Weltcup Zagreb (U20)"
+   }
+  },
+  {
+   "id": 51088,
+   "name": "RADU Paula",
+   "nat": "ROU",
+   "wins": 0,
+   "losses": 1,
+   "last": {
+    "date": "2024-01-20",
+    "win": false,
+    "score": "2:5",
+    "event": "Weltcup Zagreb (U20)"
+   }
+  },
+  {
+   "id": 61304,
+   "name": "SIMON Emily",
+   "nat": "AUT",
+   "wins": 0,
+   "losses": 1,
+   "last": {
+    "date": "2024-01-20",
+    "win": false,
+    "score": "2:5",
+    "event": "Weltcup Zagreb (U20)"
+   }
+  },
+  {
+   "id": 61339,
+   "name": "RYBERG Filippa",
+   "nat": "SWE",
+   "wins": 1,
+   "losses": 0,
+   "last": {
+    "date": "2024-01-20",
+    "win": true,
+    "score": "5:1",
+    "event": "Weltcup Zagreb (U20)"
+   }
+  },
+  {
+   "id": 52623,
+   "name": "COJOCARI Maria",
+   "nat": "MDA",
+   "wins": 0,
+   "losses": 1,
+   "last": {
+    "date": "2024-01-20",
+    "win": false,
+    "score": "9:15",
+    "event": "Weltcup Zagreb (U20)"
+   }
+  },
+  {
+   "id": 60434,
+   "name": "SAMPSON Verity",
+   "nat": "GBR",
+   "wins": 0,
+   "losses": 1,
+   "last": {
+    "date": "2024-01-06",
+    "win": false,
+    "score": "2:5",
+    "event": "Weltcup Udine (U20)"
+   }
+  },
+  {
+   "id": 53870,
+   "name": "HORPENCHENKO Viktoriia",
+   "nat": "UKR",
+   "wins": 0,
+   "losses": 1,
+   "last": {
+    "date": "2024-01-06",
+    "win": false,
+    "score": "1:5",
+    "event": "Weltcup Udine (U20)"
+   }
+  },
+  {
+   "id": 55074,
+   "name": "BALLOU Eleni",
+   "nat": "GRE",
+   "wins": 1,
+   "losses": 0,
+   "last": {
+    "date": "2024-01-06",
+    "win": true,
+    "score": "5:3",
+    "event": "Weltcup Udine (U20)"
+   }
+  },
+  {
+   "id": 58109,
+   "name": "DI RUSSO Guia",
+   "nat": "ITA",
+   "wins": 0,
+   "losses": 1,
+   "last": {
+    "date": "2024-01-06",
+    "win": false,
+    "score": "4:5",
+    "event": "Weltcup Udine (U20)"
+   }
+  },
+  {
+   "id": 49067,
+   "name": "OSENDE Carmen",
+   "nat": "ESP",
+   "wins": 1,
+   "losses": 0,
+   "last": {
+    "date": "2024-01-06",
+    "win": true,
+    "score": "5:2",
+    "event": "Weltcup Udine (U20)"
+   }
+  },
+  {
+   "id": 60981,
+   "name": "JECHIL Maria",
+   "nat": "SWE",
+   "wins": 1,
+   "losses": 0,
+   "last": {
+    "date": "2024-01-06",
+    "win": true,
+    "score": "5:1",
+    "event": "Weltcup Udine (U20)"
+   }
+  },
+  {
+   "id": 59717,
+   "name": "XU Ziyi",
+   "nat": "CHN",
+   "wins": 0,
+   "losses": 1,
+   "last": {
+    "date": "2024-01-06",
+    "win": false,
+    "score": "8:15",
+    "event": "Weltcup Udine (U20)"
+   }
+  },
+  {
+   "id": 52513,
+   "name": "LEUNG Ya Lei Janelle",
+   "nat": "HKG",
+   "wins": 1,
+   "losses": 0,
+   "last": {
+    "date": "2023-11-04",
+    "win": true,
+    "score": "5:3",
+    "event": "Weltcup Istanbul (U20)"
+   }
+  },
+  {
+   "id": 58123,
+   "name": "GABOLA Letizia",
+   "nat": "ITA",
+   "wins": 0,
+   "losses": 1,
+   "last": {
+    "date": "2023-11-04",
+    "win": false,
+    "score": "1:5",
+    "event": "Weltcup Istanbul (U20)"
+   }
+  },
+  {
+   "id": 54149,
+   "name": "CAO Arianna",
+   "nat": "USA",
+   "wins": 0,
+   "losses": 1,
+   "last": {
+    "date": "2023-11-04",
+    "win": false,
+    "score": "0:5",
+    "event": "Weltcup Istanbul (U20)"
+   }
+  },
+  {
+   "id": 57415,
+   "name": "CHEN Jia",
+   "nat": "USA",
+   "wins": 0,
+   "losses": 1,
+   "last": {
+    "date": "2023-11-04",
+    "win": false,
+    "score": "8:15",
+    "event": "Weltcup Istanbul (U20)"
+   }
+  }
+ ],
+ "events": [
   {
    "date": "2026-12-05",
    "end": "2026-12-06",

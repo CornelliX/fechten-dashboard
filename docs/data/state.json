@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-16T19:07+00:00",
+ "updated": "2026-11-16T19:10+00:00",
  "name": "Ella Gamke",
  "fie_id": 60886,
  "errors": [],
@@ -294,10 +294,10 @@
   },
   {
    "date": "2026-05-30",
-   "name": "DM Senior",
+   "name": "Deutsche Meisterschaft Senioren",
    "city": "Berlin",
    "place": 5,
-   "key": "m-2026-05-30-DM Senior",
+   "key": "m-2026-05-30-Deutsche Meisterschaft Senioren",
    "source": "Ophardt (manuell)"
   },
   {
@@ -357,10 +357,10 @@
   },
   {
    "date": "2026",
-   "name": "DM Team Senior 2025 und 2026, Die Finals 2025",
+   "name": "Deutsche Meisterschaft Mannschaft Senioren 2025 und 2026 (Die Finals 2025)",
    "city": "",
    "place": 1,
-   "key": "m-2026-DM Team Senior 2025 und 2026, Die Finals 2025",
+   "key": "m-2026-Deutsche Meisterschaft Mannschaft Senioren 2025 und 2026 (Die Finals 2025)",
    "source": "Ophardt (manuell)"
   },
   {

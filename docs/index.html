@@ -81,8 +81,8 @@ footer { color: var(--muted); font-size: 12px; margin-top: 24px; }
   </header>
   <div id="errors"></div>
   <div class="grid">
-    <section class="card kpi"><div class="lbl">FIE-Weltrangliste · Damen-Florett</div><div id="kpi-fie"></div></section>
     <section class="card kpi"><div class="lbl">DFB-Rangliste · Senior</div><div id="kpi-dfb"></div></section>
+    <section class="card kpi"><div class="lbl">FIE-Weltrangliste · Damen-Florett</div><div id="kpi-fie"></div></section>
     <section class="card wide"><h2>Was ist neu</h2><ul class="feed" id="feed"></ul></section>
     <section class="card wide"><h2>Nächste Termine</h2><div class="scroll"><table id="events"></table></div></section>
     <section class="card wide"><h2>Ranglisten-Verlauf</h2><div id="chart"></div><div class="chips" id="seasons"></div></section>
@@ -179,7 +179,7 @@ function render(s, changes, hist) {
 }
 
 function chart(hist) {
-  const series = ['FIE', 'DFB'].map(src => ({ src, pts: hist.filter(r => r.source === src) })).filter(s => s.pts.length);
+  const series = ['DFB', 'FIE'].map(src => ({ src, pts: hist.filter(r => r.source === src) })).filter(s => s.pts.length);
   if (!series.some(s => s.pts.length > 1)) {
     return '<div class="sub">Der Verlauf füllt sich mit jeder Ranglisten-Änderung. Bisher: ' +
       series.map(s => `${s.src} Platz ${int(s.pts[0].rank)} (${dmy(s.pts[0].date)})`).join(', ') + '</div>';

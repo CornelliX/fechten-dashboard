@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-16T22:47+00:00",
+ "updated": "2026-11-16T22:50+00:00",
  "name": "Ella Gamke",
  "fie_id": 60886,
  "errors": [],
@@ -310,10 +310,10 @@
   },
   {
    "date": "2026-06-13",
-   "name": "Burg-Cup",
+   "name": "Esslinger Burg-Cup",
    "city": "Esslingen",
    "place": 3,
-   "key": "m-2026-06-13-Burg-Cup",
+   "key": "m-2026-06-13-Esslinger Burg-Cup",
    "source": "Ophardt (manuell)"
   },
   {
@@ -2017,6 +2017,10 @@
  },
  "photo_albums": [
   {
+   "title": "U17 EFC Dresden Florett",
+   "date": "2026-11-14"
+  },
+  {
    "title": "Youth Olympic Games Dakar 2026",
    "date": "2026-11-13"
   },
@@ -2030,6 +2034,10 @@
   },
   {
    "title": "Weltcup Bern Herrendegen",
+   "date": "2026-11-12"
+  },
+  {
+   "title": "Weltcup Kairo Säbel",
    "date": "2026-11-12"
   },
   {

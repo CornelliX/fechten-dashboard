@@ -116,6 +116,7 @@ details summary { cursor: pointer; color: var(--muted); font-size: 13px; padding
 .dfbnews { display: block; margin-top: 14px; padding: 12px 14px; border: 1px solid var(--line); border-left: 4px solid var(--brand);
            border-radius: 8px; color: inherit; text-decoration: none; }
 .dfbnews:hover { background: var(--chip); }
+.photo-link { display: inline-block; padding-block: 3px; font-size: 13px; color: var(--muted); text-decoration-color: var(--brand); }
 .dfbnews-title { font-weight: 600; margin: 4px 0; text-decoration: underline; text-decoration-color: var(--brand); text-underline-offset: 3px; }
 /* Nächstes Turnier */
 .next { border-left: 4px solid var(--brand); }
@@ -173,7 +174,8 @@ footer { color: var(--muted); font-size: 12px; margin-top: 24px; }
     <section class="card wide next" id="next"></section>
     <section class="card wide"><h2>Letzte News</h2><ul class="feed" id="feed"></ul><div id="dfb-news"></div></section>
     <section class="card wide"><h2>Nächste Termine</h2><div class="scroll"><table id="events"></table></div></section>
-    <section class="card wide"><h2>Ergebnisse</h2><div class="scroll"><table id="results"></table></div></section>
+    <section class="card wide"><h2>Ergebnisse</h2><div class="scroll"><table id="results"></table></div>
+      <p class="sub" style="margin:10px 0 0">„Fotos im DFB-Archiv“ führt zum Fotoarchiv des Deutschen Fechter-Bundes. Dort gelten dessen Nutzungsbedingungen; Fotos werden hier bewusst nicht angezeigt.</p></section>
     <section class="card wide"><h2>Gefechtsbilanz</h2><div id="bilanz"></div></section>
     <section class="card"><h2>Letzte Gefechte</h2><div id="bouts"></div></section>
     <section class="card"><h2>DFB-Rangliste Top 10</h2><table id="dfb"></table><div class="sub" id="dfb-note"></div></section>
@@ -398,7 +400,9 @@ function render(s, changes, hist) {
     <td class="hide-s">${esc(e.city)}</td><td class="hide-s">${badge(e.status)}</td></tr>`).join('');
 
   $('#results').innerHTML = `<tr><th>Datum</th><th>Wettbewerb</th><th class="r">Platz</th><th class="r hide-s">FIE-Pkt.</th><th class="hide-s">Quelle</th></tr>` + s.results.map(r => `
-    <tr><td>${dmy(r.date)}</td><td>${esc(r.name)}${r.city && !r.name.includes(r.city) ? ', ' + esc(r.city) : ''}</td>
+    <tr><td>${dmy(r.date)}</td><td>${esc(r.name)}${r.city && !r.name.includes(r.city) ? ', ' + esc(r.city) : ''}${r.photos
+      ? `<div><a class="photo-link" href="https://www.fechten.org/service/foto-archiv" target="_blank" rel="noopener"
+           title="Album im DFB-Fotoarchiv: ${esc(r.photos)}">Fotos im DFB-Archiv ↗</a></div>` : ''}</td>
     <td class="r">${placeCell(r)}</td><td class="r hide-s">${r.points == null ? '' : num(r.points)}</td>
     <td class="hide-s sub">${esc(r.source)}</td></tr>`).join('');
 

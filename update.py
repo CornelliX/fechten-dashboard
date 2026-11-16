@@ -9,6 +9,7 @@ import os
 import re
 import secrets
 import time
+import unicodedata
 import urllib.parse
 import urllib.request
 from datetime import date, datetime, timedelta, timezone
@@ -215,6 +216,50 @@ def fetch_dfb_news(cfg):
     return parse_dfb_news(get(DFB_NEWS))
 
 
+# ---------- DFB-Fotoarchiv ----------
+# Nur Albumtitel + Datum (öffentlich auf fechten.org). Album-/Download-Links werden bewusst NICHT
+# übernommen: Die Archiv-Nutzungsbedingungen (§ 4) verbieten ihre Veröffentlichung.
+PHOTO_ARCHIVE = "https://www.fechten.org/service/foto-archiv/bilder/"
+
+
+def parse_photo_albums(page):
+    albums = []
+    for chunk in page.split('news-list-item')[1:]:
+        title = re.search(r'itemprop="headline">\s*<a[^>]*title="([^"]*)"', chunk)
+        when = re.search(r'datetime="(\d{4}-\d{2}-\d{2})"', chunk)
+        if title and when:
+            albums.append({"title": " ".join(html.unescape(title.group(1)).split()), "date": when.group(1)})
+    return albums
+
+
+def fetch_photo_albums(cfg):
+    return parse_photo_albums(get(PHOTO_ARCHIVE))
+
+
+def _fold(s):
+    """Kleinbuchstaben ohne Akzente/Umlaute, für robusten Ortsvergleich."""
+    s = unicodedata.normalize("NFKD", str(s or "").lower())
+    return "".join(c for c in s if not unicodedata.combining(c))
+
+
+def match_album(album, item):
+    """Passt ein Fotoalbum zu einem Turnier? Datum im Fenster, Ort im Titel, Waffe Florett oder nicht genannt."""
+    try:
+        a = date.fromisoformat(album["date"])
+        start = date.fromisoformat(str(item["date"])[:10])
+        end = date.fromisoformat(str(item.get("end") or item["date"])[:10])
+    except (ValueError, KeyError):
+        return False
+    if not (start - timedelta(days=1) <= a <= end + timedelta(days=7)):
+        return False
+    title, city = _fold(album["title"]), _fold(item.get("city"))
+    if not city or city not in title:
+        return False
+    weapons = ("degen", "sabel", "florett")
+    named = [w for w in weapons if w in title]
+    return not named or named == ["florett"]
+
+
 def fetch_events(cfg):
     data = json.loads(get(f"{FIE}/api/fie/tournaments?upcoming=true&limit=100&sort=dateAsc"))
     events = []
@@ -243,7 +288,8 @@ def event_status(ev, manual):
 
 def build_state(cfg, manual, old, today, fetchers=None):
     f = {"ranking": fetch_ranking, "profile": fetch_profile, "events": fetch_events, "results": fetch_results,
-         "field": fetch_field, "opponents": fetch_opponents, "dfb_news": fetch_dfb_news, **(fetchers or {})}
+         "field": fetch_field, "opponents": fetch_opponents, "dfb_news": fetch_dfb_news,
+         "photo_albums": fetch_photo_albums, **(fetchers or {})}
     season, errors = season_of(today), []
 
     def attempt(label, fn):
@@ -259,6 +305,7 @@ def build_state(cfg, manual, old, today, fetchers=None):
     more_results = attempt("FIE-Ergebnisse", lambda: f["results"](cfg, season))
     opponents = attempt("FIE-Gegnerinnen", lambda: f["opponents"](cfg))
     dfb_news = attempt("DFB-News", lambda: f["dfb_news"](cfg))
+    new_albums = attempt("DFB-Fotoarchiv", lambda: f["photo_albums"](cfg))
 
     fie = dict(old.get("fie") or {}, season=season)
     if prof:
@@ -282,6 +329,16 @@ def build_state(cfg, manual, old, today, fetchers=None):
         results[r["key"]] = dict(r, points=pts if pts is not None else prev.get("points"), field=field)
     for m in manual.get("results", []):
         results[f"m-{m['date']}-{m['name']}"] = dict(m, key=f"m-{m['date']}-{m['name']}", source="Ophardt (manuell)")
+
+    # Fotoalben sammeln (das Archiv zeigt nur die 12 neuesten) und passenden Ergebnissen zuordnen
+    albums = {(a["title"], a["date"]): a for a in (old.get("photo_albums") or []) + (new_albums or [])}
+    photo_albums = sorted(albums.values(), key=lambda a: a["date"], reverse=True)
+    for k, r in results.items():
+        hit = next((a for a in photo_albums if match_album(a, r)), None)
+        if hit:
+            results[k] = dict(r, photos=hit["title"])
+        elif "photos" in r:
+            results[k] = {x: v for x, v in r.items() if x != "photos"}
 
     fie_events = events if events is not None else [e for e in old.get("events", []) if e.get("source") == "FIE"]
     all_events = [dict(e, status=event_status(e, manual)) for e in fie_events]
@@ -310,6 +367,7 @@ def build_state(cfg, manual, old, today, fetchers=None):
         "bouts": prof["bouts"] if prof else old.get("bouts", []),
         "opponents": opponents if opponents is not None else old.get("opponents", []),
         "dfb_news": dfb_news or old.get("dfb_news"),
+        "photo_albums": photo_albums,
         "events": sorted(all_events, key=lambda e: e["date"]),
     }
 
@@ -422,6 +480,8 @@ def diff(old, new):
                 out.append(f"Neues Ergebnis: {r['name']}: Platz {r['place']}")
         elif o.get("place") != r.get("place"):
             out.append(f"Ergebnis geändert: {r['name']}: Platz {o.get('place')} → {r.get('place')}")
+        if r.get("photos") and r.get("photos") != (o or {}).get("photos") and str(r["date"]) >= cutoff:
+            out.append(f"Neue Fotos im DFB-Fotoarchiv: {r['photos']} ({r['name']})")
 
     old_e = {e["key"]: e for e in old.get("events", [])}
     for e in new.get("events", []):

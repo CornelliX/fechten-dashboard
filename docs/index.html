@@ -91,7 +91,7 @@ html { scroll-padding-top: 64px; }
 .jump a[aria-current] { background: var(--brand); border-color: var(--brand); color: #fff; }
 details.more > summary, .more-btn { cursor: pointer; color: var(--muted); font-size: 13px; padding: 8px 0; min-height: 36px; }
 .more-btn { background: none; border: 0; font-family: inherit; text-decoration: underline; text-underline-offset: 3px; }
-#results:not(.all) tr.extra { display: none; }
+#results:not(.all) tr.extra, #events:not(.all) tr.extra { display: none; }
 #stats h3 { font-size: 13px; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); margin: 16px 0 4px; }
 .ext { width: .62em; height: .62em; vertical-align: .08em; margin-left: .1em; fill: none; stroke: currentColor; stroke-width: 1.3; stroke-linecap: round; stroke-linejoin: round; opacity: .55; }
 h1, h2, h3 { text-wrap: balance; }
@@ -193,7 +193,7 @@ footer { color: var(--muted); font-size: 12px; margin-top: 24px; }
     <section class="card kpi"><div class="lbl" id="lbl-fie">FIE-Weltrangliste · Damen-Florett</div><div id="kpi-fie"></div></section>
     <section class="card wide next" id="next"></section>
     <section class="card wide" id="news"><h2>Letzte News</h2><ul class="feed" id="feed"></ul></section>
-    <section class="card wide" id="termine"><h2>Nächste Termine</h2><div class="scroll"><table id="events"></table></div></section>
+    <section class="card wide" id="termine"><h2>Nächste Termine</h2><div class="scroll"><table id="events"></table></div><div id="events-more"></div></section>
     <section class="card wide" id="ergebnisse"><h2>Ergebnisse</h2><div class="scroll"><table id="results"></table></div><div id="results-more"></div></section>
     <section class="card wide" id="gefechte"><h2>Letzte Gefechte</h2><div id="bouts"></div></section>
     <section class="card wide" id="bilanz-card"><h2>Gefechtsbilanz</h2><div id="bilanz"></div></section>
@@ -369,6 +369,16 @@ function renderNext(s) {
   $('#cal-copy').addEventListener('click', async ev => {
     try { await navigator.clipboard.writeText(calHttps); ev.target.textContent = 'Link kopiert'; }
     catch { prompt('Kalender-Link:', calHttps); }
+  });
+}
+
+// Lange Tabelle kürzen: Zeilen ab `limit` tragen class="extra", der Knopf blendet sie ein
+function moreToggle(id, n, limit, label) {
+  const box = $(`#${id}-more`);
+  box.innerHTML = n > limit ? `<button type="button" class="more-btn" aria-expanded="false">${label}</button>` : '';
+  if (n > limit) box.firstChild.addEventListener('click', ev => {
+    const open = $(`#${id}`).classList.toggle('all');
+    ev.target.setAttribute('aria-expanded', open); ev.target.textContent = open ? 'Weniger anzeigen' : label;
   });
 }
 
@@ -596,10 +606,10 @@ function render(s, changes, hist, career) {
   $('#feed').innerHTML = items.map(i => `<li><time>${dmy(i.date)}</time><span>${i.html}</span></li>`).join('')
     || '<li><span></span><span class="sub">Noch keine Änderungen.</span></li>';
 
-  const ev = s.events.filter(e => (e.end || e.date) >= today);
+  const ev = s.events.filter(e => (e.end || e.date) >= today && !/Nicht relevant/.test(e.status || ''));
   // Handy: Status unter den Namen statt eigener Spalte, damit nichts seitlich verschwindet
-  $('#events').innerHTML = `<tr><th>Datum</th><th>Wettbewerb</th><th class="hide-s">Ort</th><th class="hide-s">Status</th></tr>` + ev.map(e => `
-    <tr><td style="white-space:nowrap">${range(e.date, e.end)}</td>
+  $('#events').innerHTML = `<tr><th>Datum</th><th>Wettbewerb</th><th class="hide-s">Ort</th><th class="hide-s">Status</th></tr>` + ev.map((e, i) => `
+    <tr${i >= 5 ? ' class="extra"' : ''}><td style="white-space:nowrap">${range(e.date, e.end)}</td>
     <td>${safeUrl(e.url) ? `<a href="${safeUrl(e.url)}">${esc(e.name)}</a>` : esc(e.name)}<div class="show-s">${badge(e.status)}</div></td>
     <td class="hide-s">${esc(e.city)}</td><td class="hide-s">${badge(e.status)}</td></tr>`).join('');
 
@@ -610,12 +620,8 @@ function render(s, changes, hist, career) {
     <td class="r">${placeCell(r)}</td><td class="r hide-s">${r.points == null ? '' : num(r.points)}</td>
     <td class="hide-s sub">${esc(r.source)}</td></tr>`).join('');
 
-  const nR = s.results.length, moreLabel = `Alle ${nR} Ergebnisse`;
-  $('#results-more').innerHTML = nR > 8 ? `<button type="button" class="more-btn" aria-expanded="false">${moreLabel}</button>` : '';
-  if (nR > 8) $('#results-more button').addEventListener('click', ev => {
-    const open = $('#results').classList.toggle('all');
-    ev.target.setAttribute('aria-expanded', open); ev.target.textContent = open ? 'Weniger anzeigen' : moreLabel;
-  });
+  moreToggle('events', ev.length, 5, `Alle ${ev.length} Termine`);
+  moreToggle('results', s.results.length, 8, `Alle ${s.results.length} Ergebnisse`);
 
   const byEvent = {};
   s.bouts.forEach(b => (byEvent[`${b.event}|${b.date}`] ||= []).push(b));

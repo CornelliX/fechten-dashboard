@@ -118,7 +118,7 @@ def fetch_profile(cfg):
         "seasons": [{"season": s["season"], "rank": s["rank"], "points": float(s["point"])}
                     for s in prof.get("ranking", []) if s.get("category") == cfg["category"]],
         "results": [result_row(x, cfg["category"]) for x in results],
-        "bouts": [{"date": b["date"][:10], "event": f"{TYPE_DE.get(b['name'], b['name'])} {b['location']}",
+        "bouts": [{"date": b["date"][:10], "event": f"{event_de(b['name'])} {b['location']}",
                    "win": b["isWinner"], "score": f"{b['score']['fencer']}:{b['score']['opponent']}",
                    "opponent": " ".join(b["opponent"]["name"].split()), "nat": b["opponent"]["nationality"]}
                   for b in bouts],
@@ -127,7 +127,7 @@ def fetch_profile(cfg):
 
 def result_row(x, cat):
     """FIE-Ergebnis -> Dashboard-Zeile. Senior-Schlüssel bleiben wie bisher, U20 bekommt ein Suffix."""
-    name = f"{TYPE_DE.get(x['competitionType'], x['competitionType'])} {x['city']}" + (" (U20)" if cat == "J" else "")
+    name = f"{event_de(x['competitionType'])} {x['city']}" + (" (U20)" if cat == "J" else "")
     return {"key": f"fie-{x['season']}-{x['competitionId']}" + ("-J" if cat == "J" else ""), "date": x["date"],
             "name": name, "city": x["city"], "place": x["place"], "season": x["season"],
             "competition_id": x["competitionId"], "category": cat, "source": "FIE"}
@@ -154,7 +154,7 @@ def event_de(name):
     n = " ".join(name.split())
     if n.startswith("Championnats"):
         return "EM" if "Europe" in n else "WM" if "Monde" in n else n
-    return TYPE_DE.get(n, n)
+    return next((v for k, v in TYPE_DE.items() if k.lower() == n.lower()), n)  # "Coupe du monde" == "Coupe du Monde"
 
 
 def parse_opponents(items, fid):
@@ -169,7 +169,8 @@ def parse_opponents(items, fid):
                           "event": f"{event_de(e['name'])} {e['location']}" + (" (U20)" if e.get("category") == "J" else "")})
         if not bouts:
             continue
-        bouts.sort(key=lambda b: b["date"], reverse=True)
+        # gleicher Tag: K.-o.-Gefecht (über 5 Treffer) kam nach der Vorrunde
+        bouts.sort(key=lambda b: (b["date"], any(x.isdigit() and int(x) > 5 for x in b["score"].split(":"))), reverse=True)
         wins = sum(b["win"] for b in bouts)
         rows.append({"id": o["id"], "name": " ".join(o["name"].split()), "nat": (o.get("flag") or "").upper(),
                      "wins": wins, "losses": len(bouts) - wins, "last": bouts[0]})
@@ -273,7 +274,7 @@ def fetch_events(cfg):
         entries = json.loads(get(f"{FIE}/api/fie/tournaments/{t['id']}/event-entries?{q}")).get("entries", [])
         start = date.fromisoformat(t["startDate"])
         events.append({"key": f"fie-{t['id']}", "fie_id": t["id"], "date": t["startDate"], "end": t["endDate"],
-                       "name": t["name"], "city": t["city"], "country": t["country"], "type": t["type"],
+                       "name": f"{event_de(t['type'])} {t['startDate'][:4] if t['city'] in ('', 'TBD') else t['city']}", "city": t["city"], "country": t["country"], "type": t["type"],
                        "entered": any(e["fencer"]["id"] == cfg["fie_id"] for e in entries),
                        "url": f"{FIE}/tournaments/{season_of(start)}/{t['id']}", "source": "FIE"})
     return events

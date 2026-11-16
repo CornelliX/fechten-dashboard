@@ -74,16 +74,17 @@ html = f'<script type="application/json" id="__NUXT_DATA__">{json.dumps(payload)
 assert nuxt_queries(html) == {'["fencers", 60886]': {"rank": 312}}
 
 # 6. Gegnerbilanz aus Ellas Sicht (Ella mal fencer1, mal fencer2)
-def bout(d, me_score, other_score, me_first=True):
+def bout(d, me_score, other_score, me_first=True, name="Coupe du Monde "):
     me = {"id": 1, "score": me_score, "isWinner": me_score > other_score}
     other = {"id": 9, "score": other_score, "isWinner": other_score > me_score}
     f1, f2 = (me, other) if me_first else (other, me)
-    return {"name": "Coupe du Monde ", "date": f"{d} 00:00:00", "location": "Plovdiv", "category": "S",
+    return {"name": name, "date": f"{d} 00:00:00", "location": "Plovdiv", "category": "S",
             "fencer1": f1, "fencer2": f2}
 opp = parse_opponents([{"id": 9, "name": "AUDIBERT  Alicia", "flag": "fra",
-                        "events": [bout("2026-11-12", 5, 4), bout("2026-11-13", 4, 15, me_first=False)]}], 1)
+                        "events": [bout("2026-11-12", 5, 4), bout("2026-11-12", 4, 15, me_first=False, name="Coupe du monde")]}], 1)
+# gleicher Tag: das K.-o.-Gefecht (4:15) zählt als letztes, auch wenn FIE die Vorrunde danach listet
 assert opp == [{"id": 9, "name": "AUDIBERT Alicia", "nat": "FRA", "wins": 1, "losses": 1,
-                "last": {"date": "2026-11-13", "win": False, "score": "4:15", "event": "Weltcup Plovdiv"}}], opp
+                "last": {"date": "2026-11-12", "win": False, "score": "4:15", "event": "Weltcup Plovdiv"}}], opp
 
 # 7. Kalenderdatei: ganztägig, Ende exklusiv, Sonderzeichen escaped, "Nicht relevant" ausgelassen
 cal = ics([{"key": "fie-131", "date": "2026-12-10", "end": "2026-12-13", "name": "Shanghai, World Cup",

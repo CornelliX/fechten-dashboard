@@ -459,38 +459,61 @@ function renderStats(s, hist, career) {
     (fieJ ? tile('Bester FIE-Rang U20', int(fieJ.rank), `Saison ${saison(fieJ.season + 1)}`) : '') +
     '</div>';
 
-  // Beste Einzel-Platzierungen je Ebene (FIE mit Teilnehmerfeld)
-  const best = rs => [...rs].sort((a, b) => (a.place ?? a.rank) - (b.place ?? b.rank) || byDate(a, b))[0];
-  const dm = age => best(C.filter(r => r.event === 'German Championships' && r.type === 'Einzel' && r.age === age));
+  // Beste Einzel-Platzierungen bei internationalen Turnieren (FIE, mit Teilnehmerfeld); Meisterschaften stehen unten
+  const best = rs => [...rs].sort((a, b) => a.place - b.place || byDate(a, b))[0];
+  const isChamp = r => /^(EM|WM)\b/.test(r.name);
   const levels = [
-    ['Senioren international', best(fie.filter(r => r.category === 'S'))],
-    ['U20 international', best(fie.filter(r => r.category === 'J'))],
-    ['Deutsche Meisterschaft Senioren', dm('Senior')],
-    ['Deutsche Meisterschaft U20', dm('U20')],
-    ['Deutsche Meisterschaft U17', dm('U17')],
+    ['Weltcup / Grand Prix Senioren', best(fie.filter(r => r.category === 'S' && !isChamp(r) && !/^Satellite/.test(r.name)))],
+    ['Satellite-Turnier Senioren', best(fie.filter(r => r.category === 'S' && /^Satellite/.test(r.name)))],
+    ['Weltcup U20', best(fie.filter(r => r.category === 'J' && !isChamp(r)))],
   ].filter(([, r]) => r);
-  if (levels.length) h += `<h3>Beste Platzierungen (Einzel)</h3><table>${levels.map(([l, r]) => r.source === 'FIE'
-    ? `<tr><td>${l}<div class="sub">${esc(r.name)} · ${dmy(r.date)}</div></td><td class="r">${placeCell(r)}</td></tr>`
-    : `<tr><td>${l}<div class="sub">${esc(r.city)} · ${dmy(r.date)}</div></td><td class="r"><span class="num" style="font-size:18px">${int(r.rank)}</span></td></tr>`).join('')}</table>`;
+  const intlBest = levels.map(([l, r]) =>
+    `<tr><td>${l}<div class="sub">${esc(r.name)} · ${dmy(r.date)}</div></td><td class="r">${placeCell(r)}</td></tr>`).join('');
+  if (!career && intlBest) h += `<h3>Internationale Turniere</h3><table>${intlBest}</table>`;
 
   if (career) {
-    // Meisterschaften: DM-Titel, Europameisterschaften, Landesmeisterschaften (Zusammenfassung)
-    const em = C.filter(r => r.section === 'Zonal Championships').sort(byDate);
+    // Meisterschaften: je Meisterschaft, Jahr und Altersklasse eine Zeile mit Einzel- und Teamergebnis
+    const ageN = a => /U1[34]/.test(a) ? 'U13/U14' : ageDe(a);
+    const groups = new Map();
+    C.filter(r => r.section === 'National Championships' || r.section === 'Zonal Championships').sort(byDate).forEach(r => {
+      const k = `${r.section}|${yr(r)}|${ageN(r.age)}`;
+      if (!groups.has(k)) groups.set(k, { sec: r.section, year: yr(r), age: ageN(r.age) });
+      groups.get(k)[r.type === 'Mannschaft' ? 'team' : 'ein'] = r;
+    });
+    const place = r => !r ? '<span class="sub">–</span>'
+      : `<span class="num" style="font-size:18px${r.rank === 1 ? ';color:var(--brand)' : ''}">${int(r.rank)}.</span>`;
+    const champRow = g => {
+      const cities = [...new Set([g.ein, g.team].filter(Boolean).map(r => r.city))];
+      const where = cities.length > 1 ? `Einzel ${esc(g.ein.city)} · Team ${esc(g.team.city)}` : esc(cities[0]);
+      const won = [g.ein && g.ein.rank === 1 && 'im Einzel', g.team && g.team.rank === 1 && 'mit der Mannschaft'].filter(Boolean);
+      const finals = g.team && g.team.finals ? ` · Team-Finale bei Die Finals, ${esc(g.team.finals.city)}` : '';
+      return `<tr><td>${g.year} · ${g.age}<div class="sub">${where}${finals}</div>${won.length && g.sec === 'National Championships'
+        ? `<div class="sub" style="color:var(--ink);font-weight:600">Deutsche Meisterin ${won.join(' und ')}</div>` : ''}</td>
+        <td class="r" style="width:4em">${place(g.ein)}</td><td class="r" style="width:4em">${place(g.team)}</td></tr>`;
+    };
+    const section = (title, sec) => {
+      const rows = [...groups.values()].filter(g => g.sec === sec);
+      return rows.length ? `<tr><th colspan="3" style="padding-top:12px">${title}</th></tr>${rows.map(champRow).join('')}` : '';
+    };
     const lm = (career.medals || {}).regional || [];
-    h += '<h3>Meisterschaften</h3><table>' +
-      titles.map(r => rankRow(1, `<b>Deutsche Meisterin ${ageDe(r.age)}${r.type === 'Mannschaft' ? ' mit der Mannschaft' : ' im Einzel'}</b>`,
-        `${esc(r.city)} · ${yr(r)}${r.finals ? ` · Finale bei Die Finals, ${esc(r.finals.city)}` : ''}`)).join('') +
-      em.map(r => rankRow(r.rank, `Europameisterschaft ${ageDe(r.age)} ${r.type === 'Mannschaft' ? 'Mannschaft' : 'Einzel'}`,
-        `${esc(r.city)} · ${yr(r)}`)).join('') +
-      (lm.length ? `<tr><td></td><td>Landesmeisterschaften<div class="sub">${int(lm[0])}× Gold · ${int(lm[1])}× Silber · ${int(lm[2])}× Bronze</div></td></tr>` : '') +
-      '</table>';
+    h += `<h3>Meisterschaften</h3><table>
+      <tr><th></th><th class="r">Einzel</th><th class="r">Team</th></tr>
+      ${section('Europameisterschaften', 'Zonal Championships')}${section('Deutsche Meisterschaften', 'National Championships')}
+      ${lm.length ? `<tr><th colspan="3" style="padding-top:12px">Landesmeisterschaften</th></tr>
+        <tr><td colspan="3">${int(lm[0])}× Gold · ${int(lm[1])}× Silber · ${int(lm[2])}× Bronze<div class="sub">alle Altersklassen und Waffen</div></td></tr>` : ''}
+      </table>`;
 
-    // Turnier-Erfolge: Podestplätze bei Turnieren (keine Meisterschaften), neueste zuerst
+    // Turniere nach Ebene (Einteilung wie bei Ophardt); jedes Ergebnis steht genau einmal
     const tw = podium.filter(r => !/Championships/.test(r.section)).sort(byDate);
+    const intlPod = tw.filter(r => /^(International|Zonal) /.test(r.section)), natPod = tw.filter(r => !intlPod.includes(r));
     const row = r => rankRow(r.rank, `${ev(r)}${r.type === 'Mannschaft' ? ' (Mannschaft)' : ''}`, `${esc(r.city)} · ${ageDe(r.age)} · ${yr(r)}`);
-    if (tw.length) h += `<h3>Turnier-Erfolge</h3><div class="sub">${tw.length} Podestplätze, davon ${tw.filter(r => r.rank === 1).length} Turniersiege</div>
-      <table>${tw.slice(0, 6).map(row).join('')}</table>` +
-      (tw.length > 6 ? `<details class="more"><summary>Alle ${tw.length} anzeigen</summary><table>${tw.slice(6).map(row).join('')}</table></details>` : '');
+    const wins = rs => rs.filter(r => r.rank === 1).length;
+    if (intlBest || intlPod.length) h += `<h3>Internationale Turniere</h3>` +
+      (intlBest ? `<div class="sub">Beste Einzelplatzierungen je Turnierart</div><table>${intlBest}</table>` : '') +
+      (intlPod.length ? `<div class="sub" style="margin-top:10px">Podestplätze</div><table>${intlPod.map(row).join('')}</table>` : '');
+    if (natPod.length) h += `<h3>Nationale Turniere</h3><div class="sub">${natPod.length} Podestplätze, davon ${wins(natPod)} Turniersiege</div>
+      <table>${natPod.slice(0, 6).map(row).join('')}</table>` +
+      (natPod.length > 6 ? `<details class="more"><summary>Alle ${natPod.length} anzeigen</summary><table>${natPod.slice(6).map(row).join('')}</table></details>` : '');
 
     // Weitere Ranglisten-Bestwerte (Senioren/U20 stehen schon in den Kacheln)
     const rk = [['DFB U17', dfbC], ['Europa U23 (EFC)', efc]].filter(([, r]) => r);

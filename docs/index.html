@@ -382,14 +382,18 @@ function renderBilanz(s) {
   $('#bilanz').innerHTML = `<div class="num big">${Math.round(100 * w / (w + l))}<span style="margin-left:.08em">%</span> SIEGE</div>
       <div class="sub" style="font-size:12px;letter-spacing:-.01em;text-wrap:balance">Bilanz ${int(w)}:${int(l)} aus ${int(w + l)} Gefechten gegen ${int(o.length)} Gegnerinnen bei internationalen FIE-Turnieren${firstFie ? ` seit ${int(firstFie.slice(0, 4))}` : ''}</div>
     <input type="search" id="opp-q" placeholder="Gegnerin oder Nation suchen, z. B. Audibert oder ITA" aria-label="Gegnerin oder Nation suchen">
+    <div class="sub" id="opp-cap" style="margin-top:10px"></div>
     <table><tbody id="opp"></tbody></table>`;
+  // Ohne Suche: alle Gegnerinnen mit mehr als einem Duell (Liste ist schon nach Duellen, dann Datum sortiert)
+  const multi = o.filter(x => x.wins + x.losses > 1);
   const draw = q => {
-    const rows = q ? o.filter(x => `${x.name} ${x.nat}`.toLowerCase().includes(q)) : o;
-    $('#opp').innerHTML = rows.slice(0, q ? 40 : 8).map(x => `<tr>
+    const rows = q ? o.filter(x => `${x.name} ${x.nat}`.toLowerCase().includes(q)).slice(0, 40) : multi;
+    $('#opp-cap').textContent = q ? `${rows.length} Treffer` : `Gegnerinnen mit mehr als einem Duell (${multi.length}), meiste Duelle zuerst`;
+    $('#opp').innerHTML = rows.map(x => `<tr>
       <td>${esc(x.name)} <span class="sub">${esc(x.nat)}</span>
         <div class="sub">zuletzt ${dmy(x.last.date)}, ${esc(x.last.event)}: <span class="${x.last.win ? 'w' : 'l'}">${x.last.win ? 'S' : 'N'} ${esc(x.last.score)}</span></div></td>
       <td class="r"><span class="num" style="font-size:20px">${int(x.wins)}:${int(x.losses)}</span></td></tr>`).join('')
-      || '<tr><td class="sub">Keine Gegnerin gefunden.</td></tr>';
+      || `<tr><td class="sub">${q ? 'Keine Gegnerin gefunden.' : 'Noch keine Gegnerin mehrfach getroffen.'}</td></tr>`;
   };
   draw('');
   $('#opp-q').addEventListener('input', ev => draw(ev.target.value.trim().toLowerCase()));

@@ -390,7 +390,7 @@ function renderBilanz(s) {
   const multi = o.filter(x => x.wins + x.losses > 1), single = o.filter(x => x.wins + x.losses === 1);
   const row = x => `<tr>
       <td>${esc(x.name)} <span class="sub">${esc(x.nat)}</span>
-        <div class="sub">zuletzt ${dmy(x.last.date)}, ${esc(x.last.event)}: <span class="${x.last.win ? 'w' : 'l'}">${x.last.win ? 'S' : 'N'} ${esc(x.last.score)}</span></div></td>
+        <div class="sub">zuletzt ${dmy(x.last.date)}, ${esc(x.last.event)}: <span class="nw ${x.last.win ? 'w' : 'l'}">${x.last.win ? 'S' : 'N'} ${esc(x.last.score)}</span></div></td>
       <td class="r"><span class="num" style="font-size:20px">${int(x.wins)}:${int(x.losses)}</span></td></tr>`;
   const more = $('#opp-more');
   more.innerHTML = single.length ? `<summary>Alle weiteren Gegnerinnen (${single.length}, je ein Duell)</summary><table>${single.map(row).join('')}</table>` : '';

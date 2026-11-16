@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-16T19:10+00:00",
+ "updated": "2026-11-16T19:20+00:00",
  "name": "Ella Gamke",
  "fie_id": 60886,
  "errors": [],
@@ -280,6 +280,14 @@
    "photos": "Weltcup Plovdiv Florett"
   },
   {
+   "date": "2026-10-03",
+   "name": "Antony Open",
+   "city": "Paris",
+   "place": 54,
+   "key": "m-2026-10-03-Antony Open",
+   "source": "Ophardt (manuell)"
+  },
+  {
    "key": "fie-2027-397",
    "date": "2026-09-19",
    "name": "Satellite Amsterdam",
@@ -293,11 +301,59 @@
    "field": 100
   },
   {
+   "date": "2026-06-27",
+   "name": "Deutsche Mannschaftsmeisterschaft Senioren",
+   "city": "Koblenz",
+   "place": 1,
+   "key": "m-2026-06-27-Deutsche Mannschaftsmeisterschaft Senioren",
+   "source": "Ophardt (manuell)"
+  },
+  {
+   "date": "2026-06-13",
+   "name": "Burg-Cup",
+   "city": "Esslingen",
+   "place": 3,
+   "key": "m-2026-06-13-Burg-Cup",
+   "source": "Ophardt (manuell)"
+  },
+  {
+   "date": "2026-06-06",
+   "name": "Deutsche Meisterschaft U20",
+   "city": "Buchholz",
+   "place": 6,
+   "key": "m-2026-06-06-Deutsche Meisterschaft U20",
+   "source": "Ophardt (manuell)"
+  },
+  {
+   "date": "2026-06-06",
+   "name": "Deutsche Meisterschaft U20 Mannschaft",
+   "city": "Buchholz",
+   "place": 1,
+   "key": "m-2026-06-06-Deutsche Meisterschaft U20 Mannschaft",
+   "source": "Ophardt (manuell)"
+  },
+  {
    "date": "2026-05-30",
    "name": "Deutsche Meisterschaft Senioren",
    "city": "Berlin",
    "place": 5,
    "key": "m-2026-05-30-Deutsche Meisterschaft Senioren",
+   "source": "Ophardt (manuell)"
+  },
+  {
+   "date": "2026-04-25",
+   "name": "Europameisterschaft U23",
+   "city": "Cagliari",
+   "place": 53,
+   "key": "m-2026-04-25-Europameisterschaft U23",
+   "source": "Ophardt (manuell)"
+  },
+  {
+   "date": "2026-04-25",
+   "name": "Europameisterschaft U23 Mannschaft",
+   "city": "Cagliari",
+   "place": 8,
+   "key": "m-2026-04-25-Europameisterschaft U23 Mannschaft",
    "source": "Ophardt (manuell)"
   },
   {
@@ -312,6 +368,14 @@
    "source": "FIE",
    "points": null,
    "field": 88
+  },
+  {
+   "date": "2026-02-24",
+   "name": "Europameisterschaft U20 Mannschaft",
+   "city": "Tbilisi",
+   "place": 11,
+   "key": "m-2026-02-24-Europameisterschaft U20 Mannschaft",
+   "source": "Ophardt (manuell)"
   },
   {
    "key": "fie-2026-458",
@@ -348,19 +412,11 @@
    "field": 198
   },
   {
-   "date": "2026",
-   "name": "Burg-Cup",
-   "city": "Esslingen",
-   "place": 3,
-   "key": "m-2026-Burg-Cup",
-   "source": "Ophardt (manuell)"
-  },
-  {
-   "date": "2026",
-   "name": "Deutsche Meisterschaft Mannschaft Senioren 2025 und 2026 (Die Finals 2025)",
-   "city": "",
-   "place": 1,
-   "key": "m-2026-Deutsche Meisterschaft Mannschaft Senioren 2025 und 2026 (Die Finals 2025)",
+   "date": "2025-12-20",
+   "name": "Händel-Cup",
+   "city": "Halle",
+   "place": 8,
+   "key": "m-2025-12-20-Händel-Cup",
    "source": "Ophardt (manuell)"
   },
   {
@@ -375,14 +431,6 @@
    "source": "FIE",
    "points": null,
    "field": 192
-  },
-  {
-   "date": "2025-12",
-   "name": "Händel-Cup",
-   "city": "Halle",
-   "place": 8,
-   "key": "m-2025-12-Händel-Cup",
-   "source": "Ophardt (manuell)"
   },
   {
    "key": "fie-2026-1435-J",
@@ -411,11 +459,19 @@
    "field": 275
   },
   {
-   "date": "2025-10",
+   "date": "2025-10-18",
    "name": "Adolf-Ermer-Cup (U20)",
    "city": "Stuttgart",
    "place": 1,
-   "key": "m-2025-10-Adolf-Ermer-Cup (U20)",
+   "key": "m-2025-10-18-Adolf-Ermer-Cup (U20)",
+   "source": "Ophardt (manuell)"
+  },
+  {
+   "date": "2025-09-20",
+   "name": "Saale-Cup (U20)",
+   "city": "Jena",
+   "place": 7,
+   "key": "m-2025-09-20-Saale-Cup (U20)",
    "source": "Ophardt (manuell)"
   },
   {

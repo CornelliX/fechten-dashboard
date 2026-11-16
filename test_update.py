@@ -2,7 +2,7 @@
 import json
 from datetime import date
 
-from update import build_state, diff, ics, nuxt_queries, parse_opponents, season_of
+from update import build_state, diff, explain_dfb, explain_fie, ics, nuxt_queries, parse_opponents, season_of
 
 CFG = {"name": "Ella Gamke", "fie_id": 1, "fie_search": "X", "weapon": "F", "gender": "F", "category": "S"}
 MANUAL = {"dfb": {"rank": 7, "points": 48.25}, "fie_status": {"131": "Voranmeldung (Ophardt)"},
@@ -92,5 +92,32 @@ evil = ics([{"key": "x", "date": "2026-12-05", "name": "A\r\nBEGIN:VEVENT\x00", 
 assert evil.split("\r\n").count("BEGIN:VEVENT") == 1 and "\x00" not in evil and "javascript" not in evil, evil
 long = ics([{"key": "m-ä ö", "date": "2026-12-05", "name": "Händel-Cup " * 12, "status": "x"}], "E", "S")
 assert all(len(line.encode()) <= 75 for line in long.split("\r\n")) and "UID:m@fechten-dashboard" in long, long
+
+# 8. Erläuterungen: echter Fall DFB 19.10. -> 15.11.2026 (weniger Punkte, trotzdem einen Platz besser)
+T = lambda *rows: [{"rank": i + 1, "name": n, "points": p} for i, (n, p) in enumerate(rows)]
+dfb_old = {"rank": 7, "points": 48.25, "calculated": "2026-10-19",
+           "top10": T(("Morandi", 160.5), ("Ebert", 76.25), ("Höfler", 67.75), ("Anne Kleibrink", 65), ("Kirschen", 55.75),
+                      ("Kothieringer", 51), ("Ella Gamke", 48.25), ("Hohenadel", 38), ("Herwig", 38), ("Kirsch", 36.25))}
+dfb_new = {"rank": 6, "points": 47.25, "calculated": "2026-11-15",
+           "top10": T(("Morandi", 163), ("Ebert", 101.25), ("Höfler", 68), ("Kirschen", 56), ("Kothieringer", 53.75),
+                      ("Ella Gamke", 47.25), ("Anne Kleibrink", 45), ("Seiffert", 41.75), ("Herwig", 38.25), ("Kirsch", 36.25))}
+ex = explain_dfb(dfb_old, dfb_new)
+assert ex[1] == "Platz 7 → 6, 48,25 → 47,25 Punkte (−1)." and "Konkurrentinnen vor ihr" in ex[2], ex
+assert "– Überholt: Anne Kleibrink (65 → 45 Punkte)" in ex and not any("Vorbeigezogen" in x for x in ex), ex
+
+# Vorheriger Stand wird beim Wechsel gemerkt und bleibt sonst erhalten
+s1 = build(dict(MANUAL, dfb=dfb_old), {}, fake())
+s2 = build(dict(MANUAL, dfb=dfb_new), s1, fake())
+s3 = build(dict(MANUAL, dfb=dfb_new), s2, fake())
+assert s2["dfb_prev"]["rank"] == 7 and s3["dfb_prev"]["rank"] == 7 and "Überholt" in " ".join(s3["explain"]["dfb"])
+
+ef = explain_fie({"rank": 341, "points": 0.625, "label": "Saisonabschluss 2025/26",
+                  "breakdown": [{"key": "458_2026", "label": "Grand Prix Turin 2026", "points": 0.375, "counted": True}]},
+                 {"rank": 312, "points": 1.125, "breakdown": [
+                     {"key": "458_2026", "label": "Grand Prix Turin 2026", "points": 0.375, "counted": True},
+                     {"key": "127_2027", "label": "Weltcup Plovdiv 2026", "points": 0.25, "counted": True},
+                     {"key": "118_2026", "label": "Weltcup Hong Kong 2026", "points": 8.0, "counted": False}]})
+assert ef[0] == "Seit Saisonabschluss 2025/26:" and "– Neu gewertet: Weltcup Plovdiv 2026 (+0,25)" in ef, ef
+assert "– Streichergebnis, zählt nicht: Weltcup Hong Kong 2026 (8)" in ef, ef
 
 print("ok")

@@ -71,6 +71,18 @@ svg text.endlabel { fill: var(--ink); font: 700 15px Inter, sans-serif; }
 .tip { position: absolute; z-index: 2; background: var(--card); border: 1px solid var(--line); border-radius: 8px;
        padding: 6px 10px; font-size: 13px; box-shadow: 0 4px 14px rgb(0 0 0 / .12); pointer-events: none; white-space: nowrap; }
 details summary { cursor: pointer; color: var(--muted); font-size: 13px; padding: 6px 0; min-height: 24px; }
+/* Erläuterung in den Ranglisten-Karten */
+.why { margin-top: 10px; border-top: 1px solid var(--line); }
+.why > summary { list-style: none; cursor: pointer; display: flex; align-items: center; min-height: 40px;
+                 color: var(--muted); font-size: 14px; font-weight: 500; }
+.why > summary::-webkit-details-marker { display: none; }
+.why > summary::after { content: "▾"; margin-left: 6px; font-size: 12px; }
+.why[open] > summary::after { content: "▴"; }
+.why-body { font-size: 14px; line-height: 1.5; padding-bottom: 4px; }
+.why-body p { margin: 0 0 8px; }
+.why-body p:last-child { color: var(--muted); font-size: 13px; }
+.why-body ul { margin: -4px 0 10px; padding-left: 18px; }
+.why-body li { margin: 2px 0; }
 /* Nächstes Turnier */
 .next { border-left: 4px solid var(--brand); }
 .next-title { font: 700 30px/1.1 "Barlow Condensed", Inter, sans-serif; margin: 6px 0 4px; }
@@ -239,6 +251,16 @@ function renderBilanz(s) {
   $('#opp-q').addEventListener('input', ev => draw(ev.target.value.trim().toLowerCase()));
 }
 
+// Aufklappbare Erläuterung unter einer Ranglisten-Kennzahl; Zeilen mit "– " werden zur Aufzählung
+function why(lines) {
+  if (!lines || !lines.length) return '';
+  let html = '', list = [];
+  const flush = () => { if (list.length) { html += `<ul>${list.map(l => `<li>${esc(l)}</li>`).join('')}</ul>`; list = []; } };
+  lines.forEach(l => { if (l.startsWith('– ')) list.push(l.slice(2)); else { flush(); html += `<p>${esc(l)}</p>`; } });
+  flush();
+  return `<details class="why"><summary>Erläuterung</summary><div class="why-body">${html}</div></details>`;
+}
+
 function render(s, changes, hist) {
   renderNext(s);
   renderBilanz(s);
@@ -249,8 +271,8 @@ function render(s, changes, hist) {
   if (s.fie.image) { $('#img').src = s.fie.image; $('#img').hidden = false; }
   if (s.errors.length) $('#errors').innerHTML = `<div class="errors"><b>Quelle nicht erreichbar, letzter Stand wird gezeigt:</b><br>${s.errors.map(esc).join('<br>')}</div>`;
 
-  $('#kpi-fie').innerHTML = `<span class="num">${int(s.fie.rank)}</span>${trend(hist, 'FIE')}<div class="sub">${num(s.fie.points)} Punkte · Saison ${saison(s.fie.season)}</div>`;
-  $('#kpi-dfb').innerHTML = `<span class="num">${int(s.dfb.rank)}</span>${trend(hist, 'DFB')}<div class="sub">${num(s.dfb.points)} Punkte · berechnet ${dmy(s.dfb.calculated)} (Ophardt)</div>`;
+  $('#kpi-fie').innerHTML = `<span class="num">${int(s.fie.rank)}</span>${trend(hist, 'FIE')}<div class="sub">${num(s.fie.points)} Punkte · Saison ${saison(s.fie.season)}</div>${why((s.explain || {}).fie)}`;
+  $('#kpi-dfb').innerHTML = `<span class="num">${int(s.dfb.rank)}</span>${trend(hist, 'DFB')}<div class="sub">${num(s.dfb.points)} Punkte · berechnet ${dmy(s.dfb.calculated)} (Ophardt)</div>${why((s.explain || {}).dfb)}`;
 
   $('#feed').innerHTML = changes.slice(0, 20).map(c => `<li><time>${dmy(c.date)}</time><span>${esc(c.text)}</span></li>`).join('')
     || '<li><span></span><span class="sub">Noch keine Änderungen.</span></li>';

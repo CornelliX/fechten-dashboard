@@ -17,7 +17,7 @@ ROOT = Path(__file__).resolve().parent
 DATA = ROOT / "docs" / "data"
 FIE = "https://fie.org"
 HEADERS = {"User-Agent": "Mozilla/5.0 (compatible; fencing-dashboard/1.0)"}
-TYPE_DE = {"World Cup": "Weltcup", "World Championship": "WM", "Zone Championships": "EM",
+TYPE_DE = {"World Cup": "Weltcup", "World Championship": "WM", "World Championships": "WM", "Zone Championships": "EM",
            "Satellite": "Satellite", "Grand Prix": "Grand Prix",
            "Coupe du Monde": "Weltcup", "Tournoi Satellite": "Satellite"}
 
@@ -87,11 +87,18 @@ def fetch_ranking(cfg, season):
                                 "category": cfg["category"], "type": "I"})
     body = pick(nuxt_queries(get(f"{FIE}/athletes/detailed-ranking?{q}")), '["fencers", "detailed-ranking"')
     me = next((f for f in body["fencers"] if f["addrId"] == cfg["fie_id"]), None)
-    comp_points = {k: float(v.strip("()")) for k, v in (me or {}).get("competitionPoints", {}).items()}
+    raw = (me or {}).get("competitionPoints", {})
+    comp_points = {k: float(v.strip("()")) for k, v in raw.items()}
+    comps = {c["key"]: c for c in body.get("competitions", [])}
+    # Welche Turniere mit wie vielen Punkten zählen; "(8.000)" = Streichergebnis
+    breakdown = [{"key": k, "label": f"{event_de(comps[k]['name'])} {comps[k]['location']} {comps[k]['beginDate'][:4]}"
+                  if k in comps else k, "points": comp_points[k], "counted": not v.startswith("(")}
+                 for k, v in raw.items()]
     return {
         "rank": me and me["rank"],
         "points": me and float(me["points"]),
         "comp_points": comp_points,
+        "breakdown": breakdown,
         "top_ger": [{"rank": f["rank"], "name": f["name"], "points": float(f["points"]), "id": f["addrId"]}
                     for f in body["fencers"] if f["countryCode"] == "GER"][:12],
     }
@@ -228,6 +235,7 @@ def build_state(cfg, manual, old, today, fetchers=None):
         fie.update(rank=rank["rank"], points=rank["points"])
     if rank:
         fie["top_ger"] = rank["top_ger"]
+        fie["breakdown"] = rank.get("breakdown", [])
 
     results = {r["key"]: r for r in old.get("results", []) if r.get("source") == "FIE"}
     for r in (prof or {}).get("results", []) + (more_results or []):
@@ -247,13 +255,25 @@ def build_state(cfg, manual, old, today, fetchers=None):
     all_events = [dict(e, status=event_status(e, manual)) for e in fie_events]
     all_events += [dict(m, key=f"m-{m['date']}-{m['name']}", source="Ophardt (manuell)") for m in manual.get("events", [])]
 
+    dfb = manual.get("dfb", {})
+    # Vorheriger Stand je Rangliste: wird bei jeder Platz-/Punkteänderung durch den alten Stand ersetzt
+    old_dfb, old_fie = old.get("dfb") or {}, old.get("fie") or {}
+    changed = lambda o, n: o.get("rank") and (o.get("rank"), o.get("points")) != (n.get("rank"), n.get("points"))
+    dfb_prev = ({k: old_dfb.get(k) for k in ("rank", "points", "calculated", "top10")}
+                if changed(old_dfb, dfb) else old.get("dfb_prev"))
+    fie_prev = ({"rank": old_fie.get("rank"), "points": old_fie.get("points"), "breakdown": old_fie.get("breakdown"),
+                 "date": str(old.get("updated", ""))[:10]} if changed(old_fie, fie) else old.get("fie_prev"))
+
     return {
         "updated": datetime.now(timezone.utc).isoformat(timespec="minutes"),
         "name": cfg["name"],
         "fie_id": cfg["fie_id"],
         "errors": errors,
         "fie": fie,
-        "dfb": manual.get("dfb", {}),
+        "dfb": dfb,
+        "dfb_prev": dfb_prev,
+        "fie_prev": fie_prev,
+        "explain": {"dfb": explain_dfb(dfb_prev, dfb), "fie": explain_fie(fie_prev, fie)},
         "results": sorted(results.values(), key=lambda r: str(r["date"]), reverse=True),
         "bouts": prof["bouts"] if prof else old.get("bouts", []),
         "opponents": opponents if opponents is not None else old.get("opponents", []),
@@ -270,6 +290,79 @@ def de(x):
 def dmy(s):
     p = str(s).split("-")
     return ".".join(reversed(p)) if len(p) == 3 else str(s)
+
+
+# ---------- Erläuterungen zu den Ranglisten (Aufklappmenü in den Karten oben) ----------
+# Zeilen mit "– " am Anfang werden als Aufzählung dargestellt.
+
+def _movement(o, n):
+    """Kernsatz: Platz- und Punkteänderung, inkl. des scheinbaren Widerspruchs."""
+    dr, dp = o["rank"] - n["rank"], round((n.get("points") or 0) - (o.get("points") or 0), 3)
+    pts = f"{de(o.get('points'))} → {de(n.get('points'))} Punkte" + (f" ({'+' if dp > 0 else '−'}{de(abs(dp))})" if dp else "")
+    head = f"Platz {o['rank']} → {n['rank']}, {pts}."
+    if dr > 0 and dp < 0:
+        why = "Weniger Punkte und trotzdem besser platziert: Konkurrentinnen vor ihr haben noch mehr Punkte verloren."
+    elif dr < 0 and dp > 0:
+        why = "Mehr Punkte und trotzdem schlechter platziert: Andere haben noch mehr Punkte hinzugewonnen."
+    elif dr and not dp:
+        why = "Ihre Punkte sind gleich geblieben; verschoben haben sich die Punkte der anderen."
+    elif not dr and dp:
+        why = "Der Platz ist gleich geblieben, nur die Punkte haben sich verändert."
+    else:
+        why = ""
+    return [head] + ([why] if why else [])
+
+
+def explain_dfb(prev, cur):
+    if not cur.get("rank"):
+        return []
+    out = []
+    if prev and prev.get("rank"):
+        out.append(f"Seit der Berechnung vom {dmy(prev.get('calculated'))}:")
+        out += _movement(prev, cur)
+        old = {r["name"]: r for r in prev.get("top10") or []}
+        new = {r["name"]: r for r in cur.get("top10") or []}
+        is_me = lambda name: "gamke" in name.lower()
+        for name, r in old.items():  # vorher vor ihr, jetzt hinter ihr
+            if not is_me(name) and r["rank"] < prev["rank"] and (name not in new or new[name]["rank"] > cur["rank"]):
+                now = f"{de(new[name]['points'])} Punkte" if name in new else "nicht mehr in den Top 10"
+                out.append(f"– Überholt: {name} ({de(r['points'])} → {now})")
+        for name, r in new.items():  # vorher hinter ihr, jetzt vor ihr
+            if not is_me(name) and r["rank"] < cur["rank"] and (name not in old or old[name]["rank"] > prev["rank"]):
+                before = f"{de(old[name]['points'])}" if name in old else "außerhalb der Top 10"
+                out.append(f"– Vorbeigezogen: {name} ({before} → {de(r['points'])} Punkte)")
+    out.append("So rechnet die DFB-Rangliste: Jedes Ergebnis zählt ein Jahr und fällt danach heraus, "
+               "schwächere Ergebnisse können als Streichergebnis wegfallen. Punkte ändern sich deshalb "
+               "bei jeder Neuberechnung, auch ohne neues Turnier.")
+    if cur.get("calculated"):
+        out.append(f"Aktueller Stand: berechnet am {dmy(cur['calculated'])} (Ophardt).")
+    return out
+
+
+def explain_fie(prev, cur):
+    if not cur.get("rank"):
+        return []
+    out = []
+    if prev and prev.get("rank"):
+        out.append(f"Seit {prev['label']}:" if prev.get("label") else f"Seit dem {dmy(prev.get('date'))}:")
+        out += _movement(prev, cur)
+        ob = {b["key"]: b for b in prev.get("breakdown") or []}
+        nb = {b["key"]: b for b in cur.get("breakdown") or []}
+        if ob:
+            out += [f"– Neu gewertet: {b['label']} (+{de(b['points'])})" for k, b in nb.items() if k not in ob and b["counted"]]
+            out += [f"– Weggefallen: {b['label']} (−{de(b['points'])})" for k, b in ob.items() if k not in nb and b["counted"]]
+            out += [f"– Jetzt Streichergebnis: {b['label']} ({de(b['points'])})" for k, b in nb.items()
+                    if k in ob and ob[k]["counted"] and not b["counted"]]
+    counted = [b for b in cur.get("breakdown") or [] if b["counted"]]
+    dropped = [b for b in cur.get("breakdown") or [] if not b["counted"]]
+    if counted:
+        out.append("Aktuell gewertet:")
+        out += [f"– {b['label']}: {de(b['points'])}" for b in counted]
+    out += [f"– Streichergebnis, zählt nicht: {b['label']} ({de(b['points'])})" for b in dropped]
+    out.append("So rechnet die FIE-Weltrangliste: Gewertet werden die Ergebnisse der letzten zwölf Monate. "
+               "Die Punkte eines Turniers fallen weg, sobald es im neuen Jahr wieder ausgetragen wird. "
+               "Es zählt nur eine begrenzte Zahl bester Ergebnisse, der Rest wird gestrichen.")
+    return out
 
 
 def rank_change(label, o, n):

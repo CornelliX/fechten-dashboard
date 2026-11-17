@@ -92,7 +92,7 @@ a { color: var(--cyan); }
   <header class="hero">
     <span class="kicker">Ellas Fecht-Bilanz</span>
     <h1 class="year" id="year">2026</h1>
-    <p class="sub" id="sub">Das war dein Jahr auf der Planche.</p>
+    <p class="sub" id="sub">Das war Dein Jahr auf der Planche.</p>
   </header>
   <div id="app"></div>
 </main>
@@ -140,9 +140,9 @@ function render(b) {
   const pct = b.bouts ? Math.round(100 * b.wins / b.bouts) : 0;
   const w = b.top_win;
   const cards = [
-    card('Gefechte gewonnen', 'cyan', `<div class="big">${count(b.wins)} <small>von ${esc(b.bouts)}</small></div>
+    card('Gefechte gewonnen', 'cyan', `<div class="big">${count(b.wins)}</div>
       <div class="line">bei ${esc(b.tournaments)} internationalen Turnieren</div>
-      <div class="bar" role="img" aria-label="${pct} Prozent gewonnen"><i data-w="${pct}"></i></div><div class="meta">${pct} % Siegquote · nur FIE-Turniere</div>`, true),
+      <div class="bar" role="img" aria-label="${pct} Prozent gewonnen"><i data-w="${pct}"></i></div><div class="meta">von ${esc(b.bouts)} Gefechten insgesamt · <span style="white-space:nowrap">${pct} % Siegquote</span></div>`, true),
     card('Höchster Sieg', 'pink', w ? `<div class="big">${esc(w.score)}</div>
       <div class="line">gegen ${esc(person(w.opponent))} (${esc(land(w.nat))})</div><div class="meta">${esc(w.event)} · ${dmy(w.date)}${year}</div>`
       : '<div class="big">–</div>'),
@@ -151,8 +151,8 @@ function render(b) {
     card('Team-Highlights', 'gold', b.team.length ? b.team.map(t => `<div class="row">${medal(t.place, 36)}<div>
       <div class="line" style="margin:0">${esc(t.name)}</div><div class="meta">${dmy(t.date)}${year}</div></div></div>`).join('')
       : '<div class="meta">Diesmal kein Mannschafts-Podest</div>'),
-    card('Beste Rangliste national', 'cyan', `<div class="big"><small>Platz</small> ${count(b.dfb_rank)}</div><div class="meta">DFB-Rangliste · Senioren</div>`),
-    card('Beste Rangliste international', 'pink', `<div class="big"><small>Platz</small> ${count(b.fie_rank)}</div><div class="meta">FIE-Weltrangliste · Senioren</div>`),
+    card('Bester Platz Rangliste national', 'cyan', `<div class="big">${count(b.dfb_rank, '.')}</div><div class="meta">DFB-Rangliste · Senioren</div>`),
+    card('Bester Platz Rangliste international', 'pink', `<div class="big">${count(b.fie_rank, '.')}</div><div class="meta">FIE-Weltrangliste · Senioren</div>`),
   ];
   $('#app').innerHTML = `<div class="grid">${cards.join('')}</div>
     <div class="toast pop"><p>Prost auf ${year + 1}!</p><a href="./">Zum Dashboard</a></div>`;

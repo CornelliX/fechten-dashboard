@@ -143,7 +143,7 @@ function render(b) {
     card('Gefechte gewonnen', 'cyan', `<div class="big">${count(b.wins)}</div>
       <div class="line">bei ${esc(b.tournaments)} internationalen Turnieren</div>
       <div class="bar" role="img" aria-label="${pct} Prozent gewonnen"><i data-w="${pct}"></i></div><div class="meta">von ${esc(b.bouts)} Gefechten insgesamt · <span style="white-space:nowrap">${pct} % Siegquote</span></div>`, true),
-    card('Höchster Sieg', 'pink', w ? `<div class="big">${esc(w.score)}</div>
+    card('Höchster Sieg international', 'pink', w ? `<div class="big">${esc(w.score)}</div>
       <div class="line">gegen ${esc(person(w.opponent))} (${esc(land(w.nat))})</div><div class="meta">${esc(w.event)} · ${dmy(w.date)}${year}</div>`
       : '<div class="big">–</div>'),
     placement('Beste Platzierung national', 'gold', b.best_national),

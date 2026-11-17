@@ -566,7 +566,7 @@ function renderStats(s, hist, career, jb) {
     const rank = (lbl, n) => n ? rankRow(n, lbl, 'bester Platz im Jahr', false) : '';
     h += `<h3>Jahresbilanzen</h3>` + jbs.map(b => `<details class="jb"><summary>${int(b.year)}</summary><table>
       ${numRow('Gefechte gewonnen', `bei ${int(b.tournaments)} internationalen Turnieren`, `${int(b.wins)}/${int(b.bouts)}`)}
-      ${b.top_win ? numRow('Höchster Sieg', `gegen ${esc(b.top_win.opponent)} (${esc(b.top_win.nat)}) · ${esc(b.top_win.event)}`, esc(b.top_win.score)) : ''}
+      ${b.top_win ? numRow('Höchster Sieg international', `gegen ${esc(b.top_win.opponent)} (${esc(b.top_win.nat)}) · ${esc(b.top_win.event)}`, esc(b.top_win.score)) : ''}
       ${place('National', b.best_national)}${place('International', b.best_international)}
       ${(b.team || []).map(r => rankRow(r.place, esc(r.name), `Mannschaft · ${dmy(r.date)}`)).join('')}
       ${rank('DFB-Rangliste Senioren', b.dfb_rank)}${rank('FIE-Weltrangliste Senioren', b.fie_rank)}

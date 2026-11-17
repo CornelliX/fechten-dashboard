@@ -1,0 +1,57 @@
+name: Turnier-Tag
+
+on:
+  schedule:
+    # 6:53 und 7:53 UTC = 7:53/8:53 Uhr MEZ bzw. 8:53/9:53 Uhr MESZ; das Skript sendet nur einmal, ab 8:30 Uhr Berliner Zeit.
+    # GitHub startet geplante Läufe oft einige Minuten später, die Mail kommt also gegen 9 Uhr.
+    - cron: "53 6,7 * * *"
+  workflow_dispatch:            # Testmail: Actions → "Turnier-Tag" → Run workflow, Datum eines Turniertags eintragen
+    inputs:
+      datum:
+        description: "Testmail für dieses Datum (JJJJ-MM-TT)"
+        type: string
+        required: true
+
+permissions:
+  contents: write
+
+concurrency: turniertag
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    env:
+      MAIL_USER: ${{ secrets.MAIL_USER }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - id: t
+        env:
+          DATUM: ${{ inputs.datum }}
+        run: python turniertag.py $DATUM
+      - name: E-Mail
+        if: steps.t.outputs.send == 'true' && env.MAIL_USER != ''
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: ${{ secrets.MAIL_SERVER }}
+          server_port: ${{ secrets.MAIL_PORT }}
+          username: ${{ secrets.MAIL_USER }}
+          password: ${{ secrets.MAIL_PASS }}
+          from: Ellas Fecht-Dashboard <${{ secrets.MAIL_USER }}>
+          to: ${{ secrets.MAIL_TO }}
+          subject: "Turnier-Tag! Let's go, Ella!"
+          body: ${{ steps.t.outputs.body }}
+      - name: Gesendeten Tag merken
+        run: |
+          set -euo pipefail
+          git config user.name "fecht-bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/data/turniertag.json 2>/dev/null || exit 0
+          git diff --cached --quiet && exit 0
+          git commit -m "Turnier-Tag $(date -u +%F)"
+          git pull --rebase || { git rebase --abort; exit 1; }
+          git push

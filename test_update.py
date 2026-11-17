@@ -221,4 +221,23 @@ assert sorted((r["date"], r["section"], r["age"], r["type"]) for r in d["results
     ("2022-05-07", "National Championships", "U17", "Einzel")], d["results"]
 assert {r["name"] for r in d["results"]} == {"Flughafen-Turnier", "Deutsche Meisterschaft", "Wenzel-Cup"}, d["results"]
 assert all(r["section"] in ("National Championships", "Regional Tournaments") for r in d["results"])
+
+# 9. Turnier-Tag: FIE-Einzel nur am ersten Tag, Team nur mit "Team" im Status, eigene Termine jeden Tag oder "days"
+import turniertag
+comps = {"events": [
+    {"competitionId": 118, "season": 2027, "startDate": "2026-12-11", "endDate": "2026-12-12", "weapon": "F", "gender": "F", "category": "S", "isTeam": False},
+    {"competitionId": 755, "season": 2027, "startDate": "2026-12-13", "endDate": "2026-12-13", "weapon": "F", "gender": "F", "category": "S", "isTeam": True},
+    {"competitionId": 138, "season": 2027, "startDate": "2026-12-10", "endDate": "2026-12-12", "weapon": "F", "gender": "M", "category": "S", "isTeam": False}]}
+cfg = {"weapon": "F", "gender": "F", "category": "S"}
+fie_ev = {"source": "FIE", "fie_id": 131, "name": "Weltcup Shanghai", "date": "2026-12-10", "end": "2026-12-13", "status": "Gemeldet (FIE)"}
+st = {"events": [fie_ev, {"source": "Ophardt (manuell)", "name": "Händel-Cup", "date": "2026-12-05", "end": "2026-12-06",
+                          "status": "Gemeldet, auch als Kampfrichterin", "url": "https://o.example/cal", "days": ["2026-12-05"]},
+                 {"source": "FIE", "fie_id": 9, "name": "Turin", "date": "2026-12-11", "end": "2026-12-11", "status": "Keine Meldung bekannt"}]}
+tb = lambda d, s=st: turniertag.todays_bouts(s, cfg, d, fetch=lambda tid: comps)
+assert tb("2026-12-10") == [] and tb("2026-12-12") == [] and tb("2026-12-13") == [] and tb("2026-12-06") == []
+assert tb("2026-12-11") == [("Weltcup Shanghai", "Einzel", "https://fie.org/tournaments/2027/131/event/118")], tb("2026-12-11")
+assert tb("2026-12-05") == [("Händel-Cup", "", "https://o.example/cal")]
+team = {"events": [dict(fie_ev, status="Gemeldet (Einzel + Team)")]}
+assert tb("2026-12-13", team) == [("Weltcup Shanghai", "Team", "https://fie.org/tournaments/2027/131/event/755")]
+assert "Let's go, Ella!" in turniertag.message(tb("2026-12-11"))
 print("ok")

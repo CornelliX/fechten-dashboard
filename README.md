@@ -46,4 +46,12 @@ Nur Python-Standardbibliothek, nichts zu installieren.
 
 ## Wenn etwas nicht stimmt
 
+## Turnier-Tag-Mail
+
+An Wettkampftagen, für die Ella gemeldet ist, kommt gegen 9 Uhr eine Mail „Turnier-Tag! Let's go, Ella!“ mit Direktlink (Workflow `turniertag.yml`, Skript `turniertag.py`).
+
+- **FIE-Turniere** mit Status „Gemeldet …“ oder Eintrag in der FIE-Meldeliste: am ersten Tag des Einzels, Link zur Live-Seite des Wettbewerbs auf fie.org. Den Team-Tag gibt es nur, wenn im Status `fie_status` in `manual.json` „Team“ oder „Mannschaft“ steht, z. B. `"Gemeldet (Einzel + Team)"`.
+- **Eigene Termine** in `manual.json` mit Status „Gemeldet …“: jeden Tag von `date` bis `end`. Optional `"days": ["2026-12-05"]` für nur bestimmte Tage und `"live": "https://…"` als Direktlink (sonst `url`).
+- **Testmail:** Actions → „Turnier-Tag“ → Run workflow, Datum eines Turniertags eintragen.
+
 Fällt fie.org aus oder ändert die Seitenstruktur, bleibt der letzte Stand stehen und die Seite zeigt oben einen gelben Hinweis mit der Fehlermeldung. GitHub pausiert geplante Workflows nach 60 Tagen ohne Commits; der tägliche Commit (Zeitstempel in `state.json`) verhindert das. Falls die Mails trotzdem ausbleiben: unter Actions nachsehen, ob der Workflow deaktiviert wurde.

@@ -48,7 +48,7 @@ jobs:
           git push
       - name: E-Mail bei Änderungen
         if: (steps.u.outputs.changed == 'true' || inputs.testmail) && env.MAIL_USER != ''
-        uses: dawidd6/action-send-mail@v3
+        uses: dawidd6/action-send-mail@4226df7daafa6fc901a43789c49bf7ab309066e7 # v3.11.0
         with:
           server_address: ${{ secrets.MAIL_SERVER }}
           server_port: ${{ secrets.MAIL_PORT }}

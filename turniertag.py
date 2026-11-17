@@ -84,4 +84,5 @@ if __name__ == "__main__":
             f.write(f"send=true\nbody<<{delim}\n{message(bouts)}\n{delim}\n")
             # Kurzfassung fürs Handy-Banner (ntfy): Turniernamen in einer Zeile, Tippen öffnet den ersten Link
             push = " · ".join(" ".join(f"{n} {k}".split()) for n, k, _ in bouts)
-            f.write(f"push={push}\nlink={''.join(bouts[0][2].split())}\n")
+            link = "".join(bouts[0][2].split())
+            f.write(f"push={push}\nlink={link if link.startswith('https://') else DASHBOARD}\n")

@@ -9,7 +9,7 @@ Welche Tage zählen:
 - Eigene Termine aus manual.json mit Status "Gemeldet …": jeder Tag von date bis end, oder nur die Tage in
   "days" (z. B. ["2026-12-05"]). Link: "live", sonst "url" des Termins.
 """
-import json, os, sys
+import json, os, secrets, sys
 from datetime import date, datetime, timedelta
 from pathlib import Path
 
@@ -39,13 +39,14 @@ def todays_bouts(state, cfg, today, fetch=lambda tid: json.loads(get(f"{FIE}/api
                 out.append((e["name"], "", e.get("live") or e.get("url") or DASHBOARD))
             continue
         team = any(w in status for w in ("Team", "Mannschaft"))
-        for c in fetch(e["fie_id"]).get("events", []):
+        tid = int(e["fie_id"])  # nur numerische IDs in URLs
+        for c in fetch(tid).get("events", []):
             if (c["weapon"], c["gender"], c["category"]) != (cfg["weapon"], cfg["gender"], cfg["category"]):
                 continue
             # ponytail: Einzel nur am ersten Tag (dort ficht Ella sicher); spätere Einzeltage erfordern das Weiterkommen
             if (today == c["startDate"]) if not c["isTeam"] else (team and today in _days(c["startDate"], c["endDate"])):
                 out.append((e["name"], "Team" if c["isTeam"] else "Einzel",
-                            f"{FIE}/tournaments/{c['season']}/{e['fie_id']}/event/{c['competitionId']}"))
+                            f"{FIE}/tournaments/{int(c['season'])}/{tid}/event/{int(c['competitionId'])}"))
     return out
 
 

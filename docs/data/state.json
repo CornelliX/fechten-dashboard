@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-16T23:50+00:00",
+ "updated": "2026-11-17T12:53+00:00",
  "name": "Ella Gamke",
  "fie_id": 60886,
  "errors": [],
@@ -2080,7 +2080,11 @@
    "name": "21. Händel-Cup (DFB-Qualifikation)",
    "city": "Halle",
    "status": "Gemeldet, auch als Kampfrichterin",
-   "url": "https://fencing.ophardt.online/de/calendar",
+   "url": "https://fencing.ophardt.online/de/widget/event/34853",
+   "days": [
+    "2026-12-06"
+   ],
+   "live": "https://www.fencingworldwide.com/de/34853-2026/tournament/",
    "key": "m-2026-12-05-21. Händel-Cup (DFB-Qualifikation)",
    "source": "Ophardt (manuell)"
   },

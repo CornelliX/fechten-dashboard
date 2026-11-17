@@ -117,6 +117,14 @@ h1, h2, h3 { text-wrap: balance; }
 .why-body p:last-child { color: var(--muted); font-size: 13px; margin-bottom: 0; }
 .why-body ul { margin: -4px 0 10px; padding-left: 18px; }
 .why-body li { margin: 2px 0; }
+/* Jahresbilanzen: je Jahr aufklappbar, Stil wie Regeln */
+details.jb { border-top: 1px solid var(--line); }
+details.jb > summary { cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center;
+                       min-height: 48px; font: 700 18px/1 "Barlow Condensed", Inter, sans-serif; }
+details.jb > summary::-webkit-details-marker { display: none; }
+details.jb > summary::after { content: "+"; font: 400 20px/1 Inter, sans-serif; color: var(--muted); }
+details.jb[open] > summary::after { content: "−"; }
+details.jb > a { display: inline-block; margin: 8px 0 14px; font-size: 14px; }
 /* Regeln und Wissenswertes */
 .rules details { border-top: 1px solid var(--line); }
 .rules h2 + details { border-top: 0; }
@@ -317,7 +325,8 @@ Promise.all([
   fetch('data/changes.json', nocache).then(r => r.json()),
   fetch('data/history.csv', nocache).then(r => r.text()),
   fetch('data/laufbahn.json', nocache).then(r => r.ok ? r.json() : null).catch(() => null),
-]).then(([s, changes, csv, career]) => render(s, changes, parseCsv(csv), career))
+  fetch('data/jahresbilanz.json', nocache).then(r => r.ok ? r.json() : {}).catch(() => ({})),
+]).then(([s, changes, csv, career, jb]) => render(s, changes, parseCsv(csv), career, jb))
   .catch(e => { $('#meta').textContent = 'Daten konnten nicht geladen werden: ' + e.message; });
 
 function parseCsv(t) {
@@ -447,7 +456,7 @@ function careerResults(career) {
     .map(r => isDm(r) && finals.has(key(r)) ? { ...r, finals: finals.get(key(r)) } : r)
     .map(r => r.event === 'The Finals' ? { ...r, section: 'National Championships', event: 'German Championships' } : r);
 }
-function renderStats(s, hist, career) {
+function renderStats(s, hist, career, jb) {
   const C = careerResults(career);
   const fie = (s.results || []).filter(r => r.source === 'FIE' && Number(r.place) > 0);
   const byDate = (a, b) => String(b.date).localeCompare(String(a.date));
@@ -547,6 +556,22 @@ function renderStats(s, hist, career) {
     if (rk.length) h += `<h3>Weitere Ranglisten-Bestwerte</h3><table>${rk.map(([l, r]) => rankRow(r.rank, l, `Saison ${saison(r.season + 1)}`, false)).join('')}</table>`;
     h += `<div class="sub" style="margin-top:10px">Quellen: ${safeUrl(career.source) ? `<a href="${safeUrl(career.source)}" target="_blank" rel="noopener">Ophardt-Biografie ${EXT}</a>` : 'Ophardt-Biografie'} (Stand ${dmy(career.imported)}), FIE.</div>`;
   }
+
+  // Jahresbilanzen: Archiv der Silvesterseiten, jedes Jahr erst ab 31.12., 16 Uhr, zugeklappt
+  const jbs = Object.values(jb || {}).filter(b => Date.now() >= Date.parse(`${int(b.year)}-12-31T16:00:00+01:00`))
+    .sort((a, b) => b.year - a.year);
+  if (jbs.length) {
+    const numRow = (main, sub, val) => `<tr><td>${main}<div class="sub">${sub}</div></td><td class="r"><span class="num" style="font-size:18px">${val}</span></td></tr>`;
+    const place = (lbl, r) => r ? rankRow(r.place, `${lbl}: ${esc(r.name)}`, dmy(r.date)) : '';
+    const rank = (lbl, n) => n ? rankRow(n, lbl, 'bester Platz im Jahr', false) : '';
+    h += `<h3>Jahresbilanzen</h3>` + jbs.map(b => `<details class="jb"><summary>${int(b.year)}</summary><table>
+      ${numRow('Gefechte gewonnen', `bei ${int(b.tournaments)} internationalen Turnieren`, `${int(b.wins)}/${int(b.bouts)}`)}
+      ${b.top_win ? numRow('Höchster Sieg', `gegen ${esc(b.top_win.opponent)} (${esc(b.top_win.nat)}) · ${esc(b.top_win.event)}`, esc(b.top_win.score)) : ''}
+      ${place('National', b.best_national)}${place('International', b.best_international)}
+      ${(b.team || []).map(r => rankRow(r.place, esc(r.name), `Mannschaft · ${dmy(r.date)}`)).join('')}
+      ${rank('DFB-Rangliste Senioren', b.dfb_rank)}${rank('FIE-Weltrangliste Senioren', b.fie_rank)}
+      </table><a class="quiet-link" href="silvester.html?jahr=${int(b.year)}">Silvesterseite ansehen</a></details>`).join('');
+  }
   $('#stats').innerHTML = h;
 }
 
@@ -587,10 +612,10 @@ function why(lines, url, label) {
   return `<details class="why"><summary aria-label="Erläuterung" title="Erläuterung">i</summary><div class="why-body">${html}</div></details>`;
 }
 
-function render(s, changes, hist, career) {
+function render(s, changes, hist, career, jb) {
   renderNext(s);
   renderBilanz(s);
-  renderStats(s, hist, career);
+  renderStats(s, hist, career, jb);
   document.title = `${s.name} · Fechten`;
   $('#name').textContent = s.name;
   const upd = new Date(s.updated).toLocaleString('de-DE', { dateStyle: 'medium', timeStyle: 'short' });

@@ -83,8 +83,9 @@ def bout(d, me_score, other_score, me_first=True, name="Coupe du Monde "):
 opp = parse_opponents([{"id": 9, "name": "AUDIBERT  Alicia", "flag": "fra",
                         "events": [bout("2026-11-12", 5, 4), bout("2026-11-12", 4, 15, me_first=False, name="Coupe du monde")]}], 1)
 # gleicher Tag: das K.-o.-Gefecht (4:15) zählt als letztes, auch wenn FIE die Vorrunde danach listet
-assert opp == [{"id": 9, "name": "AUDIBERT Alicia", "nat": "FRA", "wins": 1, "losses": 1,
-                "last": {"date": "2026-11-12", "win": False, "score": "4:15", "event": "Weltcup Plovdiv"}}], opp
+ko = {"date": "2026-11-12", "win": False, "score": "4:15", "event": "Weltcup Plovdiv"}
+assert opp == [{"id": 9, "name": "AUDIBERT Alicia", "nat": "FRA", "wins": 1, "losses": 1, "last": ko,
+                "bouts": [ko, {"date": "2026-11-12", "win": True, "score": "5:4", "event": "Weltcup Plovdiv"}]}], opp
 
 # 7. Kalenderdatei: ganztägig, Ende exklusiv, Sonderzeichen escaped, "Nicht relevant" ausgelassen
 cal = ics([{"key": "fie-131", "date": "2026-12-10", "end": "2026-12-13", "name": "Shanghai, World Cup",
@@ -240,4 +241,33 @@ assert tb("2026-12-05") == [("Händel-Cup", "", "https://o.example/cal")]
 team = {"events": [dict(fie_ev, status="Gemeldet (Einzel + Team)")]}
 assert tb("2026-12-13", team) == [("Weltcup Shanghai", "Team", "https://fie.org/tournaments/2027/131/event/755")]
 assert "Let's go, Ella!" in turniertag.message(tb("2026-12-11"))
+
+# 10. Jahresbilanz: nur Gefechte des Jahres, höchster Sieg nach Differenz (dann Treffer), Einzel national/international getrennt, Team 1-3
+from jahresbilanz import bilanz
+b = lambda d, w, sc, ev="Weltcup X": {"date": d, "win": w, "score": sc, "event": ev}
+st = {"opponents": [{"name": "A B", "nat": "FRA", "bouts": [b("2026-03-01", True, "5:0"), b("2025-12-01", True, "15:2")]},
+                    {"name": "C D", "nat": "ITA", "bouts": [b("2026-03-01", True, "15:10"), b("2026-05-02", False, "1:5", "GP Y")]},
+                    {"name": "E F", "nat": "KOR", "bouts": [b("2026-03-01", True, "15:10")]}],
+      "results": [{"date": "2026-06-06", "name": "DM U20 Mannschaft", "source": "Ophardt (manuell)"},
+                  {"date": "2026-11-12", "name": "Weltcup Plovdiv", "source": "FIE", "place": 171}]}
+lb = {"results": [{"date": "2026-06-06", "rank": 1, "type": "Mannschaft", "section": "National Championships", "name": "DM"},
+                  {"date": "2026-06-06", "rank": 6, "type": "Einzel", "section": "National Championships", "name": "DM", "city": "Bonn"},
+                  {"date": "2026-01-24", "rank": 2, "type": "Einzel", "section": "National Tournaments", "name": "Turnier", "city": "Dörnigheim"},
+                  {"date": "2026-02-24", "rank": 12, "type": "Einzel", "section": "Zonal Championships", "name": "EM"},
+                  {"date": "2025-10-18", "rank": 1, "type": "Einzel", "section": "National Tournaments", "name": "Alt"}]}
+hist = [{"date": "2026-10-19", "source": "DFB", "rank": "7"}, {"date": "2026-11-16", "source": "DFB", "rank": "6"},
+        {"date": "2025-07-31", "source": "FIE", "rank": "300"}, {"date": "2026-11-16", "source": "FIE", "rank": "312"}]
+j = bilanz(st, lb, hist, 2026)
+assert (j["bouts"], j["wins"], j["tournaments"]) == (4, 3, 2), j
+assert j["top_win"]["score"] == "5:0" and j["top_win"]["nat"] == "FRA", j["top_win"]
+assert j["best_national"] == {"date": "2026-01-24", "place": 2, "name": "Turnier Dörnigheim"}, j["best_national"]
+assert j["best_international"]["place"] == 12, j["best_international"]   # Plovdiv (171) kam aus state.results dazu
+assert j["team"] == [{"date": "2026-06-06", "place": 1, "name": "DM U20 Mannschaft"}], j["team"]
+assert (j["dfb_rank"], j["fie_rank"]) == (6, 312), j
+# Silvester: News-Eintrag mit Link vorn, zweiter Lauf ändert nichts
+from jahresbilanz import silvester_news
+feed, neu = silvester_news([{"date": "2026-12-30", "text": "alt"}], 2026, "https://x/")
+assert neu and feed[0] == {"date": "2026-12-31", "text": "Ellas Fecht-Jahr 2026: Die Jahresbilanz ist da!",
+                           "url": "https://x/silvester.html?jahr=2026"} and len(feed) == 2, feed
+assert silvester_news(feed, 2026, "https://x/") == (feed, False)
 print("ok")

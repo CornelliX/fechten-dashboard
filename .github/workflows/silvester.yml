@@ -1,0 +1,61 @@
+name: Silvester-Bilanz
+
+on:
+  schedule:
+    # 31.12., 15:07 UTC = 16:07 Uhr MEZ (die Seite schaltet sich um 16 Uhr frei); zweiter Lauf als Absicherung,
+    # das Skript benachrichtigt nur einmal (der News-Eintrag ist der Merker).
+    - cron: "7 15 31 12 *"
+    - cron: "37 15 31 12 *"
+  workflow_dispatch:            # falls beide Läufe ausfallen: Actions → "Silvester-Bilanz" → Run workflow
+
+permissions:
+  contents: write
+
+concurrency: update             # gleiche Gruppe wie daily.yml: beide schreiben changes.json
+
+jobs:
+  bilanz:
+    runs-on: ubuntu-latest
+    env:
+      MAIL_USER: ${{ secrets.MAIL_USER }}
+      NTFY_TOPIC: ${{ secrets.NTFY_TOPIC }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - id: j
+        run: python jahresbilanz.py --silvester
+      - name: Bilanz und News speichern
+        run: |
+          set -euo pipefail
+          git config user.name "fecht-bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/data/jahresbilanz.json docs/data/changes.json
+          git diff --cached --quiet && exit 0
+          git commit -m "Jahresbilanz $(date -u +%Y)"
+          git pull --rebase || { git rebase --abort; exit 1; }
+          git push
+      - name: Push aufs Handy (ntfy)
+        if: steps.j.outputs.send == 'true' && env.NTFY_TOPIC != ''
+        continue-on-error: true   # die Mail soll trotzdem rausgehen
+        env:
+          PUSH: ${{ steps.j.outputs.push }}
+          LINK: ${{ steps.j.outputs.link }}
+        run: >
+          curl -fsS -H "Title: Ellas Fecht-Jahr: Die Bilanz ist da!" -H "Tags: fireworks" -H "Priority: high"
+          -H "Click: $LINK" --data-raw "$PUSH" "https://ntfy.sh/$NTFY_TOPIC"
+      - name: E-Mail
+        if: steps.j.outputs.send == 'true' && env.MAIL_USER != ''
+        uses: dawidd6/action-send-mail@4226df7daafa6fc901a43789c49bf7ab309066e7 # v3.11.0
+        with:
+          server_address: ${{ secrets.MAIL_SERVER }}
+          server_port: ${{ secrets.MAIL_PORT }}
+          username: ${{ secrets.MAIL_USER }}
+          password: ${{ secrets.MAIL_PASS }}
+          from: Ellas Fecht-Dashboard <${{ secrets.MAIL_USER }}>
+          to: ${{ secrets.MAIL_TO }}
+          subject: "Ellas Fecht-Jahr: Die Bilanz ist da!"
+          body: ${{ steps.j.outputs.body }}

@@ -55,4 +55,8 @@ An Wettkampftagen, für die Ella gemeldet ist, kommt gegen 9 Uhr eine Mail „Tu
 - **Testmail:** Actions → „Turnier-Tag“ → Run workflow, Datum eines Turniertags eintragen.
 - **Banner aufs Handy:** zusätzlich als Push über [ntfy](https://ntfy.sh). App „ntfy“ installieren, ein schwer zu erratendes Thema abonnieren (z. B. `ella-turnier-` plus Zufallszeichen) und denselben Namen als Repo-Secret `NTFY_TOPIC` eintragen. Ohne Secret entfällt der Push, die Mail kommt trotzdem. Das Thema ist das einzige Schloss: nicht veröffentlichen.
 
+## Silvester-Bilanz
+
+Jedes Jahr am 31.12. um 16 Uhr erscheint Ellas Fecht-Jahresbilanz auf `silvester.html` (vorher Countdown, Vorschau mit `?vorschau`). Workflow `silvester.yml` rechnet sie mit `jahresbilanz.py --silvester` aus, setzt einen Eintrag mit Link in „Letzte News“ und schickt Mail und ntfy-Push (gleiche Secrets wie oben). Danach steht jedes Jahr zugeklappt unter Statistik → Jahresbilanzen. Gefechte zählen nur von FIE-Turnieren; der beste DFB-Rang stammt aus `history.csv` (seit Oktober 2026).
+
 Fällt fie.org aus oder ändert die Seitenstruktur, bleibt der letzte Stand stehen und die Seite zeigt oben einen gelben Hinweis mit der Fehlermeldung. GitHub pausiert geplante Workflows nach 60 Tagen ohne Commits; der tägliche Commit (Zeitstempel in `state.json`) verhindert das. Falls die Mails trotzdem ausbleiben: unter Actions nachsehen, ob der Workflow deaktiviert wurde.

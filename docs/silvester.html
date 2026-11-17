@@ -1,0 +1,221 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<meta name="referrer" content="no-referrer">
+<meta name="theme-color" content="#0b0820">
+<title>Ellas Fecht-Jahr</title>
+<link rel="icon" href="icons/icon-192.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,600;0,800;1,800&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  color-scheme: dark;
+  --night: #0b0820; --violet: #2a0f4f; --ink: #fff; --muted: #c9c3e6;
+  --gold: #ffd25a; --pink: #ff4fa3; --cyan: #3ce3ff; --lime: #b6ff5c;
+  --card: rgb(255 255 255 / .07); --line: rgb(255 255 255 / .14);
+  --brand: #ff4fa3;
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0; min-height: 100vh; color: var(--ink); font: 16px/1.5 Inter, system-ui, sans-serif;
+  background:
+    radial-gradient(1200px 600px at 80% -10%, rgb(255 79 163 / .35), transparent 60%),
+    radial-gradient(900px 500px at -10% 30%, rgb(60 227 255 / .22), transparent 60%),
+    radial-gradient(1000px 700px at 50% 120%, rgb(255 210 90 / .18), transparent 60%),
+    linear-gradient(180deg, var(--night), var(--violet) 70%, #3b0f5c);
+  background-attachment: fixed; overflow-x: hidden;
+}
+/* Sternenhimmel */
+body::before { content: ""; position: fixed; inset: 0; pointer-events: none; opacity: .55;
+  background-image: radial-gradient(1px 1px at 20px 30px, #fff, transparent), radial-gradient(1px 1px at 120px 80px, #fff, transparent),
+    radial-gradient(1.5px 1.5px at 200px 150px, #ffe9b0, transparent), radial-gradient(1px 1px at 300px 40px, #fff, transparent);
+  background-size: 340px 220px; }
+canvas { position: fixed; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; }
+main { position: relative; z-index: 1; max-width: 880px; margin: 0 auto; padding: max(28px, env(safe-area-inset-top)) 16px 48px; }
+a { color: var(--cyan); }
+
+.hero { text-align: center; padding: 18px 0 8px; }
+.kicker { display: inline-block; font: 700 13px/1 Inter, sans-serif; letter-spacing: .22em; text-transform: uppercase;
+  color: var(--night); background: linear-gradient(90deg, var(--gold), var(--pink)); padding: 8px 14px; border-radius: 999px;
+  transform: rotate(-2deg); box-shadow: 0 6px 24px rgb(255 79 163 / .45); }
+.year { font: italic 800 clamp(110px, 34vw, 230px)/.9 "Barlow Condensed", sans-serif; margin: 14px 0 0; letter-spacing: -.02em;
+  background: linear-gradient(100deg, var(--gold) 10%, #fff3c4 30%, var(--pink) 55%, var(--cyan) 90%); background-size: 200% 100%;
+  -webkit-background-clip: text; background-clip: text; color: transparent; animation: shine 6s ease-in-out infinite alternate;
+  filter: drop-shadow(0 8px 30px rgb(255 79 163 / .45)); }
+@keyframes shine { to { background-position: 100% 0; } }
+.sub { color: var(--muted); font-size: 17px; margin: 4px 0 0; }
+
+.grid { display: grid; gap: 14px; margin-top: 26px; grid-template-columns: 1fr; }
+@media (min-width: 720px) { .grid { grid-template-columns: 1fr 1fr; } .wide { grid-column: 1 / -1; } }
+.card { position: relative; background: var(--card); border: 1px solid var(--line); border-radius: 22px; padding: 18px 20px 20px;
+  backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); overflow: hidden; }
+.card::after { content: ""; position: absolute; inset: 0 0 auto; height: 4px; background: var(--accent, var(--gold)); }
+.card h2 { font: 700 13px/1.2 Inter, sans-serif; letter-spacing: .14em; text-transform: uppercase; color: var(--accent, var(--gold)); margin: 0 0 10px; }
+.big { font: 800 clamp(56px, 16vw, 84px)/.95 "Barlow Condensed", sans-serif; letter-spacing: -.01em; }
+.big small { font-size: .42em; font-weight: 600; color: var(--muted); letter-spacing: 0; }
+.line { font-size: 17px; font-weight: 500; margin-top: 6px; overflow-wrap: anywhere; }
+.meta { color: var(--muted); font-size: 14px; margin-top: 2px; }
+.row { display: flex; align-items: center; gap: 14px; }
+.row + .row { margin-top: 10px; }
+.medal { flex: none; filter: drop-shadow(0 4px 10px rgb(0 0 0 / .35)); }
+.bar { height: 10px; border-radius: 99px; background: rgb(255 255 255 / .12); margin-top: 14px; overflow: hidden; }
+.bar i { display: block; height: 100%; width: 0; border-radius: inherit; background: linear-gradient(90deg, var(--cyan), var(--lime));
+  transition: width 1.2s cubic-bezier(.2,.8,.2,1); }
+.pop { opacity: 0; transform: translateY(18px) scale(.98); transition: opacity .6s ease, transform .6s cubic-bezier(.2,.8,.2,1); }
+.pop.in { opacity: 1; transform: none; }
+
+.toast { text-align: center; margin-top: 34px; }
+.toast p { font: italic 800 clamp(40px, 12vw, 64px)/1 "Barlow Condensed", sans-serif; margin: 0;
+  background: linear-gradient(90deg, var(--cyan), var(--pink), var(--gold)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.toast a { display: inline-block; margin-top: 16px; padding: 12px 20px; min-height: 44px; border-radius: 999px; text-decoration: none; font-weight: 700;
+  color: var(--night); background: var(--gold); box-shadow: 0 6px 20px rgb(255 210 90 / .35); }
+.toast a:focus-visible { outline: 3px solid var(--cyan); outline-offset: 3px; }
+
+.count-down { text-align: center; margin-top: 40px; }
+.clock { display: flex; justify-content: center; gap: 10px; margin-top: 16px; }
+.clock div { min-width: 72px; padding: 12px 8px; border-radius: 16px; background: var(--card); border: 1px solid var(--line); }
+.clock b { display: block; font: 800 44px/1 "Barlow Condensed", sans-serif; color: var(--gold); font-variant-numeric: tabular-nums; }
+.clock span { font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: .1em; }
+
+@media (prefers-reduced-motion: reduce) {
+  .year { animation: none; } .pop { opacity: 1; transform: none; transition: none; } .bar i { transition: none; }
+}
+</style>
+</head>
+<body>
+<canvas id="fx" aria-hidden="true"></canvas>
+<main>
+  <header class="hero">
+    <span class="kicker">Ellas Fecht-Bilanz</span>
+    <h1 class="year" id="year">2026</h1>
+    <p class="sub" id="sub">Das war dein Jahr auf der Planche.</p>
+  </header>
+  <div id="app"></div>
+</main>
+<script>
+const $ = s => document.querySelector(s);
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const dmy = s => s ? `${s.slice(8, 10)}.${s.slice(5, 7)}.` : '';
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const q = new URLSearchParams(location.search);
+const year = Number(q.get('jahr')) || new Date().getFullYear();
+// Freischaltung: 31.12., 16 Uhr deutscher Zeit (Silvester ist immer Winterzeit, UTC+1)
+const reveal = new Date(`${year}-12-31T16:00:00+01:00`);
+
+// IOC-Kürzel (FIE) → ISO-Region für deutsche Ländernamen
+const ISO = { AUT:'AT',BLR:'BY',BRA:'BR',BUL:'BG',CAN:'CA',CHN:'CN',CIV:'CI',CRO:'HR',CZE:'CZ',EGY:'EG',ESP:'ES',FRA:'FR',GBR:'GB',GEO:'GE',
+  GER:'DE',GRE:'GR',HKG:'HK',HUN:'HU',IRI:'IR',ISR:'IL',ITA:'IT',JPN:'JP',KAZ:'KZ',KOR:'KR',LAT:'LV',MDA:'MD',POL:'PL',ROU:'RO',RUS:'RU',
+  SGP:'SG',SLO:'SI',SRB:'RS',SVK:'SK',SWE:'SE',TPE:'TW',TUR:'TR',UKR:'UA',USA:'US',NED:'NL',SUI:'CH',BEL:'BE',DEN:'DK',POR:'PT',FIN:'FI',
+  NOR:'NO',EST:'EE',LTU:'LT',ARG:'AR',MEX:'MX',VEN:'VE',CHI:'CL',COL:'CO',ALG:'DZ',TUN:'TN',MAR:'MA',RSA:'ZA',AUS:'AU',NZL:'NZ',IND:'IN',
+  THA:'TH',PHI:'PH',INA:'ID',KSA:'SA',UAE:'AE',QAT:'QA',KUW:'KW',UZB:'UZ',ARM:'AM',AZE:'AZ',IRL:'IE',LUX:'LU',CYP:'CY',BIH:'BA',CUB:'CU',PUR:'PR' };
+const land = ioc => { try { return new Intl.DisplayNames(['de'], { type: 'region' }).of(ISO[ioc]) || ioc; } catch { return ioc; } };
+// "BULAUKINA Kseniya" → "Kseniya Bulaukina"
+const person = n => { const p = String(n || '').split(' '), i = p.findIndex(w => w !== w.toUpperCase());
+  if (i < 1) return n; const cap = w => w.toLowerCase().replace(/(^|[-'])\p{L}/gu, m => m.toUpperCase());
+  return [...p.slice(i), ...p.slice(0, i).map(cap)].join(' '); };
+
+const METAL = { 1: ['#f2c94c', '#b8860b', '#fff4c8', '#3d2800'], 2: ['#d5d9de', '#8a9099', '#f7f8fa', '#1f2328'],
+                3: ['#e6ad73', '#9a5b25', '#f8dcbd', '#2a1405'] };
+const medal = (n, size = 48) => { const [fill, edge, ring, ink] = METAL[n]; return `<svg class="medal" viewBox="0 0 24 30" width="${size}" height="${size * 1.25}" role="img" aria-label="Platz ${n}">
+  <path d="M5 0h5l4 12H9z" fill="var(--pink)"/><path d="M19 0h-5l-4 12h5z" fill="var(--cyan)"/>
+  <circle cx="12" cy="19.5" r="9.5" fill="${fill}" stroke="${edge}"/><circle cx="12" cy="19.5" r="8.3" fill="none" stroke="${ring}" stroke-width=".8" stroke-opacity=".8"/>
+  <text x="12" y="24.4" text-anchor="middle" style="fill:${ink};font:800 14px Inter,sans-serif">${n}</text></svg>`; };
+const count = (n, extra = '') => n == null ? '–' : `<span class="count" data-to="${Number(n)}">${reduce ? n : 0}</span>${extra}`;
+
+function card(title, accent, body, wide = false) {
+  return `<section class="card pop${wide ? ' wide' : ''}" style="--accent:var(--${accent})"><h2>${title}</h2>${body}</section>`;
+}
+function placement(title, accent, r) {
+  if (!r) return card(title, accent, '<div class="big">–</div><div class="meta">Kein Einzelturnier in diesem Jahr</div>');
+  const head = METAL[r.place] ? medal(r.place, 52) : `<div class="big">${count(r.place, '.')}</div>`;
+  return card(title, accent, `<div class="row">${head}<div><div class="line">${METAL[r.place] ? `Platz ${r.place} · ` : ''}${esc(r.name)}</div>
+    <div class="meta">${dmy(r.date)}${year}</div></div></div>`);
+}
+
+function render(b) {
+  const pct = b.bouts ? Math.round(100 * b.wins / b.bouts) : 0;
+  const w = b.top_win;
+  const cards = [
+    card('Gefechte gewonnen', 'cyan', `<div class="big">${count(b.wins)} <small>von ${esc(b.bouts)}</small></div>
+      <div class="line">bei ${esc(b.tournaments)} internationalen Turnieren</div>
+      <div class="bar" role="img" aria-label="${pct} Prozent gewonnen"><i data-w="${pct}"></i></div><div class="meta">${pct} % Siegquote · nur FIE-Turniere</div>`, true),
+    card('Höchster Sieg', 'pink', w ? `<div class="big">${esc(w.score)}</div>
+      <div class="line">gegen ${esc(person(w.opponent))} (${esc(land(w.nat))})</div><div class="meta">${esc(w.event)} · ${dmy(w.date)}${year}</div>`
+      : '<div class="big">–</div>'),
+    placement('Beste Platzierung national', 'gold', b.best_national),
+    placement('Beste Platzierung international', 'lime', b.best_international),
+    card('Team-Highlights', 'gold', b.team.length ? b.team.map(t => `<div class="row">${medal(t.place, 36)}<div>
+      <div class="line" style="margin:0">${esc(t.name)}</div><div class="meta">${dmy(t.date)}${year}</div></div></div>`).join('')
+      : '<div class="meta">Diesmal kein Mannschafts-Podest</div>'),
+    card('Beste Rangliste national', 'cyan', `<div class="big"><small>Platz</small> ${count(b.dfb_rank)}</div><div class="meta">DFB-Rangliste · Senioren</div>`),
+    card('Beste Rangliste international', 'pink', `<div class="big"><small>Platz</small> ${count(b.fie_rank)}</div><div class="meta">FIE-Weltrangliste · Senioren</div>`),
+  ];
+  $('#app').innerHTML = `<div class="grid">${cards.join('')}</div>
+    <div class="toast pop"><p>Prost auf ${year + 1}!</p><a href="./">Zum Dashboard</a></div>`;
+  animateIn();
+}
+
+function animateIn() {
+  const run = el => {
+    el.classList.add('in');
+    el.querySelectorAll('.bar i').forEach(i => i.style.width = i.dataset.w + '%');
+    el.querySelectorAll('.count').forEach(c => {
+      const to = Number(c.dataset.to); if (reduce) { c.textContent = to; return; }
+      const t0 = performance.now(), dur = 1100;
+      const step = t => { const k = Math.min(1, (t - t0) / dur); c.textContent = Math.round(to * (1 - Math.pow(1 - k, 3))); if (k < 1) requestAnimationFrame(step); };
+      requestAnimationFrame(step);
+    });
+  };
+  const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { run(e.target); io.unobserve(e.target); } }), { threshold: .2 });
+  document.querySelectorAll('.pop').forEach((el, i) => { el.style.transitionDelay = `${Math.min(i, 4) * 80}ms`; io.observe(el); });
+}
+
+function countdown() {
+  $('#sub').textContent = 'Die Bilanz wird an Silvester um 16 Uhr enthüllt.';
+  $('#app').innerHTML = `<div class="count-down"><div class="clock" role="timer" aria-live="off">
+    ${['Tage', 'Std', 'Min', 'Sek'].map(l => `<div><b>–</b><span>${l}</span></div>`).join('')}</div></div>`;
+  const tick = () => {
+    const s = Math.max(0, Math.floor((reveal - Date.now()) / 1000));
+    if (!s) return location.reload();
+    [Math.floor(s / 86400), Math.floor(s / 3600) % 24, Math.floor(s / 60) % 60, s % 60]
+      .forEach((v, i) => document.querySelectorAll('.clock b')[i].textContent = String(v).padStart(2, '0'));
+  };
+  tick(); setInterval(tick, 1000);
+}
+
+// Feuerwerk: wenige Raketen, pausiert im Hintergrund-Tab, aus bei "Bewegung reduzieren"
+function fireworks() {
+  if (reduce) return;
+  const cv = $('#fx'), cx = cv.getContext('2d'), colors = ['#ffd25a', '#ff4fa3', '#3ce3ff', '#b6ff5c', '#ffffff'];
+  let parts = [], W, H, last = 0;
+  const size = () => { const d = Math.min(devicePixelRatio || 1, 2); W = innerWidth; H = innerHeight; cv.width = W * d; cv.height = H * d; cx.setTransform(d, 0, 0, d, 0, 0); };
+  size(); addEventListener('resize', size);
+  const burst = () => { const x = W * (.15 + Math.random() * .7), y = H * (.12 + Math.random() * .35), c = colors[Math.random() * colors.length | 0];
+    for (let i = 0; i < 60; i++) { const a = Math.random() * Math.PI * 2, v = 1 + Math.random() * 3.2;
+      parts.push({ x, y, vx: Math.cos(a) * v, vy: Math.sin(a) * v, life: 1, c }); } };
+  const frame = t => {
+    if (document.hidden) { requestAnimationFrame(frame); return; }
+    if (t - last > 900 + Math.random() * 900) { burst(); last = t; }
+    cx.clearRect(0, 0, W, H);
+    parts = parts.filter(p => p.life > 0);
+    for (const p of parts) { p.x += p.vx; p.y += p.vy; p.vy += .035; p.vx *= .985; p.life -= .012;
+      cx.globalAlpha = Math.max(p.life, 0); cx.fillStyle = p.c; cx.beginPath(); cx.arc(p.x, p.y, 2.1, 0, 7); cx.fill(); }
+    requestAnimationFrame(frame);
+  };
+  requestAnimationFrame(frame);
+}
+
+$('#year').textContent = year;
+document.title = `Ellas Fecht-Jahr ${year}`;
+if (Date.now() < reveal && !q.has('vorschau')) countdown();
+else fetch(`data/jahresbilanz.json?v=${Date.now()}`).then(r => r.json()).then(all => {
+  if (!all[year]) throw new Error('keine Daten');
+  render(all[year]); fireworks();
+}).catch(() => { $('#app').innerHTML = `<p class="sub" style="text-align:center">Für ${year} gibt es noch keine Bilanz.</p>`; });
+</script>
+</body>
+</html>

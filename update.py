@@ -173,7 +173,8 @@ def parse_opponents(items, fid):
         bouts.sort(key=lambda b: (b["date"], any(x.isdigit() and int(x) > 5 for x in b["score"].split(":"))), reverse=True)
         wins = sum(b["win"] for b in bouts)
         rows.append({"id": o["id"], "name": " ".join(o["name"].split()), "nat": (o.get("flag") or "").upper(),
-                     "wins": wins, "losses": len(bouts) - wins, "last": bouts[0]})
+                     "wins": wins, "losses": len(bouts) - wins, "last": bouts[0],
+                     "bouts": bouts})  # alle Gefechte, neueste zuerst (für die Jahresbilanz)
     return sorted(rows, key=lambda r: (r["wins"] + r["losses"], r["last"]["date"]), reverse=True)  # häufigste, dann jüngste
 
 

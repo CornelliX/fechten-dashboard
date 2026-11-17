@@ -80,4 +80,8 @@ if __name__ == "__main__":
         marker.write_text(json.dumps({"sent": today}) + "\n", encoding="utf-8")
     if bouts and os.environ.get("GITHUB_OUTPUT"):
         with open(os.environ["GITHUB_OUTPUT"], "a", encoding="utf-8") as f:
-            f.write(f"send=true\nbody<<EOF\n{message(bouts)}\nEOF\n")
+            delim = f"EOF_{secrets.token_hex(16)}"  # zufälliger Begrenzer: Text kann keine weiteren Outputs einschleusen
+            f.write(f"send=true\nbody<<{delim}\n{message(bouts)}\n{delim}\n")
+            # Kurzfassung fürs Handy-Banner (ntfy): Turniernamen in einer Zeile, Tippen öffnet den ersten Link
+            push = " · ".join(" ".join(f"{n} {k}".split()) for n, k, _ in bouts)
+            f.write(f"push={push}\nlink={''.join(bouts[0][2].split())}\n")

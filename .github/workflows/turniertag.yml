@@ -22,6 +22,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       MAIL_USER: ${{ secrets.MAIL_USER }}
+      NTFY_TOPIC: ${{ secrets.NTFY_TOPIC }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -33,6 +34,15 @@ jobs:
         env:
           DATUM: ${{ inputs.datum }}
         run: python turniertag.py $DATUM
+      - name: Push aufs Handy (ntfy)
+        if: steps.t.outputs.send == 'true' && env.NTFY_TOPIC != ''
+        continue-on-error: true   # die Mail soll trotzdem rausgehen
+        env:
+          PUSH: ${{ steps.t.outputs.push }}
+          LINK: ${{ steps.t.outputs.link }}
+        run: >
+          curl -fsS -H "Title: Turnier-Tag! Let's go, Ella!" -H "Tags: crossed_swords" -H "Priority: high"
+          -H "Click: $LINK" -d "$PUSH" "https://ntfy.sh/$NTFY_TOPIC"
       - name: E-Mail
         if: steps.t.outputs.send == 'true' && env.MAIL_USER != ''
         uses: dawidd6/action-send-mail@4226df7daafa6fc901a43789c49bf7ab309066e7 # v3.11.0

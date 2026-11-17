@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-17T12:53+00:00",
+ "updated": "2026-11-17T13:39+00:00",
  "name": "Ella Gamke",
  "fie_id": 60886,
  "errors": [],
@@ -705,7 +705,27 @@
     "win": false,
     "score": "3:5",
     "event": "Weltcup Plovdiv"
-   }
+   },
+   "bouts": [
+    {
+     "date": "2026-11-12",
+     "win": false,
+     "score": "3:5",
+     "event": "Weltcup Plovdiv"
+    },
+    {
+     "date": "2025-01-18",
+     "win": false,
+     "score": "4:5",
+     "event": "Weltcup Tbilisi (U20)"
+    },
+    {
+     "date": "2023-11-04",
+     "win": false,
+     "score": "0:5",
+     "event": "Weltcup Istanbul (U20)"
+    }
+   ]
   },
   {
    "id": 58299,
@@ -718,7 +738,21 @@
     "win": false,
     "score": "4:5",
     "event": "Weltcup Plovdiv"
-   }
+   },
+   "bouts": [
+    {
+     "date": "2026-11-12",
+     "win": false,
+     "score": "4:5",
+     "event": "Weltcup Plovdiv"
+    },
+    {
+     "date": "2024-01-06",
+     "win": true,
+     "score": "15:10",
+     "event": "Weltcup Udine (U20)"
+    }
+   ]
   },
   {
    "id": 53824,
@@ -731,7 +765,21 @@
     "win": false,
     "score": "4:15",
     "event": "Weltcup Plovdiv"
-   }
+   },
+   "bouts": [
+    {
+     "date": "2026-11-12",
+     "win": false,
+     "score": "4:15",
+     "event": "Weltcup Plovdiv"
+    },
+    {
+     "date": "2026-11-12",
+     "win": true,
+     "score": "5:4",
+     "event": "Weltcup Plovdiv"
+    }
+   ]
   },
   {
    "id": 35564,
@@ -744,7 +792,21 @@
     "win": false,
     "score": "3:5",
     "event": "Satellite Amsterdam"
-   }
+   },
+   "bouts": [
+    {
+     "date": "2026-09-19",
+     "win": false,
+     "score": "3:5",
+     "event": "Satellite Amsterdam"
+    },
+    {
+     "date": "2025-12-05",
+     "win": true,
+     "score": "5:2",
+     "event": "Weltcup Busan"
+    }
+   ]
   },
   {
    "id": 53834,
@@ -757,7 +819,21 @@
     "win": false,
     "score": "2:3",
     "event": "EM Tbilisi (U20)"
-   }
+   },
+   "bouts": [
+    {
+     "date": "2026-02-24",
+     "win": false,
+     "score": "2:3",
+     "event": "EM Tbilisi (U20)"
+    },
+    {
+     "date": "2025-11-28",
+     "win": false,
+     "score": "3:5",
+     "event": "Weltcup Samorin (U20)"
+    }
+   ]
   },
   {
    "id": 46493,
@@ -770,7 +846,21 @@
     "win": true,
     "score": "5:3",
     "event": "Grand Prix Turin"
-   }
+   },
+   "bouts": [
+    {
+     "date": "2026-02-05",
+     "win": true,
+     "score": "5:3",
+     "event": "Grand Prix Turin"
+    },
+    {
+     "date": "2025-03-06",
+     "win": false,
+     "score": "2:5",
+     "event": "Weltcup Cairo"
+    }
+   ]
   },
   {
    "id": 53886,
@@ -783,7 +873,21 @@
     "win": false,
     "score": "1:5",
     "event": "Weltcup Tbilisi (U20)"
-   }
+   },
+   "bouts": [
+    {
+     "date": "2026-01-17",
+     "win": false,
+     "score": "1:5",
+     "event": "Weltcup Tbilisi (U20)"
+    },
+    {
+     "date": "2024-02-03",
+     "win": true,
+     "score": "5:3",
+     "event": "Weltcup Leipzig (U20)"
+    }
+   ]
   },
   {
    "id": 53865,
@@ -796,7 +900,21 @@
     "win": true,
     "score": "5:4",
     "event": "Weltcup Busan"
-   }
+   },
+   "bouts": [
+    {
+     "date": "2025-12-05",
+     "win": true,
+     "score": "5:4",
+     "event": "Weltcup Busan"
+    },
+    {
+     "date": "2025-01-18",
+     "win": true,
+     "score": "5:1",
+     "event": "Weltcup Tbilisi (U20)"
+    }
+   ]
   },
   {
    "id": 63325,
@@ -809,7 +927,21 @@
     "win": false,
     "score": "14:15",
     "event": "Weltcup Samorin (U20)"
-   }
+   },
+   "bouts": [
+    {
+     "date": "2025-11-28",
+     "win": false,
+     "score": "14:15",
+     "event": "Weltcup Samorin (U20)"
+    },
+    {
+     "date": "2025-03-06",
+     "win": false,
+     "score": "1:5",
+     "event": "Weltcup Cairo"
+    }
+   ]
   },
   {
    "id": 57331,
@@ -822,7 +954,21 @@
     "win": true,
     "score": "5:2",
     "event": "Weltcup Cairo"
-   }
+   },
+   "bouts": [
+    {
+     "date": "2025-03-06",
+     "win": true,
+     "score": "5:2",
+     "event": "Weltcup Cairo"
+    },
+    {
+     "date": "2023-11-04",
+     "win": true,
+     "score": "5:1",
+     "event": "Weltcup Istanbul (U20)"
+    }
+   ]
   },
   {
    "id": 62165,
@@ -835,7 +981,21 @@
     "win": false,
     "score": "3:5",
     "event": "Weltcup Zagreb (U20)"
-   }
+   },
+   "bouts": [
+    {
+     "date": "2025-02-01",
+     "win": false,
+     "score": "3:5",
+     "event": "Weltcup Zagreb (U20)"
+    },
+    {
+     "date": "2025-01-18",
+     "win": false,
+     "score": "3:5",
+     "event": "Weltcup Tbilisi (U20)"
+    }
+   ]
   },
   {
    "id": 48471,
@@ -848,7 +1008,21 @@
     "win": false,
     "score": "10:15",
     "event": "Weltcup Istanbul (U20)"
-   }
+   },
+   "bouts": [
+    {
+     "date": "2024-11-02",
+     "win": false,
+     "score": "10:15",
+     "event": "Weltcup Istanbul (U20)"
+    },
+    {
+     "date": "2024-02-03",
+     "win": true,
+     "score": "5:3",
+     "event": "Weltcup Leipzig (U20)"
+    }
+   ]
   },
   {
    "id": 57060,
@@ -861,7 +1035,21 @@
     "win": false,
     "score": "4:5",
     "event": "Weltcup Leipzig (U20)"
-   }
+   },
+   "bouts": [
+    {
+     "date": "2024-02-03",
+     "win": false,
+     "score": "4:5",
+     "event": "Weltcup Leipzig (U20)"
+    },
+    {
+     "date": "2024-01-20",
+     "win": false,
+     "score": "2:5",
+     "event": "Weltcup Zagreb (U20)"
+    }
+   ]
   },
   {
    "id": 52627,
@@ -874,7 +1062,21 @@
     "win": true,
     "score": "15:9",
     "event": "Weltcup Udine (U20)"
-   }
+   },
+   "bouts": [
+    {
+     "date": "2024-01-06",
+     "win": true,
+     "score": "15:9",
+     "event": "Weltcup Udine (U20)"
+    },
+    {
+     "date": "2023-11-04",
+     "win": true,
+     "score": "5:4",
+     "event": "Weltcup Istanbul (U20)"
+    }
+   ]
   },
   {
    "id": 25454,
@@ -887,7 +1089,15 @@
     "win": false,
     "score": "3:5",
     "event": "Weltcup Plovdiv"
-   }
+   },
+   "bouts": [
+    {
+     "date": "2026-11-12",
+     "win": false,
+     "score": "3:5",
+     "event": "Weltcup Plovdiv"
+    }
+   ]
   },
   {
    "id": 31094,
@@ -900,7 +1110,15 @@
     "win": true,
     "score": "5:3",
     "event": "Weltcup Plovdiv"
-   }
+   },
+   "bouts": [
+    {
+     "date": "2026-11-12",
+     "win": true,
+     "score": "5:3",
+     "event": "Weltcup Plovdiv"
+    }
+   ]
   },
   {
    "id": 52901,
@@ -913,7 +1131,15 @@
     "win": false,
     "score": "1:5",
     "event": "Weltcup Plovdiv"
-   }
+   },
+   "bouts": [
+    {
+     "date": "2026-11-12",
+     "win": false,
+     "score": "1:5",
+     "event": "Weltcup Plovdiv"
+    }
+   ]
   },
   {
    "id": 61393,
@@ -926,7 +1152,15 @@
     "win": true,
     "score": "5:2",
     "event": "Satellite Amsterdam"
-   }
+   },
+   "bouts": [
+    {
+     "date": "2026-09-19",
+     "win": true,
+     "score": "5:2",
+     "event": "Satellite Amsterdam"
+    }
+   ]
   },
   {
    "id": 70693,
@@ -939,7 +1173,15 @@
     "win": false,
     "score": "3:5",
     "event": "Satellite Amsterdam"
-   }
+   },
+   "bouts": [
+    {
+     "date": "2026-09-19",
+     "win": false,
+     "score": "3:5",
+     "event": "Satellite Amsterdam"
+    }
+   ]
   },
   {
    "id": 66249,
@@ -952,7 +1194,15 @@
     "win": true,
     "score": "5:3",
     "event": "Satellite Amsterdam"
-   }
+   },
+   "bouts": [
+    {
+     "date": "2026-09-19",
+     "win": true,
+     "score": "5:3",
+     "event": "Satellite Amsterdam"
+    }
+   ]
   },
   {
    "id": 53438,
@@ -965,7 +1215,15 @@
     "win": false,
     "score": "2:5",
     "event": "Satellite Amsterdam"
-   }
+   },
+   "bouts": [
+    {
+     "date": "2026-09-19",
+     "win": false,
+     "score": "2:5",
+     "event": "Satellite Amsterdam"
+    }
+   ]
   },
   {
    "id": 56866,
@@ -978,7 +1236,15 @@
     "win": true,
     "score": "5:1",
     "event": "Satellite Amsterdam"
-   }
+   },
+   "bouts": [
+    {
+     "date": "2026-09-19",
+     "win": true,
+     "score": "5:1",
+     "event": "Satellite Amsterdam"
+    }
+   ]
   },
   {
    "id": 46190,
@@ -991,7 +1257,15 @@
     "win": false,
     "score": "5:15",
     "event": "Satellite Amsterdam"
-   }
+   },
+   "bouts": [
+    {
+     "date": "2026-09-19",
+     "win": false,
+     "score": "5:15",
+     "event": "Satellite Amsterdam"
+    }
+   ]
   },
   {
    "id": 55010,
@@ -1004,7 +1278,15 @@
     "win": true,
     "score": "5:4",
     "event": "EM Tbilisi (U20)"
-   }
+   },
+   "bouts": [
+    {
+     "date": "2026-02-24",
+     "win": true,
+     "score": "5:4",
+     "event": "EM Tbilisi (U20)"
+    }
+   ]
   },
   {
    "id": 63660,
@@ -1017,7 +1299,15 @@
     "win": true,
     "score": "5:0",
     "event": "EM Tbilisi (U20)"
-   }
+   },
+   "bouts": [
+    {
+     "date": "2026-02-24",
+     "win": true,
+     "score": "5:0",
+     "event": "EM Tbilisi (U20)"
+    }
+   ]
   },
   {
    "id": 69043,
@@ -1030,7 +1320,15 @@
     "win": true,
     "score": "5:1",
     "event": "EM Tbilisi (U20)"
-   }
+   },
+   "bouts": [
+    {
+     "date": "2026-02-24",
+     "win": true,
+     "score": "5:1",
+     "event": "EM Tbilisi (U20)"
+    }
+   ]
   },
   {
    "id": 53708,
@@ -1043,7 +1341,15 @@
     "win": true,
     "score": "5:1",
     "event": "EM Tbilisi (U20)"
-   }
+   },
+   "bouts": [
+    {
+     "date": "2026-02-24",
+     "win": true,
+     "score": "5:1",
+     "event": "EM Tbilisi (U20)"
+    }
+   ]
   },
   {
    "id": 59394,
@@ -1056,7 +1362,15 @@
     "win": false,
     "score": "2:5",
     "event": "EM Tbilisi (U20)"
-   }
+   },
+   "bouts": [
+    {
+     "date": "2026-02-24",
+     "win": false,
+     "score": "2:5",
+     "event": "EM Tbilisi (U20)"
+    }
+   ]
   },
   {
    "id": 68734,
@@ -1069,7 +1383,15 @@
     "win": true,
     "score": "15:4",
     "event": "EM Tbilisi (U20)"
-   }
+   },
+   "bouts": [
+    {
+     "date": "2026-02-24",
+     "win": true,
+     "score": "15:4",
+     "event": "EM Tbilisi (U20)"
+    }
+   ]
   },
   {
    "id": 54921,
@@ -1082,7 +1404,15 @@
     "win": true,
     "score": "15:14",
     "event": "EM Tbilisi (U20)"
-   }
+   },
+   "bouts": [
+    {
+     "date": "2026-02-24",
+     "win": true,
+     "score": "15:14",
+     "event": "EM Tbilisi (U20)"
+    }
+   ]
   },
   {
    "id": 51359,
@@ -1095,7 +1425,15 @@
     "win": false,
     "score": "9:15",
     "event": "EM Tbilisi (U20)"
-   }
+   },
+   "bouts": [
+    {
+     "date": "2026-02-24",
+     "win": false,
+     "score": "9:15",
+     "event": "EM Tbilisi (U20)"
+    }
+   ]
   },
   {
    "id": 21767,
@@ -1108,7 +1446,15 @@
     "win": false,
     "score": "2:5",
     "event": "Grand Prix Turin"
-   }
+   },
+   "bouts": [
+    {
+     "date": "2026-02-05",
+     "win": false,
+     "score": "2:5",
+     "event": "Grand Prix Turin"
+    }
+   ]
   },
   {
    "id": 58990,
@@ -1121,7 +1467,15 @@
     "win": false,
     "score": "1:5",
     "event": "Grand Prix Turin"
-   }
+   },
+   "bouts": [
+    {
+     "date": "2026-02-05",
+     "win": false,
+     "score": "1:5",
+     "event": "Grand Prix Turin"
+    }
+   ]
   },
   {
    "id": 54660,
@@ -1134,7 +1488,15 @@
     "win": true,
     "score": "5:2",
     "event": "Grand Prix Turin"
-   }
+   },
+   "bouts": [
+    {
+     "date": "2026-02-05",
+     "win": true,
+     "score": "5:2",
+     "event": "Grand Prix Turin"
+    }
+   ]
   },
   {
    "id": 61755,
@@ -1147,7 +1509,15 @@
     "win": false,
     "score": "1:5",
     "event": "Grand Prix Turin"
-   }
+   },
+   "bouts": [
+    {
+     "date": "2026-02-05",
+     "win": false,
+     "score": "1:5",
+     "event": "Grand Prix Turin"
+    }
+   ]
   },
   {
    "id": 42839,
@@ -1160,7 +1530,15 @@
     "win": true,
     "score": "5:3",
     "event": "Grand Prix Turin"
-   }
+   },
+   "bouts": [
+    {
+     "date": "2026-02-05",
+     "win": true,
+     "score": "5:3",
+     "event": "Grand Prix Turin"
+    }
+   ]
   },
   {
    "id": 34449,
@@ -1173,7 +1551,15 @@
     "win": false,
     "score": "8:15",
     "event": "Grand Prix Turin"
-   }
+   },
+   "bouts": [
+    {
+     "date": "2026-02-05",
+     "win": false,
+     "score": "8:15",
+     "event": "Grand Prix Turin"
+    }
+   ]
   },
   {
    "id": 61564,
@@ -1186,7 +1572,15 @@
     "win": true,
     "score": "5:2",
     "event": "Weltcup Tbilisi (U20)"
-   }
+   },
+   "bouts": [
+    {
+     "date": "2026-01-17",
+     "win": true,
+     "score": "5:2",
+     "event": "Weltcup Tbilisi (U20)"
+    }
+   ]
   },
   {
    "id": 59758,
@@ -1199,7 +1593,15 @@
     "win": true,
     "score": "5:2",
     "event": "Weltcup Tbilisi (U20)"
-   }
+   },
+   "bouts": [
+    {
+     "date": "2026-01-17",
+     "win": true,
+     "score": "5:2",
+     "event": "Weltcup Tbilisi (U20)"
+    }
+   ]
   },
   {
    "id": 68336,
@@ -1212,7 +1614,15 @@
     "win": false,
     "score": "1:5",
     "event": "Weltcup Tbilisi (U20)"
-   }
+   },
+   "bouts": [
+    {
+     "date": "2026-01-17",
+     "win": false,
+     "score": "1:5",
+     "event": "Weltcup Tbilisi (U20)"
+    }
+   ]
   },
   {
    "id": 67856,
@@ -1225,7 +1635,15 @@
     "win": false,
     "score": "2:5",
     "event": "Weltcup Tbilisi (U20)"
-   }
+   },
+   "bouts": [
+    {
+     "date": "2026-01-17",
+     "win": false,
+     "score": "2:5",
+     "event": "Weltcup Tbilisi (U20)"
+    }
+   ]
   },
   {
    "id": 61394,
@@ -1238,7 +1656,15 @@
     "win": true,
     "score": "5:2",
     "event": "Weltcup Tbilisi (U20)"
-   }
+   },
+   "bouts": [
+    {
+     "date": "2026-01-17",
+     "win": true,
+     "score": "5:2",
+     "event": "Weltcup Tbilisi (U20)"
+    }
+   ]
   },
   {
    "id": 57106,
@@ -1251,7 +1677,15 @@
     "win": false,
     "score": "8:15",
     "event": "Weltcup Tbilisi (U20)"
-   }
+   },
+   "bouts": [
+    {
+     "date": "2026-01-17",
+     "win": false,
+     "score": "8:15",
+     "event": "Weltcup Tbilisi (U20)"
+    }
+   ]
   },
   {
    "id": 53828,
@@ -1264,7 +1698,15 @@
     "win": false,
     "score": "3:5",
     "event": "Weltcup Busan"
-   }
+   },
+   "bouts": [
+    {
+     "date": "2025-12-05",
+     "win": false,
+     "score": "3:5",
+     "event": "Weltcup Busan"
+    }
+   ]
   },
   {
    "id": 24463,
@@ -1277,7 +1719,15 @@
     "win": false,
     "score": "0:5",
     "event": "Weltcup Busan"
-   }
+   },
+   "bouts": [
+    {
+     "date": "2025-12-05",
+     "win": false,
+     "score": "0:5",
+     "event": "Weltcup Busan"
+    }
+   ]
   },
   {
    "id": 60536,
@@ -1290,7 +1740,15 @@
     "win": false,
     "score": "1:5",
     "event": "Weltcup Busan"
-   }
+   },
+   "bouts": [
+    {
+     "date": "2025-12-05",
+     "win": false,
+     "score": "1:5",
+     "event": "Weltcup Busan"
+    }
+   ]
   },
   {
    "id": 35207,
@@ -1303,7 +1761,15 @@
     "win": true,
     "score": "5:1",
     "event": "Weltcup Busan"
-   }
+   },
+   "bouts": [
+    {
+     "date": "2025-12-05",
+     "win": true,
+     "score": "5:1",
+     "event": "Weltcup Busan"
+    }
+   ]
   },
   {
    "id": 63876,
@@ -1316,7 +1782,15 @@
     "win": false,
     "score": "8:15",
     "event": "Weltcup Busan"
-   }
+   },
+   "bouts": [
+    {
+     "date": "2025-12-05",
+     "win": false,
+     "score": "8:15",
+     "event": "Weltcup Busan"
+    }
+   ]
   },
   {
    "id": 67047,
@@ -1329,7 +1803,15 @@
     "win": true,
     "score": "5:1",
     "event": "Weltcup Samorin (U20)"
-   }
+   },
+   "bouts": [
+    {
+     "date": "2025-11-28",
+     "win": true,
+     "score": "5:1",
+     "event": "Weltcup Samorin (U20)"
+    }
+   ]
   },
   {
    "id": 57339,
@@ -1342,7 +1824,15 @@
     "win": true,
     "score": "5:4",
     "event": "Weltcup Samorin (U20)"
-   }
+   },
+   "bouts": [
+    {
+     "date": "2025-11-28",
+     "win": true,
+     "score": "5:4",
+     "event": "Weltcup Samorin (U20)"
+    }
+   ]
   },
   {
    "id": 55304,
@@ -1355,7 +1845,15 @@
     "win": true,
     "score": "5:4",
     "event": "Weltcup Samorin (U20)"
-   }
+   },
+   "bouts": [
+    {
+     "date": "2025-11-28",
+     "win": true,
+     "score": "5:4",
+     "event": "Weltcup Samorin (U20)"
+    }
+   ]
   },
   {
    "id": 63314,
@@ -1368,7 +1866,15 @@
     "win": true,
     "score": "5:1",
     "event": "Weltcup Samorin (U20)"
-   }
+   },
+   "bouts": [
+    {
+     "date": "2025-11-28",
+     "win": true,
+     "score": "5:1",
+     "event": "Weltcup Samorin (U20)"
+    }
+   ]
   },
   {
    "id": 56885,
@@ -1381,7 +1887,15 @@
     "win": true,
     "score": "5:1",
     "event": "Weltcup Samorin (U20)"
-   }
+   },
+   "bouts": [
+    {
+     "date": "2025-11-28",
+     "win": true,
+     "score": "5:1",
+     "event": "Weltcup Samorin (U20)"
+    }
+   ]
   },
   {
    "id": 66595,
@@ -1394,7 +1908,15 @@
     "win": true,
     "score": "5:0",
     "event": "Weltcup Istanbul (U20)"
-   }
+   },
+   "bouts": [
+    {
+     "date": "2025-11-01",
+     "win": true,
+     "score": "5:0",
+     "event": "Weltcup Istanbul (U20)"
+    }
+   ]
   },
   {
    "id": 60501,
@@ -1407,7 +1929,15 @@
     "win": true,
     "score": "5:2",
     "event": "Weltcup Istanbul (U20)"
-   }
+   },
+   "bouts": [
+    {
+     "date": "2025-11-01",
+     "win": true,
+     "score": "5:2",
+     "event": "Weltcup Istanbul (U20)"
+    }
+   ]
   },
   {
    "id": 52802,
@@ -1420,7 +1950,15 @@
     "win": true,
     "score": "5:4",
     "event": "Weltcup Istanbul (U20)"
-   }
+   },
+   "bouts": [
+    {
+     "date": "2025-11-01",
+     "win": true,
+     "score": "5:4",
+     "event": "Weltcup Istanbul (U20)"
+    }
+   ]
   },
   {
    "id": 63703,
@@ -1433,7 +1971,15 @@
     "win": true,
     "score": "5:1",
     "event": "Weltcup Istanbul (U20)"
-   }
+   },
+   "bouts": [
+    {
+     "date": "2025-11-01",
+     "win": true,
+     "score": "5:1",
+     "event": "Weltcup Istanbul (U20)"
+    }
+   ]
   },
   {
    "id": 67520,
@@ -1446,7 +1992,15 @@
     "win": true,
     "score": "5:2",
     "event": "Weltcup Istanbul (U20)"
-   }
+   },
+   "bouts": [
+    {
+     "date": "2025-11-01",
+     "win": true,
+     "score": "5:2",
+     "event": "Weltcup Istanbul (U20)"
+    }
+   ]
   },
   {
    "id": 58782,
@@ -1459,7 +2013,15 @@
     "win": true,
     "score": "5:2",
     "event": "Weltcup Istanbul (U20)"
-   }
+   },
+   "bouts": [
+    {
+     "date": "2025-11-01",
+     "win": true,
+     "score": "5:2",
+     "event": "Weltcup Istanbul (U20)"
+    }
+   ]
   },
   {
    "id": 61173,
@@ -1472,7 +2034,15 @@
     "win": false,
     "score": "7:15",
     "event": "Weltcup Istanbul (U20)"
-   }
+   },
+   "bouts": [
+    {
+     "date": "2025-11-01",
+     "win": false,
+     "score": "7:15",
+     "event": "Weltcup Istanbul (U20)"
+    }
+   ]
   },
   {
    "id": 25293,
@@ -1485,7 +2055,15 @@
     "win": false,
     "score": "1:5",
     "event": "Weltcup Cairo"
-   }
+   },
+   "bouts": [
+    {
+     "date": "2025-03-06",
+     "win": false,
+     "score": "1:5",
+     "event": "Weltcup Cairo"
+    }
+   ]
   },
   {
    "id": 57383,
@@ -1498,7 +2076,15 @@
     "win": false,
     "score": "1:5",
     "event": "Weltcup Cairo"
-   }
+   },
+   "bouts": [
+    {
+     "date": "2025-03-06",
+     "win": false,
+     "score": "1:5",
+     "event": "Weltcup Cairo"
+    }
+   ]
   },
   {
    "id": 56857,
@@ -1511,7 +2097,15 @@
     "win": false,
     "score": "4:5",
     "event": "Weltcup Cairo"
-   }
+   },
+   "bouts": [
+    {
+     "date": "2025-03-06",
+     "win": false,
+     "score": "4:5",
+     "event": "Weltcup Cairo"
+    }
+   ]
   },
   {
    "id": 60330,
@@ -1524,7 +2118,15 @@
     "win": true,
     "score": "5:0",
     "event": "Weltcup Zagreb (U20)"
-   }
+   },
+   "bouts": [
+    {
+     "date": "2025-02-01",
+     "win": true,
+     "score": "5:0",
+     "event": "Weltcup Zagreb (U20)"
+    }
+   ]
   },
   {
    "id": 61295,
@@ -1537,7 +2139,15 @@
     "win": false,
     "score": "2:5",
     "event": "Weltcup Zagreb (U20)"
-   }
+   },
+   "bouts": [
+    {
+     "date": "2025-02-01",
+     "win": false,
+     "score": "2:5",
+     "event": "Weltcup Zagreb (U20)"
+    }
+   ]
   },
   {
    "id": 57127,
@@ -1550,7 +2160,15 @@
     "win": false,
     "score": "3:5",
     "event": "Weltcup Zagreb (U20)"
-   }
+   },
+   "bouts": [
+    {
+     "date": "2025-02-01",
+     "win": false,
+     "score": "3:5",
+     "event": "Weltcup Zagreb (U20)"
+    }
+   ]
   },
   {
    "id": 64780,
@@ -1563,7 +2181,15 @@
     "win": true,
     "score": "5:2",
     "event": "Weltcup Zagreb (U20)"
-   }
+   },
+   "bouts": [
+    {
+     "date": "2025-02-01",
+     "win": true,
+     "score": "5:2",
+     "event": "Weltcup Zagreb (U20)"
+    }
+   ]
   },
   {
    "id": 57300,
@@ -1576,7 +2202,15 @@
     "win": false,
     "score": "1:5",
     "event": "Weltcup Zagreb (U20)"
-   }
+   },
+   "bouts": [
+    {
+     "date": "2025-02-01",
+     "win": false,
+     "score": "1:5",
+     "event": "Weltcup Zagreb (U20)"
+    }
+   ]
   },
   {
    "id": 54883,
@@ -1589,7 +2223,15 @@
     "win": false,
     "score": "12:15",
     "event": "Weltcup Zagreb (U20)"
-   }
+   },
+   "bouts": [
+    {
+     "date": "2025-02-01",
+     "win": false,
+     "score": "12:15",
+     "event": "Weltcup Zagreb (U20)"
+    }
+   ]
   },
   {
    "id": 59679,
@@ -1602,7 +2244,15 @@
     "win": false,
     "score": "3:5",
     "event": "Weltcup Tbilisi (U20)"
-   }
+   },
+   "bouts": [
+    {
+     "date": "2025-01-18",
+     "win": false,
+     "score": "3:5",
+     "event": "Weltcup Tbilisi (U20)"
+    }
+   ]
   },
   {
    "id": 64009,
@@ -1615,7 +2265,15 @@
     "win": true,
     "score": "5:4",
     "event": "Weltcup Tbilisi (U20)"
-   }
+   },
+   "bouts": [
+    {
+     "date": "2025-01-18",
+     "win": true,
+     "score": "5:4",
+     "event": "Weltcup Tbilisi (U20)"
+    }
+   ]
   },
   {
    "id": 55456,
@@ -1628,7 +2286,15 @@
     "win": true,
     "score": "5:2",
     "event": "Weltcup Tbilisi (U20)"
-   }
+   },
+   "bouts": [
+    {
+     "date": "2025-01-18",
+     "win": true,
+     "score": "5:2",
+     "event": "Weltcup Tbilisi (U20)"
+    }
+   ]
   },
   {
    "id": 64654,
@@ -1641,7 +2307,15 @@
     "win": true,
     "score": "15:9",
     "event": "Weltcup Tbilisi (U20)"
-   }
+   },
+   "bouts": [
+    {
+     "date": "2025-01-18",
+     "win": true,
+     "score": "15:9",
+     "event": "Weltcup Tbilisi (U20)"
+    }
+   ]
   },
   {
    "id": 58285,
@@ -1654,7 +2328,15 @@
     "win": false,
     "score": "7:15",
     "event": "Weltcup Tbilisi (U20)"
-   }
+   },
+   "bouts": [
+    {
+     "date": "2025-01-18",
+     "win": false,
+     "score": "7:15",
+     "event": "Weltcup Tbilisi (U20)"
+    }
+   ]
   },
   {
    "id": 57843,
@@ -1667,7 +2349,15 @@
     "win": false,
     "score": "4:5",
     "event": "Weltcup Istanbul (U20)"
-   }
+   },
+   "bouts": [
+    {
+     "date": "2024-11-02",
+     "win": false,
+     "score": "4:5",
+     "event": "Weltcup Istanbul (U20)"
+    }
+   ]
   },
   {
    "id": 53446,
@@ -1680,7 +2370,15 @@
     "win": false,
     "score": "1:5",
     "event": "Weltcup Istanbul (U20)"
-   }
+   },
+   "bouts": [
+    {
+     "date": "2024-11-02",
+     "win": false,
+     "score": "1:5",
+     "event": "Weltcup Istanbul (U20)"
+    }
+   ]
   },
   {
    "id": 58896,
@@ -1693,7 +2391,15 @@
     "win": true,
     "score": "5:2",
     "event": "Weltcup Istanbul (U20)"
-   }
+   },
+   "bouts": [
+    {
+     "date": "2024-11-02",
+     "win": true,
+     "score": "5:2",
+     "event": "Weltcup Istanbul (U20)"
+    }
+   ]
   },
   {
    "id": 49691,
@@ -1706,7 +2412,15 @@
     "win": false,
     "score": "2:5",
     "event": "Weltcup Istanbul (U20)"
-   }
+   },
+   "bouts": [
+    {
+     "date": "2024-11-02",
+     "win": false,
+     "score": "2:5",
+     "event": "Weltcup Istanbul (U20)"
+    }
+   ]
   },
   {
    "id": 52672,
@@ -1719,7 +2433,15 @@
     "win": true,
     "score": "5:0",
     "event": "Weltcup Istanbul (U20)"
-   }
+   },
+   "bouts": [
+    {
+     "date": "2024-11-02",
+     "win": true,
+     "score": "5:0",
+     "event": "Weltcup Istanbul (U20)"
+    }
+   ]
   },
   {
    "id": 60769,
@@ -1732,7 +2454,15 @@
     "win": true,
     "score": "15:4",
     "event": "Weltcup Istanbul (U20)"
-   }
+   },
+   "bouts": [
+    {
+     "date": "2024-11-02",
+     "win": true,
+     "score": "15:4",
+     "event": "Weltcup Istanbul (U20)"
+    }
+   ]
   },
   {
    "id": 58117,
@@ -1745,7 +2475,15 @@
     "win": true,
     "score": "5:0",
     "event": "Weltcup Leipzig (U20)"
-   }
+   },
+   "bouts": [
+    {
+     "date": "2024-02-03",
+     "win": true,
+     "score": "5:0",
+     "event": "Weltcup Leipzig (U20)"
+    }
+   ]
   },
   {
    "id": 53639,
@@ -1758,7 +2496,15 @@
     "win": true,
     "score": "5:1",
     "event": "Weltcup Leipzig (U20)"
-   }
+   },
+   "bouts": [
+    {
+     "date": "2024-02-03",
+     "win": true,
+     "score": "5:1",
+     "event": "Weltcup Leipzig (U20)"
+    }
+   ]
   },
   {
    "id": 58626,
@@ -1771,7 +2517,15 @@
     "win": true,
     "score": "5:2",
     "event": "Weltcup Leipzig (U20)"
-   }
+   },
+   "bouts": [
+    {
+     "date": "2024-02-03",
+     "win": true,
+     "score": "5:2",
+     "event": "Weltcup Leipzig (U20)"
+    }
+   ]
   },
   {
    "id": 57463,
@@ -1784,7 +2538,15 @@
     "win": false,
     "score": "11:15",
     "event": "Weltcup Leipzig (U20)"
-   }
+   },
+   "bouts": [
+    {
+     "date": "2024-02-03",
+     "win": false,
+     "score": "11:15",
+     "event": "Weltcup Leipzig (U20)"
+    }
+   ]
   },
   {
    "id": 53412,
@@ -1797,7 +2559,15 @@
     "win": false,
     "score": "0:4",
     "event": "Weltcup Zagreb (U20)"
-   }
+   },
+   "bouts": [
+    {
+     "date": "2024-01-20",
+     "win": false,
+     "score": "0:4",
+     "event": "Weltcup Zagreb (U20)"
+    }
+   ]
   },
   {
    "id": 53843,
@@ -1810,7 +2580,15 @@
     "win": true,
     "score": "5:4",
     "event": "Weltcup Zagreb (U20)"
-   }
+   },
+   "bouts": [
+    {
+     "date": "2024-01-20",
+     "win": true,
+     "score": "5:4",
+     "event": "Weltcup Zagreb (U20)"
+    }
+   ]
   },
   {
    "id": 51088,
@@ -1823,7 +2601,15 @@
     "win": false,
     "score": "2:5",
     "event": "Weltcup Zagreb (U20)"
-   }
+   },
+   "bouts": [
+    {
+     "date": "2024-01-20",
+     "win": false,
+     "score": "2:5",
+     "event": "Weltcup Zagreb (U20)"
+    }
+   ]
   },
   {
    "id": 61304,
@@ -1836,7 +2622,15 @@
     "win": false,
     "score": "2:5",
     "event": "Weltcup Zagreb (U20)"
-   }
+   },
+   "bouts": [
+    {
+     "date": "2024-01-20",
+     "win": false,
+     "score": "2:5",
+     "event": "Weltcup Zagreb (U20)"
+    }
+   ]
   },
   {
    "id": 61339,
@@ -1849,7 +2643,15 @@
     "win": true,
     "score": "5:1",
     "event": "Weltcup Zagreb (U20)"
-   }
+   },
+   "bouts": [
+    {
+     "date": "2024-01-20",
+     "win": true,
+     "score": "5:1",
+     "event": "Weltcup Zagreb (U20)"
+    }
+   ]
   },
   {
    "id": 52623,
@@ -1862,7 +2664,15 @@
     "win": false,
     "score": "9:15",
     "event": "Weltcup Zagreb (U20)"
-   }
+   },
+   "bouts": [
+    {
+     "date": "2024-01-20",
+     "win": false,
+     "score": "9:15",
+     "event": "Weltcup Zagreb (U20)"
+    }
+   ]
   },
   {
    "id": 60434,
@@ -1875,7 +2685,15 @@
     "win": false,
     "score": "2:5",
     "event": "Weltcup Udine (U20)"
-   }
+   },
+   "bouts": [
+    {
+     "date": "2024-01-06",
+     "win": false,
+     "score": "2:5",
+     "event": "Weltcup Udine (U20)"
+    }
+   ]
   },
   {
    "id": 53870,
@@ -1888,7 +2706,15 @@
     "win": false,
     "score": "1:5",
     "event": "Weltcup Udine (U20)"
-   }
+   },
+   "bouts": [
+    {
+     "date": "2024-01-06",
+     "win": false,
+     "score": "1:5",
+     "event": "Weltcup Udine (U20)"
+    }
+   ]
   },
   {
    "id": 55074,
@@ -1901,7 +2727,15 @@
     "win": true,
     "score": "5:3",
     "event": "Weltcup Udine (U20)"
-   }
+   },
+   "bouts": [
+    {
+     "date": "2024-01-06",
+     "win": true,
+     "score": "5:3",
+     "event": "Weltcup Udine (U20)"
+    }
+   ]
   },
   {
    "id": 58109,
@@ -1914,7 +2748,15 @@
     "win": false,
     "score": "4:5",
     "event": "Weltcup Udine (U20)"
-   }
+   },
+   "bouts": [
+    {
+     "date": "2024-01-06",
+     "win": false,
+     "score": "4:5",
+     "event": "Weltcup Udine (U20)"
+    }
+   ]
   },
   {
    "id": 49067,
@@ -1927,7 +2769,15 @@
     "win": true,
     "score": "5:2",
     "event": "Weltcup Udine (U20)"
-   }
+   },
+   "bouts": [
+    {
+     "date": "2024-01-06",
+     "win": true,
+     "score": "5:2",
+     "event": "Weltcup Udine (U20)"
+    }
+   ]
   },
   {
    "id": 60981,
@@ -1940,7 +2790,15 @@
     "win": true,
     "score": "5:1",
     "event": "Weltcup Udine (U20)"
-   }
+   },
+   "bouts": [
+    {
+     "date": "2024-01-06",
+     "win": true,
+     "score": "5:1",
+     "event": "Weltcup Udine (U20)"
+    }
+   ]
   },
   {
    "id": 59717,
@@ -1953,7 +2811,15 @@
     "win": false,
     "score": "8:15",
     "event": "Weltcup Udine (U20)"
-   }
+   },
+   "bouts": [
+    {
+     "date": "2024-01-06",
+     "win": false,
+     "score": "8:15",
+     "event": "Weltcup Udine (U20)"
+    }
+   ]
   },
   {
    "id": 52513,
@@ -1966,7 +2832,15 @@
     "win": true,
     "score": "5:3",
     "event": "Weltcup Istanbul (U20)"
-   }
+   },
+   "bouts": [
+    {
+     "date": "2023-11-04",
+     "win": true,
+     "score": "5:3",
+     "event": "Weltcup Istanbul (U20)"
+    }
+   ]
   },
   {
    "id": 58123,
@@ -1979,7 +2853,15 @@
     "win": false,
     "score": "1:5",
     "event": "Weltcup Istanbul (U20)"
-   }
+   },
+   "bouts": [
+    {
+     "date": "2023-11-04",
+     "win": false,
+     "score": "1:5",
+     "event": "Weltcup Istanbul (U20)"
+    }
+   ]
   },
   {
    "id": 54149,
@@ -1992,7 +2874,15 @@
     "win": false,
     "score": "0:5",
     "event": "Weltcup Istanbul (U20)"
-   }
+   },
+   "bouts": [
+    {
+     "date": "2023-11-04",
+     "win": false,
+     "score": "0:5",
+     "event": "Weltcup Istanbul (U20)"
+    }
+   ]
   },
   {
    "id": 57415,
@@ -2005,7 +2895,15 @@
     "win": false,
     "score": "8:15",
     "event": "Weltcup Istanbul (U20)"
-   }
+   },
+   "bouts": [
+    {
+     "date": "2023-11-04",
+     "win": false,
+     "score": "8:15",
+     "event": "Weltcup Istanbul (U20)"
+    }
+   ]
   }
  ],
  "dfb_news": {

@@ -31,7 +31,9 @@
       "name": "21. Händel-Cup (DFB-Qualifikation)",
       "city": "Halle",
       "status": "Gemeldet, auch als Kampfrichterin",
-      "url": "https://fencing.ophardt.online/de/calendar"
+      "url": "https://fencing.ophardt.online/de/widget/event/34853",
+      "days": ["2026-12-06"],
+      "live": "https://www.fencingworldwide.com/de/34853-2026/tournament/"
     },
     {
       "date": "2027-04-03",

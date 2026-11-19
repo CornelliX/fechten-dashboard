@@ -5,6 +5,9 @@ on:
     # 6:53 und 7:53 UTC = 7:53/8:53 Uhr MEZ bzw. 8:53/9:53 Uhr MESZ; das Skript sendet nur einmal, ab 8:30 Uhr Berliner Zeit.
     # GitHub startet geplante Läufe oft einige Minuten später, die Mail kommt also gegen 9 Uhr.
     - cron: "53 6,7 * * *"
+    # 24.12.: Weihnachtsgruß um 10 Uhr MEZ (8:52 UTC + übliche Verspätung), 9:22 UTC als Absicherung
+    - cron: "52 8 24 12 *"
+    - cron: "22 9 24 12 *"
   workflow_dispatch:            # Testmail: Actions → "Turnier-Tag" → Run workflow, Datum eines Turniertags eintragen
     inputs:
       datum:

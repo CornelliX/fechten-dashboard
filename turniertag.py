@@ -71,8 +71,8 @@ if __name__ == "__main__":
         sent = m.get("sent")
         # Zwei Läufe am Morgen (Sommer-/Winterzeit, GitHub startet oft verspätet): der erste ab 8:30 Uhr sendet
         in_window = "08:30" <= now.strftime("%H:%M") <= "12:00"
-        # 24.12.: Weihnachtsgruß einmal aufs Handy (Schritt "Weihnachtsgruß" in turniertag.yml)
-        if in_window and today[5:] == "12-24" and m.get("xmas") != today:
+        # 24.12.: Weihnachtsgruß einmal aufs Handy, ab 9:50 Uhr (eigene Läufe in turniertag.yml, Ziel 10 Uhr)
+        if "09:50" <= now.strftime("%H:%M") <= "12:00" and today[5:] == "12-24" and m.get("xmas") != today:
             m["xmas"] = today
             marker.write_text(json.dumps(m) + "\n", encoding="utf-8")
             if os.environ.get("GITHUB_OUTPUT"):

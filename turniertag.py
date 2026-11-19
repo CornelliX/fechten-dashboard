@@ -67,9 +67,19 @@ if __name__ == "__main__":
         from zoneinfo import ZoneInfo
         now = datetime.now(ZoneInfo("Europe/Berlin"))
         today = now.date().isoformat()
-        sent = json.loads(marker.read_text(encoding="utf-8")).get("sent") if marker.exists() else None
+        m = json.loads(marker.read_text(encoding="utf-8")) if marker.exists() else {}
+        sent = m.get("sent")
         # Zwei Läufe am Morgen (Sommer-/Winterzeit, GitHub startet oft verspätet): der erste ab 8:30 Uhr sendet
-        if sent == today or not "08:30" <= now.strftime("%H:%M") <= "12:00":
+        in_window = "08:30" <= now.strftime("%H:%M") <= "12:00"
+        # 24.12.: Weihnachtsgruß einmal aufs Handy (Schritt "Weihnachtsgruß" in turniertag.yml)
+        if in_window and today[5:] == "12-24" and m.get("xmas") != today:
+            m["xmas"] = today
+            marker.write_text(json.dumps(m) + "\n", encoding="utf-8")
+            if os.environ.get("GITHUB_OUTPUT"):
+                with open(os.environ["GITHUB_OUTPUT"], "a", encoding="utf-8") as f:
+                    f.write("xmas=true\n")
+            print("Weihnachtsgruß vorgemerkt")
+        if sent == today or not in_window:
             print(f"Nichts zu tun ({now:%H:%M}, zuletzt gesendet {sent})")
             sys.exit(0)
     state = json.loads((DATA / "state.json").read_text(encoding="utf-8"))
@@ -77,7 +87,8 @@ if __name__ == "__main__":
     bouts = todays_bouts(state, cfg, today)
     print(message(bouts) if bouts else f"{today}: kein Turnier-Tag")
     if bouts and not force:
-        marker.write_text(json.dumps({"sent": today}) + "\n", encoding="utf-8")
+        m = json.loads(marker.read_text(encoding="utf-8")) if marker.exists() else {}
+        marker.write_text(json.dumps({**m, "sent": today}) + "\n", encoding="utf-8")
     if bouts and os.environ.get("GITHUB_OUTPUT"):
         with open(os.environ["GITHUB_OUTPUT"], "a", encoding="utf-8") as f:
             delim = f"EOF_{secrets.token_hex(16)}"  # zufälliger Begrenzer: Text kann keine weiteren Outputs einschleusen

@@ -34,6 +34,12 @@ jobs:
         env:
           DATUM: ${{ inputs.datum }}
         run: python turniertag.py $DATUM
+      - name: Weihnachtsgruß (ntfy)
+        if: steps.t.outputs.xmas == 'true' && env.NTFY_TOPIC != ''
+        continue-on-error: true
+        run: >
+          curl -fsS -H "Title: Frohes Fecht!" -H "Tags: christmas_tree" -H "Click: https://cornellix.github.io/fechten-dashboard/"
+          --data-raw "Frohe Weihnachten! Im Dashboard wartet heute ein Gruß." "https://ntfy.sh/$NTFY_TOPIC"
       - name: Push aufs Handy (ntfy)
         if: steps.t.outputs.send == 'true' && env.NTFY_TOPIC != ''
         continue-on-error: true   # die Mail soll trotzdem rausgehen

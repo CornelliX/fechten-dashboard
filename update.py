@@ -577,6 +577,13 @@ def ics(events, name, stamp):
     return "\r\n".join(fold(line) for line in lines) + "\r\n"
 
 
+def xmas(feed, today):
+    """Am 24.12. einmal "Frohes Fecht!" mit Link zum Weihnachtsvideo (das Dashboard zeigt es an dem Tag oben)."""
+    if today.strftime("%m-%d") != "12-24" or any(c.get("date") == today.isoformat() and c["text"] == "Frohes Fecht!" for c in feed):
+        return []
+    return [{"text": "Frohes Fecht!", "url": "https://cornellix.github.io/fechten-dashboard/weihnachten.mp4"}]
+
+
 def main():
     cfg = json.loads((ROOT / "config.json").read_text(encoding="utf-8"))
     manual = json.loads((ROOT / "manual.json").read_text(encoding="utf-8"))
@@ -590,6 +597,7 @@ def main():
 
     state_path.write_text(json.dumps(new, ensure_ascii=False, indent=1), encoding="utf-8")
     feed = json.loads(changes_path.read_text(encoding="utf-8")) if changes_path.exists() else []
+    changes = xmas(feed, today) + changes
     feed = [{"date": today.isoformat(), **c} for c in changes] + feed
     changes_path.write_text(json.dumps(feed, ensure_ascii=False, indent=1), encoding="utf-8")
     append_history(DATA / "history.csv", new, today)

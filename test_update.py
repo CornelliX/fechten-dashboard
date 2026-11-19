@@ -274,4 +274,11 @@ assert silvester_news(feed, 2026, "https://x/") == (feed, False)
 late = {"key": "fie-x", "source": "FIE", "date": "2026-10-03", "name": "Antony Open", "place": 54}
 assert not [c for c in diff({"results": []}, {"updated": NOW, "results": [late]}) if "Antony" in c["text"]]
 assert [c for c in diff({"results": []}, {"updated": NOW, "results": [dict(late, date="2026-11-08")]}) if "Antony" in c["text"]]
+# Weihnachten: "Frohes Fecht!" nur am 24.12. und nur einmal
+from update import xmas
+from datetime import date as _d
+x = xmas([], _d(2026, 12, 24))
+assert x == [{"text": "Frohes Fecht!", "url": "https://cornellix.github.io/fechten-dashboard/weihnachten.mp4"}], x
+assert xmas([{"date": "2026-12-24", **x[0]}], _d(2026, 12, 24)) == [] and xmas([], _d(2026, 12, 23)) == []
+assert xmas([{"date": "2025-12-24", **x[0]}], _d(2026, 12, 24)) == x   # jedes Jahr neu
 print("ok")

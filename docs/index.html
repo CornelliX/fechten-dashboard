@@ -37,6 +37,8 @@ header img { width: 72px; height: 72px; border-radius: 50%; object-fit: cover; b
 .grid { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
 .card { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 16px; min-width: 0; }
 .wide { grid-column: 1 / -1; }
+.xmas { padding: 0; overflow: hidden; background: #0b0820; border: 0; }
+.xmas video { display: block; width: 100%; max-width: 520px; margin: 0 auto; }
 .kpi .num { font-size: 56px; line-height: 1; font-weight: 700; }
 .lbl { font-size: 12px; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); }
 .trend { font-weight: 600; font-size: 14px; margin-left: 6px; }
@@ -319,6 +321,14 @@ const safeUrl = u => /^https?:\/\//i.test(String(u ?? '')) ? esc(u) : '';  // nu
 const calHttps = new URL('data/termine.ics', location.href).href;
 const calWebcal = calHttps.replace(/^https?:/, 'webcal:');
 const nocache = { cache: 'no-store' };
+
+// 24.12.: Weihnachtsgruß ganz oben, stummes Video in Schleife (wirkt wie ein GIF, ist aber viel kleiner); Vorschau mit ?weihnachten
+{ const d = new Date();
+  if ((d.getMonth() === 11 && d.getDate() === 24) || new URLSearchParams(location.search).has('weihnachten')) {
+    const still = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    document.querySelector('.grid').insertAdjacentHTML('afterbegin', `<section class="card wide xmas">
+      <video src="weihnachten.mp4" ${still ? 'controls' : 'autoplay'} muted loop playsinline aria-label="Weihnachtsgruß: Frohes Fecht!"></video></section>`);
+  } }
 
 Promise.all([
   fetch('data/state.json', nocache).then(r => r.json()),

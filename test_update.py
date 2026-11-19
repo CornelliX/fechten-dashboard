@@ -7,7 +7,7 @@ from update import match_album, parse_photo_albums, parse_dfb_news, build_state,
 CFG = {"name": "Ella Gamke", "fie_id": 1, "fie_search": "X", "weapon": "F", "gender": "F", "category": "S"}
 MANUAL = {"dfb": {"rank": 7, "points": 48.25}, "fie_status": {"131": "Voranmeldung (Ophardt)"},
           "events": [{"date": "2026-12-05", "name": "Händel-Cup", "status": "Gemeldet"}], "results": []}
-NOW = "2026-11-16T05:00+00:00"  # fester Zeitstempel, damit die 45-Tage-Regel nicht von der Uhr abhängt
+NOW = "2026-11-16T05:00+00:00"  # fester Zeitstempel, damit die 14-Tage-Regel nicht von der Uhr abhängt
 
 
 def fake(rank=312, points=1.125, entered=False, results=(), more=(), field=230):
@@ -270,4 +270,8 @@ feed, neu = silvester_news([{"date": "2026-12-30", "text": "alt"}], 2026, "https
 assert neu and feed[0] == {"date": "2026-12-31", "text": "Ellas Fecht-Jahr 2026: Die Jahresbilanz ist da!",
                            "url": "https://x/silvester.html?jahr=2026"} and len(feed) == 2, feed
 assert silvester_news(feed, 2026, "https://x/") == (feed, False)
+# Spät nachgetragenes Ergebnis (Antony Open vom 3.10., erst am 16.11. bei der FIE) ist keine Neuigkeit mehr
+late = {"key": "fie-x", "source": "FIE", "date": "2026-10-03", "name": "Antony Open", "place": 54}
+assert not [c for c in diff({"results": []}, {"updated": NOW, "results": [late]}) if "Antony" in c["text"]]
+assert [c for c in diff({"results": []}, {"updated": NOW, "results": [dict(late, date="2026-11-08")]}) if "Antony" in c["text"]]
 print("ok")

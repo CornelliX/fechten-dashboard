@@ -496,7 +496,7 @@ def diff(old, new):
     athlete = f"{FIE}/athletes/{new['fie_id']}" if new.get("fie_id") else None
     old_r = {r["key"]: r for r in old.get("results", [])}
     # Ältere Ergebnisse, die erst jetzt mitgeladen werden (z. B. Vorsaison, U20), sind keine Neuigkeit
-    cutoff = (date.fromisoformat(new.get("updated", "9999-12-31")[:10]) - timedelta(days=45)).isoformat()
+    cutoff = (date.fromisoformat(new.get("updated", "9999-12-31")[:10]) - timedelta(days=14)).isoformat()  # ponytail: feste 14 Tage; spät nachgetragene Turniere bleiben stumm
     for r in new.get("results", []):
         o = old_r.get(r["key"])
         r_url = r.get("url") or (athlete if r.get("source") == "FIE" else None)

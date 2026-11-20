@@ -5,9 +5,7 @@ Nur Standardbibliothek. Aufruf: python update.py"""
 import csv
 import html
 import json
-import os
 import re
-import secrets
 import time
 import unicodedata
 import urllib.parse
@@ -608,13 +606,6 @@ def main():
         print("•", c["text"])
     for e in new["errors"]:
         print("FEHLER", e)
-    if changes and os.environ.get("GITHUB_OUTPUT"):
-        # Texte stammen teils von fie.org: Zeilenumbrüche raus, Zufalls-Delimiter gegen Output-Injection
-        delim = "EOF_" + secrets.token_hex(16)
-        body = "\n".join("• " + " ".join(c["text"].split()) + ("\n  " + "".join(c["url"].split()) if c.get("url") else "")
-                           for c in changes)
-        with open(os.environ["GITHUB_OUTPUT"], "a", encoding="utf-8") as fh:
-            fh.write(f"changed=true\nbody<<{delim}\n{body}\n{delim}\n")
 
 
 if __name__ == "__main__":

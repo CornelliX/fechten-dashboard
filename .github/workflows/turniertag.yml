@@ -43,6 +43,20 @@ jobs:
         run: >
           curl -fsS -H "Title: Frohes Fecht!" -H "Tags: christmas_tree" -H "Click: https://cornellix.github.io/fechten-dashboard/"
           --data-raw "Frohe Weihnachten! Im Dashboard wartet heute ein Gruß." "https://ntfy.sh/$NTFY_TOPIC"
+      - name: Weihnachtsgruß (Mail)
+        if: steps.t.outputs.xmas == 'true' && env.MAIL_USER != ''
+        uses: dawidd6/action-send-mail@4226df7daafa6fc901a43789c49bf7ab309066e7 # v3.11.0
+        with:
+          server_address: ${{ secrets.MAIL_SERVER }}
+          server_port: ${{ secrets.MAIL_PORT }}
+          username: ${{ secrets.MAIL_USER }}
+          password: ${{ secrets.MAIL_PASS }}
+          from: Ellas Fecht-Dashboard <${{ secrets.MAIL_USER }}>
+          to: ${{ secrets.MAIL_TO }}
+          subject: "Frohes Fecht!"
+          body: |
+            Frohe Weihnachten! Im Dashboard wartet heute ein Gruß:
+            https://cornellix.github.io/fechten-dashboard/
       - name: Push aufs Handy (ntfy)
         if: steps.t.outputs.send == 'true' && env.NTFY_TOPIC != ''
         continue-on-error: true   # die Mail soll trotzdem rausgehen

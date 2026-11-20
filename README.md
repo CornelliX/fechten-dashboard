@@ -5,7 +5,7 @@ Statische Seite (`docs/`), die ein GitHub-Workflow jeden Morgen neu befüllt:
 - **Automatisch von fie.org:** Weltranglistenplatz und Punkte, Ergebnisse mit FIE-Punkten, Einzelgefechte, Saisonkalender Damen-Florett Senior, Meldestatus in den FIE-Meldelisten, deutsche Konkurrenz in der Weltrangliste.
 - **Von Hand in `manual.json`:** DFB-Rangliste, nationale Turniere und Meldestatus bei Ophardt. Ophardt sperrt automatische Abrufe per Cloudflare-Bot-Schutz, deshalb dieser Weg.
 
-Jede Änderung (Platz, Punkte, neues Ergebnis, neuer Termin, Meldestatus, Terminverschiebung) landet im Feed „Letzte News“, in `docs/data/history.csv` und, falls eingerichtet, per Mail bei dir.
+Jede Änderung (Platz, Punkte, neues Ergebnis, neuer Termin, Meldestatus, Terminverschiebung) landet im Feed „Letzte News“ und in `docs/data/history.csv`. Mails gibt es nur für Turnier-Tage, den Weihnachtsgruß (24.12., 10 Uhr) und die Silvester-Bilanz.
 
 ## Einrichtung (einmalig, ca. 10 Minuten)
 
@@ -26,7 +26,7 @@ Jede Änderung (Platz, Punkte, neues Ergebnis, neuer Termin, Meldestatus, Termin
 
 ## Ophardt-Daten pflegen
 
-`manual.json` direkt auf GitHub bearbeiten (Stift-Symbol) und speichern. Der Workflow läuft dann sofort und mailt die Änderung.
+`manual.json` direkt auf GitHub bearbeiten (Stift-Symbol) und speichern. Der Workflow läuft dann sofort und übernimmt die Änderung.
 
 - `dfb`: Platz, Punkte, Berechnungsdatum und Top 10 der DFB-Rangliste.
 - `fie_status`: Ophardt-Status für FIE-Turniere, Schlüssel ist die FIE-Turnier-ID aus der URL (`fie.org/tournaments/2027/131` → `"131"`). Steht Ella in der FIE-Meldeliste, zeigt das Dashboard automatisch „Gemeldet (FIE)“.

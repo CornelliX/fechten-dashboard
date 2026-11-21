@@ -31,7 +31,7 @@ Jede Änderung (Platz, Punkte, neues Ergebnis, neuer Termin, Meldestatus, Termin
 - `dfb`: Platz, Punkte, Berechnungsdatum und Top 10 der DFB-Rangliste.
 - `fie_status`: Ophardt-Status für FIE-Turniere, Schlüssel ist die FIE-Turnier-ID aus der URL (`fie.org/tournaments/2027/131` → `"131"`). Steht Ella in der FIE-Meldeliste, zeigt das Dashboard automatisch „Gemeldet (FIE)“.
 - `events` / `results`: nationale Turniere und Ergebnisse.
-- `news`: eigene Meldungen für „Letzte News“, z. B. Neuigkeiten von direkten Konkurrentinnen (`{"text": "…", "url": "…"}`). Jede erscheint einmal, am Tag des nächsten Laufs.
+- `news`: eigene Meldungen für „Letzte News“, z. B. Neuigkeiten von direkten Konkurrentinnen (`{"text": "…", "url": "…"}`). Jede erscheint einmal, am Tag des nächsten Laufs. Mit `#:~:text=NAME` am Ende der URL springt die verlinkte Seite direkt zu dieser Stelle (ohne Treffer: Seitenanfang). Ranglisten-News bekommen das automatisch.
 
 Die Startwerte stammen aus dem Grok-Dashboard vom 13.11.2026. Einige ältere Ergebnisse haben dort kein genaues Datum.
 

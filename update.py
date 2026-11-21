@@ -477,6 +477,11 @@ def rank_change(label, o, n):
 PHOTO_ARCHIVE_PUBLIC = "https://www.fechten.org/service/foto-archiv"  # öffentliche Seite mit Nutzungsbedingungen
 
 
+def at(url, text):
+    """Link mit Text-Fragment: Safari/Chrome springen direkt zur Fundstelle (ohne Treffer: Seitenanfang)."""
+    return f"{url}#:~:text={urllib.parse.quote(text)}"
+
+
 def diff(old, new):
     """Änderungen als [{"text": ..., "url": ...}]; url nur, wenn es ein direktes Ziel gibt."""
     out = []
@@ -485,11 +490,12 @@ def diff(old, new):
         out.append({"text": text, **({"url": url} if url else {})})
 
     fie_n, dfb_n = new.get("fie") or {}, new.get("dfb") or {}
+    surname = (new.get("name") or "").split()[-1:]
     for label, o, n, url in (("FIE-Weltrangliste", old.get("fie"), fie_n, fie_n.get("ranking_url")),
                              ("DFB-Rangliste", old.get("dfb"), dfb_n, dfb_n.get("url"))):
         c = rank_change(label, o, n)
         if c:
-            add(c, url)
+            add(c, at(url, surname[0]) if url and surname else url)
 
     athlete = f"{FIE}/athletes/{new['fie_id']}" if new.get("fie_id") else None
     old_r = {r["key"]: r for r in old.get("results", [])}

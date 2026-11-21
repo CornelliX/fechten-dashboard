@@ -46,6 +46,7 @@ b = build(MANUAL, a, fake(rank=290, points=2.0, entered=True, results=[PLOVDIV],
 ch = [c["text"] for c in diff(a, b)]
 fie_c = next(c for c in diff(a, b) if c["text"].startswith("FIE"))
 assert fie_c["url"].startswith("https://fie.org/athletes/detailed-ranking?season=2027&weapon=F"), fie_c
+assert fie_c["url"].endswith("#:~:text=Gamke"), fie_c   # Sprung direkt zu Ellas Zeile
 assert next(c for c in diff(a, b) if c["text"].startswith("Neues Ergebnis"))["url"] == "https://fie.org/athletes/1"
 assert "FIE-Weltrangliste: Platz 312 → 290 ↑ (1,125 → 2 Punkte)" in ch, ch
 assert "Neues Ergebnis: Weltcup Plovdiv: Platz 171" in ch, ch

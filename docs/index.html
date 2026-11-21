@@ -191,6 +191,11 @@ footer { color: var(--muted); font-size: 12px; margin-top: 24px; }
   h1 { font-size: 32px; } .kpi .num { font-size: 44px; }
   .card { padding: 14px; } td, th { padding-inline: 4px; }
 }
+.ptr { position: fixed; top: calc(env(safe-area-inset-top) + 8px); left: 50%; z-index: 9; padding: 6px 14px;
+  border-radius: 999px; background: var(--card); color: var(--muted); border: 1px solid var(--line);
+  font: 600 13px/1.2 Inter, system-ui, sans-serif; box-shadow: 0 2px 10px rgb(0 0 0 / .12);
+  transform: translate(-50%, -60px); transition: transform .2s ease; pointer-events: none; }
+.ptr.on { transform: translate(-50%, 0); }
 </style>
 </head>
 <body>
@@ -338,6 +343,28 @@ Promise.all([
   fetch('data/jahresbilanz.json', nocache).then(r => r.ok ? r.json() : {}).catch(() => ({})),
 ]).then(([s, changes, csv, career, jb]) => render(s, changes, parseCsv(csv), career, jb))
   .catch(e => { $('#meta').textContent = 'Daten konnten nicht geladen werden: ' + e.message; });
+
+// Aktualisieren: oben herunterziehen (auch als Home-Bildschirm-App, wo iOS kein eigenes Pull-to-Refresh hat)
+// und automatisch beim Zurückkehren, wenn die Seite länger als 5 Minuten im Hintergrund lag.
+{ const tip = document.body.appendChild(Object.assign(document.createElement('div'), { className: 'ptr', role: 'status' }));
+  let y0 = null, pulled = false;
+  const app = navigator.standalone || matchMedia('(display-mode: standalone)').matches;  // im Browser-Tab zieht Safari selbst
+  addEventListener('touchstart', e => { y0 = app && scrollY <= 0 && e.touches.length === 1 ? e.touches[0].clientY : null; }, { passive: true });
+  addEventListener('touchmove', e => {
+    if (y0 === null) return;
+    pulled = e.touches[0].clientY - y0 > 90;
+    tip.textContent = pulled ? 'Loslassen zum Aktualisieren' : 'Zum Aktualisieren ziehen';
+    tip.classList.toggle('on', e.touches[0].clientY - y0 > 30);
+  }, { passive: true });
+  addEventListener('touchend', () => {
+    if (pulled) { tip.textContent = 'Aktualisiere …'; location.reload(); return; }
+    y0 = null; tip.classList.remove('on');
+  });
+  let hiddenAt = 0;
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) hiddenAt = Date.now();
+    else if (hiddenAt && Date.now() - hiddenAt > 5 * 60e3) location.reload();
+  }); }
 
 function parseCsv(t) {
   const [head, ...rows] = t.trim().split(/\r?\n/);

@@ -282,3 +282,11 @@ assert x == [{"text": "Frohes Fecht!", "url": "https://cornellix.github.io/fecht
 assert xmas([{"date": "2026-12-24", **x[0]}], _d(2026, 12, 24)) == [] and xmas([], _d(2026, 12, 23)) == []
 assert xmas([{"date": "2025-12-24", **x[0]}], _d(2026, 12, 24)) == x   # jedes Jahr neu
 print("ok")
+
+# Eigene Meldungen aus manual.json: einmal in den Feed, danach nicht wieder
+from update import manual_news
+m = {"news": [{"text": "Händel-Cup: Morandi storniert", "url": "https://x"}, {"text": ""}]}
+n = manual_news([], m)
+assert n == [{"text": "Händel-Cup: Morandi storniert", "url": "https://x"}]
+assert manual_news([{"date": "2026-11-21", **n[0]}], m) == [] and manual_news([], {}) == []
+print("ok")

@@ -582,6 +582,13 @@ def xmas(feed, today):
     return [{"text": "Frohes Fecht!", "url": "https://cornellix.github.io/fechten-dashboard/weihnachten.mp4"}]
 
 
+def manual_news(feed, manual):
+    """Eigene Meldungen aus manual.json → "news" (z. B. Konkurrenz storniert), jede nur einmal im Feed."""
+    seen = {c["text"] for c in feed}
+    return [{"text": n["text"], **({"url": n["url"]} if n.get("url") else {})}
+            for n in manual.get("news", []) if n.get("text") and n["text"] not in seen]
+
+
 def main():
     cfg = json.loads((ROOT / "config.json").read_text(encoding="utf-8"))
     manual = json.loads((ROOT / "manual.json").read_text(encoding="utf-8"))
@@ -595,7 +602,7 @@ def main():
 
     state_path.write_text(json.dumps(new, ensure_ascii=False, indent=1), encoding="utf-8")
     feed = json.loads(changes_path.read_text(encoding="utf-8")) if changes_path.exists() else []
-    changes = xmas(feed, today) + changes
+    changes = xmas(feed, today) + manual_news(feed, manual) + changes
     feed = [{"date": today.isoformat(), **c} for c in changes] + feed
     changes_path.write_text(json.dumps(feed, ensure_ascii=False, indent=1), encoding="utf-8")
     append_history(DATA / "history.csv", new, today)

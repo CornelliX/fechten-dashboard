@@ -1,24 +1,67 @@
 {
   "_hinweis": "Ophardt sperrt automatische Abrufe. Diese Datei pflegst du von Hand (oder sagst Claude Bescheid). Jede Änderung erscheint beim nächsten Lauf unter „Letzte News“. Datumsformat JJJJ-MM-TT.",
   "news": [
-    { "text": "Händel-Cup: Carlotta Sophie Morandi (DFB-Rangliste Platz 1) hat ihre Meldung storniert", "url": "https://fencing.ophardt.online/de/inscriptions/show/34853#:~:text=MORANDI" }
+    {
+      "text": "Händel-Cup: Carlotta Sophie Morandi (DFB-Rangliste Platz 1) hat ihre Meldung storniert",
+      "url": "https://fencing.ophardt.online/de/inscriptions/show/34853#:~:text=MORANDI"
+    }
   ],
   "dfb": {
     "rank": 6,
     "points": 47.25,
-    "calculated": "2026-11-15",
+    "calculated": "2026-11-25",
     "url": "https://fencing.ophardt.online/de/display-ranking/html/ger/senior/f/f/i?id=16",
     "top10": [
-      { "rank": 1, "name": "Carlotta Sophie Morandi", "points": 163 },
-      { "rank": 2, "name": "Leonie Ebert", "points": 101.25 },
-      { "rank": 3, "name": "Marie Höfler", "points": 68 },
-      { "rank": 4, "name": "Kim Kirschen", "points": 56 },
-      { "rank": 5, "name": "Anna Sophie Kothieringer", "points": 53.75 },
-      { "rank": 6, "name": "Ella Gamke", "points": 47.25 },
-      { "rank": 7, "name": "Anne Kleibrink", "points": 45 },
-      { "rank": 8, "name": "Veranika Seiffert", "points": 41.75 },
-      { "rank": 9, "name": "Merle Herwig", "points": 38.25 },
-      { "rank": 10, "name": "Anne Kirsch", "points": 36.25 }
+      {
+        "rank": 1,
+        "name": "Carlotta Sophie Morandi",
+        "points": 163
+      },
+      {
+        "rank": 2,
+        "name": "Leonie Ebert",
+        "points": 101.25
+      },
+      {
+        "rank": 3,
+        "name": "Marie Höfler",
+        "points": 68
+      },
+      {
+        "rank": 4,
+        "name": "Kim Kirschen",
+        "points": 56
+      },
+      {
+        "rank": 5,
+        "name": "Anna Sophie Kothieringer",
+        "points": 53.75
+      },
+      {
+        "rank": 6,
+        "name": "Ella Gamke",
+        "points": 47.25
+      },
+      {
+        "rank": 7,
+        "name": "Anne Kleibrink",
+        "points": 45
+      },
+      {
+        "rank": 8,
+        "name": "Veranika Seiffert",
+        "points": 41.75
+      },
+      {
+        "rank": 9,
+        "name": "Merle Herwig",
+        "points": 38.25
+      },
+      {
+        "rank": 10,
+        "name": "Anne Kirsch",
+        "points": 36.25
+      }
     ]
   },
   "fie_status": {
@@ -35,7 +78,9 @@
       "city": "Halle",
       "status": "Gemeldet",
       "url": "https://fencing.ophardt.online/de/widget/event/34853",
-      "days": ["2026-12-06"],
+      "days": [
+        "2026-12-06"
+      ],
       "live": "https://www.fencingworldwide.com/de/34853-2026/tournament/"
     },
     {
@@ -48,18 +93,83 @@
     }
   ],
   "results": [
-    { "date": "2026-10-03", "name": "Antony Open", "city": "Paris", "place": 54 },
-    { "date": "2026-06-27", "name": "Deutsche Mannschaftsmeisterschaft Senioren", "city": "Koblenz", "place": 1 },
-    { "date": "2026-06-13", "name": "Esslinger Burg-Cup", "city": "Esslingen", "place": 3 },
-    { "date": "2026-06-06", "name": "Deutsche Meisterschaft U20", "city": "Buchholz", "place": 6 },
-    { "date": "2026-06-06", "name": "Deutsche Meisterschaft U20 Mannschaft", "city": "Buchholz", "place": 1 },
-    { "date": "2026-05-30", "name": "Deutsche Meisterschaft Senioren", "city": "Berlin", "place": 5 },
-    { "date": "2026-04-25", "name": "Europameisterschaft U23", "city": "Cagliari", "place": 53 },
-    { "date": "2026-04-25", "name": "Europameisterschaft U23 Mannschaft", "city": "Cagliari", "place": 8 },
-    { "date": "2026-02-24", "name": "Europameisterschaft U20 Mannschaft", "city": "Tbilisi", "place": 11 },
-    { "date": "2026-01-24", "name": "Turnier Dörnigheim", "city": "Dörnigheim", "place": 2 },
-    { "date": "2025-12-20", "name": "Händel-Cup", "city": "Halle", "place": 8 },
-    { "date": "2025-10-18", "name": "Adolf-Ermer-Cup (U20)", "city": "Stuttgart", "place": 1 },
-    { "date": "2025-09-20", "name": "Saale-Cup (U20)", "city": "Jena", "place": 7 }
+    {
+      "date": "2026-10-03",
+      "name": "Antony Open",
+      "city": "Paris",
+      "place": 54
+    },
+    {
+      "date": "2026-06-27",
+      "name": "Deutsche Mannschaftsmeisterschaft Senioren",
+      "city": "Koblenz",
+      "place": 1
+    },
+    {
+      "date": "2026-06-13",
+      "name": "Esslinger Burg-Cup",
+      "city": "Esslingen",
+      "place": 3
+    },
+    {
+      "date": "2026-06-06",
+      "name": "Deutsche Meisterschaft U20",
+      "city": "Buchholz",
+      "place": 6
+    },
+    {
+      "date": "2026-06-06",
+      "name": "Deutsche Meisterschaft U20 Mannschaft",
+      "city": "Buchholz",
+      "place": 1
+    },
+    {
+      "date": "2026-05-30",
+      "name": "Deutsche Meisterschaft Senioren",
+      "city": "Berlin",
+      "place": 5
+    },
+    {
+      "date": "2026-04-25",
+      "name": "Europameisterschaft U23",
+      "city": "Cagliari",
+      "place": 53
+    },
+    {
+      "date": "2026-04-25",
+      "name": "Europameisterschaft U23 Mannschaft",
+      "city": "Cagliari",
+      "place": 8
+    },
+    {
+      "date": "2026-02-24",
+      "name": "Europameisterschaft U20 Mannschaft",
+      "city": "Tbilisi",
+      "place": 11
+    },
+    {
+      "date": "2026-01-24",
+      "name": "Turnier Dörnigheim",
+      "city": "Dörnigheim",
+      "place": 2
+    },
+    {
+      "date": "2025-12-20",
+      "name": "Händel-Cup",
+      "city": "Halle",
+      "place": 8
+    },
+    {
+      "date": "2025-10-18",
+      "name": "Adolf-Ermer-Cup (U20)",
+      "city": "Stuttgart",
+      "place": 1
+    },
+    {
+      "date": "2025-09-20",
+      "name": "Saale-Cup (U20)",
+      "city": "Jena",
+      "place": 7
+    }
   ]
 }
